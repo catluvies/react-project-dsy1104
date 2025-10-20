@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './ExitoMensaje.css'
 
-// Componente que muestra el mensaje de compra exitosa
+// mensaje cuando la compra sale bien
 function ExitoMensaje() {
   return (
     <section className="exito">

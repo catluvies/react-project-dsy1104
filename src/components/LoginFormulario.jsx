@@ -8,15 +8,15 @@ function LoginFormulario() {
   const [errores, setErrores] = useState({})
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
 
-  // Función que se ejecuta cuando el usuario escribe en los inputs
+  // manejar cambios en inputs
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
 
-    // Actualizar el formData con el nuevo valor
+    // actualizar datos del formulario
     setFormData({ ...formData, [name]: value })
 
-    // Si había un error en ese campo, limpiarlo
+    // limpiar error si había
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }
@@ -37,7 +37,7 @@ function LoginFormulario() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!validarFormulario()) return
-    // Solo valida el formulario - no implementa login real
+    // solo valida, no hace login real
     alert('Login exitoso (simulado)')
   }
 

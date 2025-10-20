@@ -7,17 +7,17 @@ import { validarNombre, validarEmail, validarTelefono } from '../utils/validacio
 import { CarritoContext } from '../context/CarritoContext'
 import './CheckoutFormulario.css'
 
-// Componente de formulario de checkout (pago)
+// formulario para finalizar compra
 function CheckoutFormulario() {
-  // Usar el contexto del carrito
+  // usar el carrito
   const { carrito, subtotal } = useContext(CarritoContext)
 
   const navigate = useNavigate()
 
-  // Estado local para la comuna seleccionada
+  // estado para la comuna
   const [comunaSeleccionada, setComunaSeleccionada] = useState('')
 
-  // Estado para los datos del formulario
+  // datos del formulario
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -26,21 +26,21 @@ function CheckoutFormulario() {
     direccion: ''
   })
 
-  // Estado para los errores de validación
+  // errores del formulario
   const [errores, setErrores] = useState({})
 
-  // Función para manejar cambios en los inputs
+  // manejar cambios en inputs
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
 
-    // Limpiar error del campo si había uno
+    // limpiar error si había
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }
   }
 
-  // Función para validar el formulario
+  // validar formulario completo
   const validarFormulario = () => {
     const nuevosErrores = {}
 
@@ -103,9 +103,9 @@ function CheckoutFormulario() {
           navigate('/exito')
         }}>
           <div className="checkout__grid">
-            {/* Formulario */}
+            {/* formulario */}
             <div className="checkout__formulario">
-              {/* Información Personal */}
+              {/* información personal */}
               <div className="card checkout__card">
                 <h5 className="checkout__card-titulo">Información Personal</h5>
                 <div className="checkout__card-contenido">
@@ -164,7 +164,7 @@ function CheckoutFormulario() {
                 </div>
               </div>
 
-              {/* Entrega */}
+              {/* entrega */}
               <div className="card checkout__card">
                 <h5 className="checkout__card-titulo">Información de Entrega</h5>
                 <div className="checkout__card-contenido">
@@ -207,7 +207,7 @@ function CheckoutFormulario() {
                 </div>
               </div>
 
-              {/* Método de Pago */}
+              {/* método de pago */}
               <div className="card checkout__card">
                 <h5 className="checkout__card-titulo">Método de Pago</h5>
                 <div className="checkout__card-contenido">
@@ -245,12 +245,12 @@ function CheckoutFormulario() {
               </div>
             </div>
 
-            {/* Resumen */}
+            {/* resumen */}
             <div className="checkout__resumen">
               <div className="card checkout__resumen-card">
                 <h5 className="checkout__resumen-titulo">Resumen de Compra</h5>
 
-                {/* Lista de productos del carrito */}
+                {/* lista de productos del carrito */}
                 {carrito.map(item => (
                   <div key={item.id} className="checkout__producto">
                     <span>{item.nombre} x{item.cantidad}</span>

@@ -2,7 +2,7 @@ import { ordenesData } from '../data/ordenes'
 import './AdminOrders.css'
 
 function AdminOrders() {
-  // Datos estáticos - sin lógica compleja
+  // datos estáticos de órdenes
   const ordenes = ordenesData
   const estados = ['todos', 'pendiente', 'en_preparacion', 'completada', 'entregada', 'cancelada']
 

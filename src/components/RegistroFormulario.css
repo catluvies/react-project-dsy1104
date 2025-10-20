@@ -1,7 +1,4 @@
-/* ========================================
-   REGISTRO - Solo estilos específicos de layout
-   Los inputs, selects y botones usan estilos globales
-   ======================================== */
+
 .registro {
   padding: var(--espacio-4xl) var(--espacio-lg);
   background-color: var(--color-crema-oscuro);

@@ -1,12 +1,9 @@
 import { createContext, useState, useEffect } from 'react'
 
-// Crear el contexto
+// Crear el contexto del carrito
 export const CarritoContext = createContext()
 
-/**
- * Provider del contexto del carrito
- * Encapsula toda la lógica del carrito de compras
- */
+// Provider para manejo del carrito de compras
 export function CarritoProvider({ children }) {
   // Estado del carrito de compras
   const [carrito, setCarrito] = useState(() => {
@@ -19,20 +16,20 @@ export function CarritoProvider({ children }) {
     localStorage.setItem('carrito', JSON.stringify(carrito))
   }, [carrito])
 
-  // Función para agregar productos al carrito
+  // Agrega productos al carrito
   const agregarAlCarrito = (producto, cantidad) => {
-    // Verificar si hay stock disponible
+    // verificar stock
     if (producto.stock === 0) {
       alert('Este producto no tiene stock disponible')
       return
     }
 
-    // Buscar si el producto ya existe en el carrito
+    // buscar si ya existe en carrito
     const itemExistente = carrito.find(item => item.id === producto.id)
     const cantidadEnCarrito = itemExistente ? itemExistente.cantidad : 0
     const cantidadTotal = cantidadEnCarrito + cantidad
 
-    // Verificar que no se exceda el stock
+    // verificar que no se pase del stock
     if (cantidadTotal > producto.stock) {
       if (itemExistente) {
         alert(`Ya tienes ${cantidadEnCarrito} unidades en el carrito. Solo quedan ${producto.stock - cantidadEnCarrito} unidades disponibles.`)
@@ -43,7 +40,7 @@ export function CarritoProvider({ children }) {
     }
 
     if (itemExistente) {
-      // Si existe, incrementar la cantidad
+      // si existe, aumentar cantidad
       const nuevoCarrito = carrito.map(item =>
         item.id === producto.id
           ? { ...item, cantidad: item.cantidad + cantidad }
@@ -51,22 +48,22 @@ export function CarritoProvider({ children }) {
       )
       setCarrito(nuevoCarrito)
     } else {
-      // Si no existe, agregarlo como nuevo item
+      // si no existe, agregarlo nuevo
       setCarrito([...carrito, { ...producto, cantidad }])
     }
   }
 
-  // Calcular el subtotal sumando precio * cantidad de cada producto
+  // calcular subtotal
   const subtotal = carrito.reduce((total, item) => {
     return total + (item.precio_clp * item.cantidad)
   }, 0)
 
-  // Calcular el total de items en el carrito
+  // contar total de productos
   const totalItems = carrito.reduce((total, item) => {
     return total + item.cantidad
   }, 0)
 
-  // Valor que se compartirá a través del contexto
+  // Valores disponibles en el contexto
   const value = {
     carrito,
     agregarAlCarrito,

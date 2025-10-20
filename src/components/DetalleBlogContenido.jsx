@@ -2,12 +2,12 @@ import { useParams, Link } from 'react-router-dom'
 import { noticiasData } from '../data/noticias'
 import './DetalleBlogContenido.css'
 
-// Componente que muestra el detalle de un artículo del blog
+// detalle de artículo del blog
 function DetalleBlogContenido() {
-  // Obtener el ID del artículo desde la URL
+  // obtener el id desde la url
   const { id } = useParams()
 
-  // Buscar la noticia por ID
+  // buscar la noticia por id
   const noticia = noticiasData.find(n => n.id === id)
 
   if (!noticia) {

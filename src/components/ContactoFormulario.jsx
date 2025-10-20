@@ -13,15 +13,15 @@ function ContactoFormulario() {
   const [errores, setErrores] = useState({})
   const [enviado, setEnviado] = useState(false)
 
-  // Función que se ejecuta cuando el usuario escribe en los inputs
+  // manejar cambios en inputs
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
 
-    // Actualizar el formData con el nuevo valor
+    // actualizar datos del formulario
     setFormData({ ...formData, [name]: value })
 
-    // Si había un error en ese campo, limpiarlo
+    // limpiar error si había
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }
@@ -89,7 +89,7 @@ function ContactoFormulario() {
             </div>
           )}
 
-          {/* Info Cards */}
+          {/* info cards */}
           <div className="contacto-info">
             <div className="card contacto-info-card">
               <h5 className="contacto-info-card__titulo">Dirección</h5>
@@ -117,7 +117,7 @@ function ContactoFormulario() {
             </div>
           </div>
 
-          {/* Formulario */}
+          {/* formulario */}
           <div className="card contacto-form-card">
             <h5 className="contacto-form-card__titulo">Envíanos un Mensaje</h5>
 

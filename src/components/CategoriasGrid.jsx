@@ -4,17 +4,17 @@ import { obtenerCategoriasUnicas } from '../utils/productos'
 import { formatearCategoria } from '../utils/formateo'
 import './CategoriasGrid.css'
 
-// Componente que muestra una grilla de categorías con cantidad de productos
+// grilla de categorías
 function CategoriasGrid() {
-  // Obtener categorías únicas
+  // obtener categorías sin repetir
   const categoriasUnicas = obtenerCategoriasUnicas(productosData)
 
-  // Contar productos por categoría
+  // contar productos por categoría
   const categoriasConInfo = []
   for (let i = 0; i < categoriasUnicas.length; i++) {
     const categoria = categoriasUnicas[i]
 
-    // Contar cuántos productos hay en esta categoría
+    // contar productos en esta categoría
     let cantidad = 0
     for (let j = 0; j < productosData.length; j++) {
       if (productosData[j].categoria === categoria) {
@@ -22,7 +22,7 @@ function CategoriasGrid() {
       }
     }
 
-    // Agregar al array de categorías con info
+    // agregar al array
     categoriasConInfo.push({
       nombre: categoria,
       cantidad: cantidad

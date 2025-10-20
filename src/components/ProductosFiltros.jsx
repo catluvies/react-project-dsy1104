@@ -1,9 +1,9 @@
 import { formatearCategoria } from '../utils/formateo'
 import './ProductosFiltros.css'
 
-// Componente para filtrar productos por búsqueda y categoría
+// filtros de productos
 function ProductosFiltros(props) {
-  // Recibir las props para los filtros
+  // recibir props de filtros
   const busqueda = props.busqueda
   const onBusquedaChange = props.onBusquedaChange
   const categoriaFiltro = props.categoriaFiltro

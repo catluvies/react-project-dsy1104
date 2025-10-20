@@ -5,7 +5,6 @@ import { CarritoProvider } from './context/CarritoContext'
 import './index.css'
 import App from './App.jsx'
 
-// Renderizar la aplicación React en el DOM
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>

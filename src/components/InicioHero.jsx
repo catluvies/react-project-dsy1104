@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './InicioHero.css'
 
-// Componente Hero principal de la página de inicio
+// hero de la página principal
 function InicioHero() {
   return (
     <section className="inicio-hero">

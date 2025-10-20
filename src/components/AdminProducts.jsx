@@ -7,15 +7,15 @@ function AdminProducts() {
   const [filtroCategoria, setFiltroCategoria] = useState('todas')
   const [filtroStock, setFiltroStock] = useState('todos')
 
-  // Obtener categorías únicas
+  // obtener categorías sin repetir
   const categorias = ['todas', ...Array.from(new Set(productos.map(p => p.categoria)))]
 
-  // Formatear categoría para mostrar
+  // formato bonito para categorías
   const formatCategoria = (categoria) => {
     return categoria.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
   }
 
-  // Filtrar productos
+  // filtrar productos
   const productosFiltrados = productos.filter(producto => {
     const categoriaMatch = filtroCategoria === 'todas' || producto.categoria === filtroCategoria
     const stockMatch = filtroStock === 'todos' || 
@@ -26,7 +26,7 @@ function AdminProducts() {
     return categoriaMatch && stockMatch
   })
 
-  // Ordenar por nombre
+  // ordenar por nombre
   const productosOrdenados = [...productosFiltrados].sort((a, b) => 
     a.nombre.localeCompare(b.nombre)
   )
@@ -126,7 +126,7 @@ function AdminProducts() {
                   </div>
                 </div>
 
-                {/* Metadatos destacados */}
+                {/* metadatos destacados */}
                 {producto.metadatos && (
                   <div className="admin-product-card__metadatos">
                     <h4>📋 Metadatos del Producto</h4>

@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom'
 import { truncarTexto } from '../utils/helpers'
 import './BlogLista.css'
 
-// Componente para mostrar la lista de noticias/blog
+// lista de noticias del blog
 function BlogLista(props) {
-  // Recibir el array de noticias como prop
+  // recibir noticias como prop
   const noticias = props.noticias
 
   return (

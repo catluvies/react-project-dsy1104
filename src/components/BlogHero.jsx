@@ -1,6 +1,6 @@
 import './BlogHero.css'
 
-// Componente Hero para la página de Blog
+// hero del blog
 function BlogHero() {
   return (
     <section className="blog-hero">

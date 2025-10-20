@@ -1,10 +1,10 @@
 import './NosotrosContenido.css'
 
-// Componente que muestra el contenido de la página Sobre Nosotros
+// página sobre nosotros
 function NosotrosContenido() {
   return (
     <>
-      {/* Hero */}
+      {/* hero */}
       <section className="nosotros-hero">
         <div className="nosotros-hero__contenedor">
           <h1 className="nosotros-hero__titulo">Sobre Nosotros</h1>
@@ -12,7 +12,7 @@ function NosotrosContenido() {
         </div>
       </section>
 
-      {/* Historia */}
+      {/* historia */}
       <section className="nosotros-seccion">
         <div className="nosotros-contenido">
           <div className="nosotros-texto">
@@ -40,7 +40,7 @@ function NosotrosContenido() {
         </div>
       </section>
 
-      {/* Misión */}
+      {/* misión */}
       <section className="nosotros-seccion nosotros-seccion--gris">
         <div className="nosotros-contenido nosotros-contenido--inverso">
           <div className="nosotros-texto">
@@ -65,7 +65,7 @@ function NosotrosContenido() {
         </div>
       </section>
 
-      {/* Valores */}
+      {/* valores */}
       <section className="nosotros-seccion">
         <h2 className="nosotros-titulo-seccion">Nuestros Valores</h2>
         <div className="nosotros-valores">
@@ -96,7 +96,7 @@ function NosotrosContenido() {
         </div>
       </section>
 
-      {/* Equipo */}
+      {/* equipo */}
       <section className="nosotros-seccion nosotros-seccion--gris">
         <h2 className="nosotros-titulo-seccion">Nuestro Equipo</h2>
         <div className="nosotros-equipo">

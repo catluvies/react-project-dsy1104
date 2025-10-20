@@ -15,9 +15,9 @@ npm install
 npm run dev
 ```
 
-## 🧪 Pruebas
+##  Pruebas
 
-El proyecto incluye pruebas unitarias con **Vitest** para garantizar la calidad del código:
+El proyecto incluye 1 prueba con Vitest: 
 
 ```bash
 # Ejecutar todas las pruebas una sola vez

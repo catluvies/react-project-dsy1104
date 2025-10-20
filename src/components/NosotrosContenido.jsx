@@ -121,7 +121,7 @@ function NosotrosContenido() {
             <h5 className="nosotros-miembro-card__nombre">Sonic Carvajal</h5>
             <p className="nosotros-miembro-card__cargo">Jefe de Producción</p>
             <p className="nosotros-miembro-card__descripcion">
-              Experta en productos sin azúcar y veganos
+              Experto en productos sin azúcar y veganos
             </p>
           </div>
         </div>

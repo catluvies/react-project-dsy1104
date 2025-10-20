@@ -1,0 +1,234 @@
+.ofertas-hero {
+  background: linear-gradient(135deg, var(--color-rosa-pastel) 0%, var(--color-rosa-claro) 100%);
+  color: var(--color-blanco);
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  text-align: center;
+}
+
+.ofertas-hero__contenedor {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ofertas-hero__titulo {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: var(--espacio-md);
+}
+
+.ofertas-hero__subtitulo {
+  font-size: 1.3rem;
+  margin-bottom: var(--espacio-sm);
+}
+
+.ofertas-hero__nota {
+  font-size: 0.9rem;
+}
+
+.ofertas-principal {
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  background-color: var(--color-blanco);
+}
+
+.ofertas-principal__contenedor {
+  max-width: 800px;
+  margin: 0 auto var(--espacio-3xl);
+}
+
+.ofertas-card {
+  background: var(--color-blanco);
+  border-radius: var(--border-radius-lg);
+  padding: 50px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.ofertas-badge {
+  margin-bottom: var(--espacio-xl);
+}
+
+.ofertas-badge span {
+  background-color: var(--color-amarillo-claro);
+  color: var(--color-cafe-muy-oscuro);
+  padding: var(--espacio-sm) var(--espacio-xl);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: inline-block;
+}
+
+.ofertas-card__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 2rem;
+  margin-bottom: var(--espacio-lg);
+}
+
+.ofertas-card__descripcion {
+  color: var(--color-cafe-oscuro);
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: var(--espacio-xl);
+}
+
+.ofertas-nota {
+  background-color: var(--color-amarillo-claro);
+  border: var(--border-width) solid var(--color-amarillo-palido);
+  border-radius: var(--border-radius);
+  padding: var(--espacio-md);
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 0.9rem;
+  margin-bottom: var(--espacio-xl);
+}
+
+.ofertas-cupon {
+  background-color: var(--color-crema-oscuro);
+  padding: var(--espacio-xl);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--espacio-xl);
+}
+
+.ofertas-cupon__label {
+  color: var(--color-cafe-oscuro);
+  font-size: 0.9rem;
+  margin-bottom: var(--espacio-sm);
+}
+
+.ofertas-cupon__codigo {
+  color: var(--color-rosa-pastel);
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: monospace;
+  margin: 0;
+}
+
+.ofertas-instrucciones {
+  text-align: left;
+  margin-bottom: var(--espacio-xl);
+}
+
+.ofertas-instrucciones h5 {
+  color: var(--color-cafe-muy-oscuro);
+  margin-bottom: var(--espacio-md);
+}
+
+.ofertas-instrucciones ol {
+  color: var(--color-cafe-oscuro);
+  line-height: 2;
+}
+
+/* Usa clase global .alerta .alerta--info */
+.ofertas-terminos {
+  text-align: left;
+  font-size: 0.85rem;
+  margin-bottom: var(--espacio-xl);
+}
+
+.ofertas-terminos ul {
+  margin-top: var(--espacio-sm);
+  line-height: 1.8;
+}
+
+.ofertas-boton {
+  display: inline-block;
+  background-color: var(--color-rosa-pastel);
+  color: var(--color-blanco);
+  padding: var(--espacio-md) var(--espacio-2xl);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.ofertas-boton:hover {
+  background-color: var(--color-rosa-claro);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-md);
+}
+
+.ofertas-info {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ofertas-info__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 1.8rem;
+  margin-bottom: var(--espacio-2xl);
+}
+
+.ofertas-info__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espacio-xl);
+}
+
+.ofertas-info-card {
+  padding: var(--espacio-lg);
+}
+
+.ofertas-info-card__icono {
+  font-size: 3rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.ofertas-info-card__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  margin-bottom: var(--espacio-sm);
+}
+
+.ofertas-info-card__descripcion {
+  color: var(--color-cafe-oscuro);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.ofertas-cta {
+  background-color: var(--color-crema-oscuro);
+  padding: var(--espacio-3xl) var(--espacio-lg);
+  text-align: center;
+}
+
+.ofertas-cta__contenedor {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ofertas-cta__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 2rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.ofertas-cta__descripcion {
+  color: var(--color-cafe-oscuro);
+  margin-bottom: var(--espacio-xl);
+}
+
+.ofertas-cta__boton {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--color-rosa-pastel);
+  border: var(--border-width) solid var(--color-rosa-pastel);
+  padding: 12px 35px;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.ofertas-cta__boton:hover {
+  background-color: var(--color-rosa-pastel);
+  color: var(--color-blanco);
+}
+
+@media (max-width: 768px) {
+  .ofertas-card {
+    padding: 30px 20px;
+  }
+
+  .ofertas-info__grid {
+    grid-template-columns: 1fr;
+  }
+}

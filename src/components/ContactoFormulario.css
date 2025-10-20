@@ -1,0 +1,122 @@
+.contacto-hero {
+  background: linear-gradient(135deg, var(--color-cafe-claro) 0%, var(--color-cafe-oscuro) 100%);
+  color: var(--color-blanco);
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  text-align: center;
+}
+
+.contacto-hero__contenedor {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contacto-hero__titulo {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.contacto-hero__descripcion {
+  font-size: 1.3rem;
+}
+
+.contacto-contenido {
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  background-color: var(--color-blanco);
+}
+
+.contacto-contenido__contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Usa clase global .alerta .alerta--exito */
+
+.contacto-alerta__cerrar {
+  position: absolute;
+  right: var(--espacio-sm);
+  top: var(--espacio-sm);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-cafe-muy-oscuro);
+  cursor: pointer;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  line-height: 1;
+}
+
+.contacto-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espacio-xl);
+  margin-bottom: var(--espacio-3xl);
+}
+
+/* Usa clase global .card */
+.contacto-info-card {
+  text-align: center;
+}
+
+.contacto-info-card__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 1.2rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.contacto-info-card__texto {
+  color: var(--color-cafe-oscuro);
+  line-height: 1.8;
+}
+
+/* Usa clase global .card */
+.contacto-form-card {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contacto-form-card__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 1.5rem;
+  margin-bottom: var(--espacio-xl);
+  text-align: center;
+}
+
+.contacto-campo {
+  margin-bottom: var(--espacio-lg);
+}
+
+.contacto-label {
+  display: block;
+  color: var(--color-cafe-muy-oscuro);
+  font-weight: 600;
+  margin-bottom: var(--espacio-sm);
+}
+
+/* Estilos base de input/textarea están en App.css (global) */
+.contacto-input--error,
+.contacto-textarea--error {
+  border-color: var(--color-error) !important;
+}
+
+.contacto-error {
+  display: block;
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: var(--espacio-xs);
+}
+
+/* Botón usa clase global .boton .boton--primario .boton--block */
+
+@media (max-width: 968px) {
+  .contacto-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .contacto-form-card {
+    padding: 30px 20px;
+  }
+}

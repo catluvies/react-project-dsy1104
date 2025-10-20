@@ -1,0 +1,85 @@
+// Noticias del blog maqueteadas para presentación
+export const noticiasData = [
+  {
+    id: 'BLOG001',
+    titulo: 'Mil Sabores Busca Estudiantes DuocUC para Pasantías Remuneradas',
+    categoria: 'Oportunidades',
+    autor: 'Ahri González',
+    fecha: '18-10-2025',
+    tiempo_lectura: '4 min',
+    excerpt: 'Abrimos convocatoria para estudiantes de Gastronomía de DuocUC. Ofertas de práctica profesional con posibilidad de contrato indefinido.',
+    contenido: '<p>En Mil Sabores estamos creciendo y queremos que estudiantes de DuocUC sean parte de nuestro equipo. Buscamos alumnos de Gastronomía apasionados por la repostería para realizar su práctica profesional con nosotros.</p><p><strong>¿Qué ofrecemos?</strong> Práctica remunerada, horarios flexibles compatibles con estudios, capacitación con maestros pasteleros con más de 20 años de experiencia, y posibilidad real de contrato indefinido al terminar la práctica.</p><p><strong>Requisitos:</strong> Ser estudiante activo de DuocUC de las carreras de Gastronomía o áreas relacionadas, tener al menos el 50% de la malla curricular aprobada, y muchas ganas de aprender.</p><p>Los interesados pueden enviar su CV a rrhh@milsabores.cl con asunto "Práctica DuocUC 2025". ¡Te esperamos!</p>'
+  },
+  {
+    id: 'BLOG002',
+    titulo: 'Mil Sabores Viaja a China: Catering Oficial para T1 en Worlds 2025',
+    categoria: 'Novedades',
+    autor: 'Yasuo Silva',
+    fecha: '15-10-2025',
+    tiempo_lectura: '6 min',
+    excerpt: 'Nuestra pastelería fue seleccionada para encargarse del servicio de repostería del equipo T1 durante el Mundial de League of Legends 2025 en Shanghai.',
+    contenido: '<p>¡Noticia histórica! Mil Sabores ha sido seleccionada por T1, el equipo más laureado de League of Legends, para encargarse de todo su servicio de repostería durante el Mundial 2025 que se realizará en Shanghai, China.</p><p>Esta increíble oportunidad llegó después de que Faker, el legendario mid laner de T1, probara nuestras tortas durante su visita a Chile en septiembre y quedara fascinado con el sabor del mil hojas tradicional chileno.</p><p><strong>El desafío:</strong> Viajaremos con un equipo de 5 pasteleros chilenos para preparar postres diarios para todo el equipo, staff técnico y management de T1 durante las 3 semanas del torneo.</p><p>Esto no solo es un orgullo para nuestra pastelería, sino también para Chile y su gastronomía. Llevaremos nuestros sabores tradicionales al escenario más importante del esports mundial.</p><p>"Es un sueño hecho realidad. Combinar mi pasión por la repostería con los esports es algo que nunca imaginé", comentó nuestro chef principal.</p>'
+  },
+  {
+    id: 'BLOG003',
+    titulo: 'Estudiante de DuocUC le Entrega Mil Hojas a Faker en Backstage',
+    categoria: 'Historia',
+    autor: 'Jinx Torres',
+    fecha: '12-10-2025',
+    tiempo_lectura: '5 min',
+    excerpt: 'La historia detrás del momento viral: cómo un estudiante en práctica de DuocUC logró entregarle personalmente nuestra icónica torta mil hojas al mejor jugador del mundo.',
+    contenido: '<p>El pasado 10 de octubre, un video se viralizó en redes sociales: Faker, considerado el mejor jugador de League of Legends de todos los tiempos, recibiendo y probando una torta mil hojas de nuestra pastelería. Pero pocos conocen la historia completa detrás de ese momento.</p><p>Todo comenzó con Ezreal Fernández, estudiante de tercer año de Gastronomía en DuocUC, quien realiza su práctica profesional en Mil Sabores desde marzo de este año.</p><p><strong>El momento mágico:</strong> Durante la visita de T1 a Chile para un evento promocional de Riot Games, Ezreal fue seleccionado para entregar personalmente los postres en el backstage del evento. "Cuando vi a Faker a 2 metros de distancia, casi me desmayo. Soy fan desde 2013", cuenta Ezreal.</p><p>Faker no solo probó la torta, sino que pidió la receta y preguntó si podíamos enviarle más unidades a Corea. Ese momento casual fue el inicio de la relación que llevó a Mil Sabores a convertirse en el catering oficial de T1 para Worlds 2025.</p><p>"Mi vida cambió en 5 minutos. Pasé de ser un estudiante en práctica a ser parte de algo histórico", reflexiona Ezreal, quien viajará a China como parte del equipo seleccionado.</p>',
+  },
+  {
+    id: 'BLOG004',
+    titulo: 'Alianza Estratégica con Riot Games Chile: Postres Oficiales para Torneos',
+    categoria: 'Novedades',
+    autor: 'Lux Ramírez',
+    fecha: '08-10-2025',
+    tiempo_lectura: '4 min',
+    excerpt: 'Firmamos convenio con Riot Games Chile para ser el proveedor oficial de repostería en todos los torneos nacionales de League of Legends.',
+    contenido: '<p>Mil Sabores firma un convenio estratégico con Riot Games Chile para convertirse en el proveedor oficial de repostería en todos los eventos y torneos de League of Legends en el país durante 2025 y 2026.</p><p><strong>¿Qué incluye el convenio?</strong> Seremos los encargados de proveer postres, tortas y servicios de coffee break en la Liga de Videojuegos Profesional (LVP), torneos universitarios, y eventos comunitarios organizados por Riot Games en Chile.</p><p>Además, desarrollaremos una línea exclusiva de productos temáticos de League of Legends que estarán disponibles tanto en eventos como en nuestras tiendas físicas y página web.</p><p>"Esta alianza representa la unión perfecta entre la tradición de la repostería chilena y la innovación del mundo de los esports", comentó Lux Ramírez, nuestra directora de marketing.</p><p>Como parte del acuerdo, también ofreceremos becas de práctica profesional para estudiantes de DuocUC interesados en especializarse en repostería para eventos masivos.</p>',
+  },
+  {
+    id: 'BLOG005',
+    titulo: 'Nueva Línea de Tortas Temáticas de League of Legends',
+    categoria: 'Productos',
+    autor: 'Zed Morales',
+    fecha: '05-10-2025',
+    tiempo_lectura: '5 min',
+    excerpt: 'Presentamos nuestra colección exclusiva de tortas inspiradas en los campeones más icónicos de League of Legends. Diseños personalizados y sabores únicos.',
+    contenido: '<p>Después del éxito de nuestra alianza con Riot Games y T1, lanzamos oficialmente nuestra línea de tortas temáticas de League of Legends.</p><p><strong>Modelos disponibles:</strong></p><p>• <strong>Torta Ahri de 9 Colas:</strong> Mil hojas con manjar y frutos rojos, decorada con 9 colas de fondant. Perfecta para 12 personas.</p><p>• <strong>Torta Jinx Explosiva:</strong> Chocolate intenso con chips de menta, decoración inspirada en su icónico Rocket Launcher.</p><p>• <strong>Torta Yasuo del Viento:</strong> Mousse de lúcuma con crema de coco, diseño minimalista inspirado en su espada.</p><p>• <strong>Torta Lux Elementalista:</strong> Torta arcoíris de 4 sabores, cada capa representa un elemento.</p><p><strong>Personalización:</strong> Puedes pedir cualquier campeón de League of Legends. Nuestro equipo de diseño trabajará contigo para crear la torta perfecta para tu cumpleaños, evento o simplemente porque amas el juego.</p><p>Todas las tortas incluyen una tarjeta coleccionable con arte oficial de Riot Games. Pedidos con 1 semana de anticipación.</p>',
+  },
+  {
+    id: 'BLOG006',
+    titulo: 'Worlds 2025: Fiesta de Visualización en Mil Sabores con Promociones',
+    categoria: 'Eventos',
+    autor: 'Akali Vega',
+    fecha: '02-10-2025',
+    tiempo_lectura: '4 min',
+    excerpt: 'Transmitiremos en vivo todas las finales del Mundial con pantalla gigante, descuentos especiales y sorpresas. Entrada liberada para estudiantes DuocUC.',
+    contenido: '<p>Durante todo el mes de noviembre, Mil Sabores se transformará en el epicentro de la comunidad de League of Legends en Santiago. Transmitiremos en vivo todas las finales de Worlds 2025 en pantalla gigante.</p><p><strong>Promociones especiales:</strong></p><p>• 30% de descuento en toda la línea LoL durante transmisiones</p><p>• Entrada liberada y café gratis para estudiantes DuocUC (con credencial vigente)</p><p>• Por cada torta LoL vendida durante el evento, sortearemos un meet & greet virtual con jugadores de T1</p><p>• Menú especial "Rift Menu" con nombres inspirados en el juego</p><p><strong>Fechas importantes:</strong></p><p>• Semifinales: 2 y 3 de noviembre</p><p>• Gran Final: 9 de noviembre, desde las 4:00 AM (hora Chile)</p><p>Para la final, abriremos desde las 3:00 AM con desayuno continental incluido. Cupos limitados, inscripciones en nuestro Instagram.</p><p>¡Ven a celebrar con nosotros y apoya a nuestro equipo T1 con el que trabajaremos en China!</p>',
+  },
+  {
+    id: 'BLOG007',
+    titulo: 'Detrás de Escena: Cómo Creamos las Tortas para el Equipo T1',
+    categoria: 'Behind the Scenes',
+    autor: 'Thresh Ramírez',
+    fecha: '28-09-2025',
+    tiempo_lectura: '7 min',
+    excerpt: 'Un vistazo exclusivo al proceso creativo y logístico de preparar 50+ postres semanales para el equipo profesional más exitoso de esports.',
+    contenido: '<p>Trabajar como el catering oficial de T1 es un desafío titánico que requiere precisión, creatividad y comprensión del alto rendimiento deportivo.</p><p><strong>El proceso:</strong></p><p><strong>1. Planificación nutricional:</strong> Trabajamos con nutricionistas deportivos de T1 para asegurar que cada postre cumpla con los requerimientos calóricos y nutricionales del equipo. No es solo "hacer tortas ricas", es crear postres que apoyen el rendimiento competitivo.</p><p><strong>2. Adaptación cultural:</strong> Los jugadores coreanos tienen preferencias específicas: menos dulce, texturas más ligeras, y sabores que les recuerden a casa. Hemos incorporado ingredientes como té verde matcha, yuzu, y arroz mochi.</p><p><strong>3. Producción diaria:</strong> En China, producimos entre 8-12 postres diferentes cada día. Desde las 5 AM hasta las 2 PM, nuestro equipo trabaja sin parar.</p><p><strong>4. Presentación:</strong> Cada postre se presenta en cajas individuales con el logo de T1 y Mil Sabores, con una tarjeta que explica los ingredientes y calorías en coreano e inglés.</p><p><strong>El favorito de Faker:</strong> Sin duda, el mil hojas tradicional chileno. Lo pide al menos 3 veces por semana. También le encanta nuestra versión de torta de té verde con manjar.</p><p>Esta experiencia ha elevado nuestro nivel como pastelería. Estamos aprendiendo de los mejores y aplicando ese aprendizaje en cada producto que ofrecemos en Chile.</p>',
+  },
+  {
+    id: 'BLOG008',
+    titulo: 'De Estudiante a Pastelero: Historia de Éxito de un Alumno DuocUC',
+    categoria: 'Inspiración',
+    autor: 'Seraphine Torres',
+    fecha: '25-09-2025',
+    tiempo_lectura: '6 min',
+    excerpt: 'Ezreal Fernández nos cuenta su viaje desde el primer día de práctica hasta convertirse en miembro clave del equipo que viajará a Worlds 2025.',
+    contenido: '<p><strong>Seraphine Torres, periodista de Mil Sabores, entrevista a Ezreal Fernández</strong></p><p><strong>S.T.:</strong> Ezreal, cuéntanos cómo llegaste a Mil Sabores.</p><p><strong>E.F.:</strong> Llegué en marzo buscando un lugar para mi práctica profesional. Había enviado CV a 15 pastelerías diferentes. Mil Sabores fue la primera en responderme. Recuerdo que el día de la entrevista estaba tan nervioso que llegué 40 minutos antes.</p><p><strong>S.T.:</strong> ¿Qué esperabas de la práctica?</p><p><strong>E.F.:</strong> Honestamente, esperaba barrer, lavar loza, y si tenía suerte, batir huevos. Nunca imaginé que 7 meses después estaría viajando a China con el equipo para trabajar con T1 en un Mundial de League of Legends. Es surreal.</p><p><strong>S.T.:</strong> ¿Cuál fue tu momento más difícil?</p><p><strong>E.F.:</strong> La primera vez que arruiné un pedido completo de alfajores. Olvidé ajustar el horno y se quemaron 200 unidades. Lloré en la bodega. Pensé que me echarían. Pero el chef me dijo: "Todos hemos quemado alfajores. Ahora sabes cómo NO hacerlo. Vamos, hay que reponerlos antes de las 4". Trabajamos juntos hasta las 11 PM ese día.</p><p><strong>S.T.:</strong> ¿Qué consejo le darías a otros estudiantes?</p><p><strong>E.F.:</strong> Que se atrevan. Que postulen a lugares que parecen "muy grandes" para ellos. Que digan que sí a cada oportunidad, incluso si da miedo. Hace 7 meses yo era un estudiante promedio. Hoy voy a trabajar en el evento de esports más grande del mundo. Si yo pude, cualquiera puede.</p><p><em>Ezreal viajará a Shanghai el 15 de octubre como parte del equipo oficial de Mil Sabores. Le deseamos todo el éxito del mundo.</em></p>',
+  }
+]
+
+export default noticiasData

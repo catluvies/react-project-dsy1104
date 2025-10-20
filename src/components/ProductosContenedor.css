@@ -1,0 +1,26 @@
+.productos {
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  background-color: var(--color-blanco);
+}
+
+.productos__contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.productos__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 3rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.productos__descripcion {
+  color: var(--color-cafe-oscuro);
+  font-size: 1.1rem;
+  margin-bottom: var(--espacio-2xl);
+}
+
+.productos__contador {
+  color: var(--color-cafe-oscuro);
+  margin-bottom: var(--espacio-xl);
+}

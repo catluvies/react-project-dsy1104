@@ -1,12 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
 import { formatearPrecio, formatearCategoria } from '../utils/formateo'
+import { CarritoContext } from '../context/CarritoContext'
 import './CarritoContenido.css'
 
 // Componente que muestra el contenido del carrito de compras
-function CarritoContenido(props) {
-  // Recibir datos del carrito como props
-  const carrito = props.carrito
-  const subtotal = props.subtotal
+function CarritoContenido() {
+  // Usar el contexto del carrito
+  const { carrito, subtotal } = useContext(CarritoContext)
   const navigate = useNavigate()
 
   if (carrito.length === 0) {
@@ -51,7 +52,9 @@ function CarritoContenido(props) {
                   </div>
 
                   <div className="carrito-item__cantidad">
-                    <p><strong>x{item.cantidad}</strong></p>
+                    <span className="carrito-item__cantidad-texto">
+                      Cantidad: {item.cantidad}
+                    </span>
                   </div>
 
                   <div className="carrito-item__total">

@@ -1,16 +1,16 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { comunasData } from '../data/comunas'
 import { obtenerCostoEnvioComuna } from '../utils/helpers'
 import { formatearPrecio } from '../utils/formateo'
 import { validarNombre, validarEmail, validarTelefono } from '../utils/validaciones'
+import { CarritoContext } from '../context/CarritoContext'
 import './CheckoutFormulario.css'
 
 // Componente de formulario de checkout (pago)
-function CheckoutFormulario(props) {
-  // Recibir datos del carrito como props
-  const carrito = props.carrito
-  const subtotal = props.subtotal
+function CheckoutFormulario() {
+  // Usar el contexto del carrito
+  const { carrito, subtotal } = useContext(CarritoContext)
 
   const navigate = useNavigate()
 

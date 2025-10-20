@@ -1,17 +1,18 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import productosData from '../data/productos.json'
 import { formatearPrecio, formatearCategoria } from '../utils/formateo'
+import { CarritoContext } from '../context/CarritoContext'
 import './DetalleProductoContenido.css'
 
 // Componente que muestra el detalle de un producto
-function DetalleProductoContenido(props) {
+function DetalleProductoContenido() {
   // Obtener el ID del producto desde la URL
   const { id } = useParams()
   const navigate = useNavigate()
 
-  // Recibir la función agregarAlCarrito como prop
-  const agregarAlCarrito = props.agregarAlCarrito
+  // Usar el contexto del carrito
+  const { agregarAlCarrito } = useContext(CarritoContext)
 
   // Estados locales del componente
   const [cantidad, setCantidad] = useState(1)

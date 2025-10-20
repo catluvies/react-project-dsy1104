@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { CarritoContext } from '../context/CarritoContext'
 import './Header.css'
 
 // Componente Header - Barra de navegación
-function Header(props) {
-  // Recibir el total de items del carrito como prop
-  const totalItems = props.totalItems
+function Header() {
+  // Usar el contexto del carrito
+  const { totalItems } = useContext(CarritoContext)
 
   return (
     <header className="header">

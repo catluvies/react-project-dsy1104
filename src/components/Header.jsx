@@ -3,9 +3,9 @@ import { useContext } from 'react'
 import { CarritoContext } from '../context/CarritoContext'
 import './Header.css'
 
-// Componente Header - Barra de navegación
+// header principal de la página
 function Header() {
-  // Usar el contexto del carrito
+  // usar el contexto del carrito
   const { totalItems } = useContext(CarritoContext)
 
   return (

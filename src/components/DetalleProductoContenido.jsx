@@ -5,16 +5,16 @@ import { formatearPrecio, formatearCategoria } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
 import './DetalleProductoContenido.css'
 
-// Componente que muestra el detalle de un producto
+// detalle de producto
 function DetalleProductoContenido() {
-  // Obtener el ID del producto desde la URL
+  // obtener el id desde la url
   const { id } = useParams()
   const navigate = useNavigate()
 
-  // Usar el contexto del carrito
+  // usar el carrito
   const { agregarAlCarrito } = useContext(CarritoContext)
 
-  // Estados locales del componente
+  // estados del componente
   const [cantidad, setCantidad] = useState(1)
   const [mensajeAgregado, setMensajeAgregado] = useState(false)
 
@@ -53,7 +53,7 @@ function DetalleProductoContenido() {
   return (
     <section className="detalle-producto">
       <div className="detalle-producto__contenedor">
-        {/* Breadcrumb */}
+        {/* breadcrumb */}
         <nav className="detalle-producto__breadcrumb">
           <Link to="/">Inicio</Link>
           <span> / </span>
@@ -62,7 +62,7 @@ function DetalleProductoContenido() {
           <span>{producto.nombre}</span>
         </nav>
 
-        {/* Mensaje de éxito */}
+        {/* mensaje de éxito */}
         {mensajeAgregado && (
           <div className="alerta alerta--exito detalle-producto__mensaje">
             Producto agregado al carrito
@@ -76,7 +76,7 @@ function DetalleProductoContenido() {
           </div>
         )}
 
-        {/* Detalle del producto */}
+        {/* detalle del producto */}
         <div className="detalle-producto__grid">
           <div className="detalle-producto__imagen">
             {producto.imagen ? (
@@ -118,7 +118,7 @@ function DetalleProductoContenido() {
               </p>
             </div>
 
-            {/* Mostrar opción de personalización si está disponible */}
+            {/* mostrar opción de personalización si está disponible */}
             {producto.opcion_personalizacion && producto.opcion_personalizacion.disponible && (
               <div className="detalle-producto__personalizacion">
                 <strong>✨ Este producto es personalizable</strong>
@@ -134,7 +134,7 @@ function DetalleProductoContenido() {
               </div>
             )}
 
-            {/* Selector de cantidad */}
+            {/* selector de cantidad */}
             <div className="detalle-producto__cantidad">
               <label><strong>Cantidad:</strong></label>
               <div className="detalle-producto__cantidad-control">

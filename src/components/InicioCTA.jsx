@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './InicioCTA.css'
 
-// Componente Call-to-Action (CTA) para eventos especiales
+// cta para eventos especiales
 function InicioCTA() {
   return (
     <section className="inicio-cta">

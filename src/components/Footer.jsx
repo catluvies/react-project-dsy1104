@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import './Footer.css'
 
-// Componente Footer - Pie de página
+// footer de la página
 function Footer() {
-  // Obtener el año actual para el copyright
+  // sacar el año actual para copyright
   const currentYear = new Date().getFullYear()
 
   return (

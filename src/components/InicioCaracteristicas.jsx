@@ -1,8 +1,8 @@
 import './InicioCaracteristicas.css'
 
-// Componente que muestra las características principales del negocio
+// características del negocio
 function InicioCaracteristicas() {
-  // Array con las características a mostrar
+  // características a mostrar
   const caracteristicas = [
     { titulo: '50 años', descripcion: 'de experiencia' },
     { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales' },

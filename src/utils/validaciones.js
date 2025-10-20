@@ -1,56 +1,31 @@
-/**
- * UTILIDADES DE VALIDACIÓN
- * Funciones para validar datos de formularios
- */
+// validaciones para formularios, las encontré en internet
 
-/**
- * Validar email
- * @param {string} email - Email a validar
- * @returns {boolean} true si es válido
- */
+// valida si el email tiene formato correcto
 export const validarEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return regex.test(email)
 }
 
-/**
- * Validar teléfono chileno
- * Formato: +56 9 XXXX XXXX o 9 XXXX XXXX
- * @param {string} telefono - Teléfono a validar
- * @returns {boolean} true si es válido
- */
+// valida teléfono chileno
 export const validarTelefono = (telefono) => {
   const regex = /^(\+?56)?[ ]?9[ ]?\d{4}[ ]?\d{4}$/
   return regex.test(telefono)
 }
 
-/**
- * Validar nombre (mínimo 2 caracteres, solo letras)
- * @param {string} nombre - Nombre a validar
- * @returns {boolean} true si es válido
- */
+// valida nombre, mínimo 2 letras
 export const validarNombre = (nombre) => {
   return nombre.trim().length >= 2 && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre)
 }
 
-/**
- * Validar mensaje/texto (mínimo especificado de caracteres)
- * @param {string} texto - Texto a validar
- * @param {number} minCaracteres - Mínimo de caracteres (por defecto 10)
- * @returns {boolean} true si es válido
- */
+// valida que el texto tenga mínimo de caracteres
 export const validarTexto = (texto, minCaracteres = 10) => {
   return texto.trim().length >= minCaracteres
 }
 
-/**
- * Validar RUT chileno
- * @param {string} rut - RUT a validar
- * @returns {boolean} true si es válido
- */
+// valida RUT chileno, esta fue complicada de hacer
 export const validarRUT = (rut) => {
   if (typeof rut !== 'string') return false
-  // Normalizar: quitar espacios, puntos, guión y asegurar DV en mayúscula
+  // limpiar el formato del rut
   const limpio = rut.trim().toUpperCase().replace(/\./g, '').replace(/-/g, '')
 
   if (limpio.length < 2) return false
@@ -58,11 +33,11 @@ export const validarRUT = (rut) => {
   const cuerpo = limpio.slice(0, -1)
   const dv = limpio.slice(-1)
 
-  // Validaciones de formato: cuerpo 7-8 dígitos y DV 0-9/K
+  // verificar formato del rut
   if (!/^\d{7,8}$/.test(cuerpo)) return false
   if (!/^[0-9K]$/.test(dv)) return false
 
-  // Calcular dígito verificador
+  // calcular el dígito verificador
   let suma = 0
   let multiplo = 2
 
@@ -77,11 +52,7 @@ export const validarRUT = (rut) => {
   return dv === dvEsperado
 }
 
-/**
- * Validar contraseña (mínimo 8 caracteres, debe incluir mayúscula, minúscula y número)
- * @param {string} contrasena - Contraseña a validar
- * @returns {boolean} true si es válida
- */
+// valida contraseña con mayúscula, minúscula y número
 export const validarContrasena = (contrasena) => {
   if (contrasena.length < 8) return false
 

@@ -3,9 +3,9 @@ import { formatearPrecio, formatearCategoria } from '../utils/formateo'
 import { truncarTexto } from '../utils/helpers'
 import './ProductosGrid.css'
 
-// Componente para mostrar una grilla de productos
+// grilla de productos
 function ProductosGrid(props) {
-  // Recibir el array de productos como prop
+  // recibir productos como prop
   const productos = props.productos
 
   if (productos.length === 0) {

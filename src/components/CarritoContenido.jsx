@@ -4,9 +4,9 @@ import { formatearPrecio, formatearCategoria } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
 import './CarritoContenido.css'
 
-// Componente que muestra el contenido del carrito de compras
+// contenido del carrito
 function CarritoContenido() {
-  // Usar el contexto del carrito
+  // usar el contexto del carrito
   const { carrito, subtotal } = useContext(CarritoContext)
   const navigate = useNavigate()
 
@@ -30,7 +30,7 @@ function CarritoContenido() {
         <h1 className="carrito__titulo">Carrito de Compras</h1>
 
         <div className="carrito__grid">
-          {/* Lista de productos */}
+          {/* lista de productos */}
           <div className="carrito__lista">
             <div className="card carrito__card">
               {carrito.map(item => (
@@ -65,7 +65,7 @@ function CarritoContenido() {
             </div>
           </div>
 
-          {/* Resumen del pedido */}
+          {/* resumen del pedido */}
           <div className="carrito__resumen">
             <div className="card carrito__resumen-card">
               <h5 className="carrito__resumen-titulo">Resumen del Pedido</h5>

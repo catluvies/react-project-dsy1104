@@ -18,19 +18,18 @@ function RegistroFormulario() {
   })
   const [errores, setErrores] = useState({})
 
-  // Función que se ejecuta cuando el usuario escribe en los inputs
+  // manejar cambios en inputs
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
     const type = e.target.type
     const checked = e.target.checked
 
-    // Actualizar el formData con el nuevo valor
-    // Si es un checkbox, usar checked, sino usar value
+    // actualizar datos del formulario si es checkbox usar checked sino value
     const nuevoValor = type === 'checkbox' ? checked : value
     setFormData({ ...formData, [name]: nuevoValor })
 
-    // Si había un error en ese campo, limpiarlo
+    // limpiar error si había
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }

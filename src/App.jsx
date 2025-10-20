@@ -26,10 +26,7 @@ import AdminProductsPage from './pages/admin/AdminProductsPage'
 
 import './App.css'
 
-/**
- * Componente principal App
- * Responsabilidad: Configurar las rutas y el layout general
- */
+// Configuración de rutas y layout principal de la aplicación
 function App() {
 
   return (

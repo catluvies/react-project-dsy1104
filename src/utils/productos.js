@@ -1,15 +1,8 @@
-/**
- * UTILIDADES DE PRODUCTOS
- * Funciones para trabajar con productos
- */
+// funciones para manejar productos
 
-/**
- * Obtiene un array de categorías únicas desde un array de productos
- * @param {Array} productos - Array de productos
- * @returns {Array} Array de categorías únicas
- */
+// obtiene categorías sin repetir
 export const obtenerCategoriasUnicas = (productos) => {
-  // Obtener todas las categorías y filtrar las únicas
+  // sacar categorías sin repetir
   const categorias = productos.map(producto => producto.categoria)
   const categoriasUnicas = categorias.filter((categoria, index) => {
     return categorias.indexOf(categoria) === index
@@ -18,23 +11,13 @@ export const obtenerCategoriasUnicas = (productos) => {
   return categoriasUnicas
 }
 
-/**
- * Filtra productos por categoría
- * @param {Array} productos - Array de productos
- * @param {string} categoria - La categoría a filtrar (usar 'todas' para no filtrar)
- * @returns {Array} Array de productos filtrados
- */
+// filtra productos por categoría
 export const filtrarPorCategoria = (productos, categoria) => {
   if (categoria === 'todas') return productos
   return productos.filter(p => p.categoria === categoria)
 }
 
-/**
- * Filtra productos por búsqueda en nombre y descripción
- * @param {Array} productos - Array de productos
- * @param {string} busqueda - El término de búsqueda
- * @returns {Array} Array de productos filtrados
- */
+// busca productos por nombre o descripción
 export const filtrarPorBusqueda = (productos, busqueda) => {
   if (!busqueda) return productos
   const terminoBusqueda = busqueda.toLowerCase()

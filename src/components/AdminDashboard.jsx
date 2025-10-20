@@ -3,13 +3,13 @@ import productosData from '../data/productos.json'
 import './AdminDashboard.css'
 
 function AdminDashboard() {
-  // Estadísticas básicas
+  // estadísticas básicas
   const totalOrdenes = ordenesData.length
   const ordenesPendientes = ordenesData.filter(o => o.estado === 'pendiente').length
   const totalProductos = productosData.length
   const productosSinStock = productosData.filter(p => p.stock === 0).length
 
-  // Últimas órdenes
+  // últimas órdenes
   const ultimasOrdenes = ordenesData
     .sort((a, b) => new Date(b.fecha.split('-').reverse().join('-')) - new Date(a.fecha.split('-').reverse().join('-')))
     .slice(0, 5)
@@ -19,7 +19,7 @@ function AdminDashboard() {
       <div className="contenedor">
         <h1 className="titulo-principal">Dashboard Admin</h1>
         
-        {/* Estadísticas principales */}
+        {/* estadísticas principales */}
         <div className="admin-stats grid grid--4">
           <div className="admin-stat-card card">
             <div className="admin-stat-card__icon">📦</div>
@@ -54,7 +54,7 @@ function AdminDashboard() {
           </div>
         </div>
 
-        {/* Últimas órdenes */}
+        {/* últimas órdenes */}
         <div className="admin-section card">
           <h2 className="titulo-seccion">Últimas Órdenes</h2>
           <div className="admin-ordenes-lista">

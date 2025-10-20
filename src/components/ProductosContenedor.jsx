@@ -6,25 +6,24 @@ import ProductosGrid from './ProductosGrid'
 import { obtenerCategoriasUnicas, filtrarPorCategoria, filtrarPorBusqueda } from '../utils/productos'
 import './ProductosContenedor.css'
 
-// Componente contenedor de la página de productos
+// contenedor de productos
 function ProductosContenedor() {
-  // Obtener parámetros de la URL (por ejemplo: ?categoria=tortas-tradicionales)
+  // obtener parámetros de la url
   const [searchParams] = useSearchParams()
   const categoriaURL = searchParams.get('categoria')
 
-  // Estados para los filtros
+  // estados para filtros
   const [busqueda, setBusqueda] = useState('')
   const [categoriaFiltro, setCategoriaFiltro] = useState('todas')
 
-  // useEffect se ejecuta cuando categoriaURL cambia
-  // Sirve para actualizar el filtro cuando se navega desde otra página
+  // actualizar filtro cuando cambia la url
   useEffect(() => {
     if (categoriaURL) {
       setCategoriaFiltro(categoriaURL)
     }
   }, [categoriaURL])
 
-  // Validar que los datos de productos existen y son un array
+  // validar que productos existe
   if (!productosData || !Array.isArray(productosData)) {
     return (
       <section className="productos">
@@ -38,10 +37,10 @@ function ProductosContenedor() {
     )
   }
 
-  // Obtener todas las categorías únicas
+  // obtener categorías sin repetir
   const categorias = obtenerCategoriasUnicas(productosData)
 
-  // Filtrar productos según búsqueda y categoría
+  // filtrar productos
   let productosFiltrados = productosData
   productosFiltrados = filtrarPorCategoria(productosFiltrados, categoriaFiltro)
   productosFiltrados = filtrarPorBusqueda(productosFiltrados, busqueda)

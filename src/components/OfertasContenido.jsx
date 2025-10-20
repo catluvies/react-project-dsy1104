@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
 import './OfertasContenido.css'
 
-// Componente que muestra las ofertas y promociones
+// ofertas y promociones
 function OfertasContenido() {
-  // Datos de la promoción
+  // datos de la promoción
   const codigoCupon = 'DUOC2025'
   const fechaValidez = '31/12/2025'
 
   return (
     <>
-      {/* Hero */}
+      {/* hero */}
       <section className="ofertas-hero">
         <div className="ofertas-hero__contenedor">
           <h1 className="ofertas-hero__titulo">Ofertas y Promociones</h1>
@@ -18,19 +18,19 @@ function OfertasContenido() {
         </div>
       </section>
 
-      {/* Oferta Principal */}
+      {/* oferta principal */}
       <section className="ofertas-principal">
         <div className="ofertas-principal__contenedor">
           <div className="ofertas-card">
-            {/* Badge */}
+            {/* badge */}
             <div className="ofertas-badge">
               <span>🎂 OFERTA EXCLUSIVA</span>
             </div>
 
-            {/* Título */}
+            {/* título */}
             <h2 className="ofertas-card__titulo">Torta Gratis por tu Cumpleaños</h2>
 
-            {/* Descripción */}
+            {/* descripción */}
             <p className="ofertas-card__descripcion">
               Por ser estudiante de DuocUC, te regalamos una deliciosa torta
               en el mes de tu cumpleaños. ¡Celebra con Mil Sabores!
@@ -42,13 +42,13 @@ function OfertasContenido() {
               ¡Mantente atento!
             </div>
 
-            {/* Cupón */}
+            {/* cupón */}
             <div className="ofertas-cupon">
               <p className="ofertas-cupon__label">Código de Cupón</p>
               <h3 className="ofertas-cupon__codigo">{codigoCupon}</h3>
             </div>
 
-            {/* Instrucciones */}
+            {/* instrucciones */}
             <div className="ofertas-instrucciones">
               <h5>¿Cómo canjear tu torta?</h5>
               <ol>
@@ -59,7 +59,7 @@ function OfertasContenido() {
               </ol>
             </div>
 
-            {/* Términos */}
+            {/* términos */}
             <div className="alerta alerta--info ofertas-terminos">
               <strong>Términos y condiciones:</strong>
               <ul>
@@ -71,14 +71,14 @@ function OfertasContenido() {
               </ul>
             </div>
 
-            {/* Botón */}
+            {/* botón */}
             <Link to="/productos" className="ofertas-boton">
               Ver Tortas Disponibles
             </Link>
           </div>
         </div>
 
-        {/* Información adicional */}
+        {/* información adicional */}
         <div className="ofertas-info">
           <h4 className="ofertas-info__titulo">¿Por qué elegir Mil Sabores?</h4>
           <div className="ofertas-info__grid">
@@ -107,7 +107,7 @@ function OfertasContenido() {
         </div>
       </section>
 
-      {/* CTA Final */}
+      {/* cta final */}
       <section className="ofertas-cta">
         <div className="ofertas-cta__contenedor">
           <h3 className="ofertas-cta__titulo">¿Tienes dudas sobre la promoción?</h3>

@@ -1,0 +1,192 @@
+.nosotros-hero {
+  background: linear-gradient(135deg, var(--color-cafe-oscuro) 0%, var(--color-cafe-claro) 100%);
+  color: var(--color-blanco);
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  text-align: center;
+}
+
+.nosotros-hero__contenedor {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.nosotros-hero__titulo {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: var(--espacio-md);
+}
+
+.nosotros-hero__descripcion {
+  font-size: 1.3rem;
+}
+
+.nosotros-seccion {
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  background-color: var(--color-blanco);
+}
+
+.nosotros-seccion--gris {
+  background-color: var(--color-crema-oscuro);
+}
+
+.nosotros-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espacio-2xl);
+  align-items: center;
+}
+
+.nosotros-contenido--inverso {
+  direction: rtl;
+}
+
+.nosotros-contenido--inverso > * {
+  direction: ltr;
+}
+
+.nosotros-texto h2 {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 2rem;
+  margin-bottom: var(--espacio-lg);
+}
+
+.nosotros-texto p {
+  color: var(--color-cafe-oscuro);
+  line-height: 1.8;
+  margin-bottom: var(--espacio-md);
+}
+
+.nosotros-imagen {
+  background: linear-gradient(135deg, var(--color-amarillo-claro) 0%, var(--color-amarillo-palido) 100%);
+  /* Altura moderada y sin desborde para que no se vea gigante */
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-lg);
+  color: var(--color-cafe-claro);
+  font-size: 1.2rem;
+  overflow: hidden;
+}
+
+/* Asegura que la foto conserve proporción y quepa en el contenedor */
+.nosotros-imagen__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Muestra la imagen completa sin recortarla ni hacer zoom */
+  display: block;
+  border-radius: inherit;
+}
+
+.nosotros-titulo-seccion {
+  text-align: center;
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 2.5rem;
+  margin-bottom: var(--espacio-3xl);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nosotros-valores {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espacio-xl);
+}
+
+.nosotros-valor-card {
+  background: var(--color-blanco);
+  padding: var(--espacio-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--sombra-md);
+  text-align: center;
+}
+
+.nosotros-valor-card__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 1.3rem;
+  margin-bottom: var(--espacio-md);
+}
+
+.nosotros-valor-card__descripcion {
+  color: var(--color-cafe-oscuro);
+  line-height: 1.6;
+}
+
+.nosotros-equipo {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espacio-xl);
+}
+
+.nosotros-miembro-card {
+  background: var(--color-blanco);
+  padding: var(--espacio-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--sombra-md);
+  text-align: center;
+}
+
+.nosotros-miembro-card__avatar {
+  width: var(--espacio-4xl);
+  height: var(--espacio-4xl);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-rosa-pastel) 0%, var(--color-rosa-claro) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-blanco);
+  margin: 0 auto var(--espacio-lg);
+}
+
+.nosotros-miembro-card__nombre {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.nosotros-miembro-card__cargo {
+  color: var(--color-rosa-pastel);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.nosotros-miembro-card__descripcion {
+  color: var(--color-cafe-oscuro);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 968px) {
+  .nosotros-contenido {
+    grid-template-columns: 1fr;
+  }
+  .nosotros-imagen {
+    height: 220px;
+  }
+
+  .nosotros-valores {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nosotros-equipo {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .nosotros-imagen {
+    height: 180px;
+  }
+  .nosotros-valores {
+    grid-template-columns: 1fr;
+  }
+}

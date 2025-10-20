@@ -1,0 +1,126 @@
+.header {
+  background-color: var(--color-cafe-oscuro);
+  color: var(--color-blanco);
+  padding: var(--espacio-lg) 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header__contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--espacio-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espacio-xl);
+}
+
+.header__logo {
+  text-decoration: none;
+  color: var(--color-blanco);
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-sm);
+}
+
+.header__logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header__logo h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header__nav {
+  display: flex;
+  gap: 25px;
+  flex: 1;
+  justify-content: center;
+}
+
+.header__link {
+  color: var(--color-blanco);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.header__link:hover {
+  color: var(--color-rosa-pastel);
+}
+
+.header__acciones {
+  display: flex;
+  gap: var(--espacio-lg);
+  align-items: center;
+}
+
+.header__carrito {
+  color: var(--color-blanco);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  position: relative;
+}
+
+.header__badge {
+  background-color: var(--color-rosa-pastel);
+  color: var(--color-cafe-muy-oscuro);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.header__login {
+  background-color: var(--color-rosa-pastel);
+  color: var(--color-cafe-muy-oscuro);
+  padding: 8px var(--espacio-lg);
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.header__login:hover {
+  background-color: var(--color-rosa-claro);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 968px) {
+  .header__nav {
+    display: none;
+  }
+  
+  .header__logo-img {
+    height: 35px;
+  }
+  
+  .header__logo h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__logo-img {
+    height: 30px;
+  }
+  
+  .header__logo h1 {
+    font-size: 1.4rem;
+  }
+}

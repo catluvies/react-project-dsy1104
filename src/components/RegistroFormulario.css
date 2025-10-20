@@ -1,0 +1,104 @@
+/* ========================================
+   REGISTRO - Solo estilos específicos de layout
+   Los inputs, selects y botones usan estilos globales
+   ======================================== */
+.registro {
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  background-color: var(--color-crema-oscuro);
+}
+
+.registro__contenedor {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.registro__card {
+  background: var(--color-blanco);
+  border-radius: var(--border-radius-lg);
+  padding: var(--espacio-2xl);
+  box-shadow: var(--sombra-lg);
+}
+
+.registro__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 2rem;
+  margin-bottom: var(--espacio-xl);
+  text-align: center;
+}
+
+.registro__campo {
+  margin-bottom: var(--espacio-lg);
+}
+
+.registro__label {
+  display: block;
+  color: var(--color-cafe-muy-oscuro);
+  font-weight: 600;
+  margin-bottom: var(--espacio-sm);
+}
+
+/* Input/Select error state */
+.registro__input--error,
+.registro__select--error {
+  border-color: var(--color-error) !important;
+}
+
+.registro__error {
+  display: block;
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: var(--espacio-xs);
+}
+
+.registro__ayuda {
+  color: var(--color-cafe-oscuro);
+  font-size: 0.85rem;
+  margin-top: var(--espacio-xs);
+}
+
+.registro__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-sm);
+  margin-bottom: var(--espacio-xl);
+  padding: var(--espacio-md);
+  border: var(--border-width) solid var(--color-borde);
+  border-radius: var(--border-radius);
+}
+
+.registro__checkbox--error {
+  border-color: var(--color-error);
+}
+
+.registro__checkbox input {
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.registro__checkbox label {
+  color: var(--color-cafe-muy-oscuro);
+  cursor: pointer;
+}
+
+.registro__login {
+  text-align: center;
+  margin-top: var(--espacio-lg);
+  color: var(--color-cafe-oscuro);
+}
+
+.registro__login a {
+  color: var(--color-rosa-pastel);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.registro__login a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .registro__card {
+    padding: var(--espacio-xl) var(--espacio-lg);
+  }
+}

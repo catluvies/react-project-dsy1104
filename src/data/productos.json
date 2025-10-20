@@ -1,0 +1,902 @@
+[
+  {
+    "id": "PROD001",
+    "nombre": "Torta Mil Hojas Tradicional",
+    "imagen": "/public/images/productos/torta_milhojas.jpg",
+    "precio_clp": 18500,
+    "descripcion": "Clásica torta mil hojas con manjar y hojarasca, un ícono de la repostería chilena con capas crujientes y dulce de leche casero",
+    "ingredientes": [
+      "harina",
+      "mantequilla",
+      "manjar",
+      "azúcar flor",
+      "huevos"
+    ],
+    "categoria": "tortas-tradicionales",
+    "stock": 12,
+    "formato_venta": "unidad",
+    "porciones": 8,
+    "peso": "1.2 kg",
+    "duracion": "3 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 30 caracteres",
+        "decoracion": [
+          "Tradicional",
+          "Con frutas"
+        ],
+        "tamaño": [
+          "Personal (4 porciones)",
+          "Mediana (8 porciones)",
+          "Grande (12 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "02-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "02-10-2025"
+    }
+  },
+  {
+    "id": "PROD002",
+    "nombre": "Kuchen de Manzana Alemán",
+    "imagen": "/public/images/productos/kuchen_manzana.jpg",
+    "precio_clp": 15000,
+    "descripcion": "Tradicional kuchen de manzana con canela, herencia de la colonización alemana en el sur de Chile",
+    "ingredientes": [
+      "manzanas",
+      "harina",
+      "mantequilla",
+      "azúcar",
+      "canela",
+      "huevos"
+    ],
+    "categoria": "tortas-tradicionales",
+    "stock": 8,
+    "formato_venta": "unidad",
+    "porciones": 10,
+    "peso": "1.5 kg",
+    "duracion": "5 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 24 horas",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "03-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "10-10-2025"
+    }
+  },
+  {
+    "id": "PROD003",
+    "nombre": "Torta de Lúcuma",
+    "imagen": "/public/images/productos/torta_lucuma.jpg",
+    "precio_clp": 22000,
+    "descripcion": "Exquisita torta con lúcuma chilena, fruta autóctona que aporta un sabor único y especial",
+    "ingredientes": [
+      "lúcuma",
+      "harina",
+      "azúcar",
+      "huevos",
+      "mantequilla",
+      "crema"
+    ],
+    "categoria": "tortas-tradicionales",
+    "stock": 6,
+    "formato_venta": "unidad",
+    "porciones": 12,
+    "peso": "1.8 kg",
+    "duracion": "4 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 30 caracteres",
+        "decoracion": [
+          "Clásica",
+          "Con merengue",
+          "Con frutas"
+        ],
+        "tamaño": [
+          "Mediana (8 porciones)",
+          "Grande (12 porciones)",
+          "Extra grande (16 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "03-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "03-10-2025"
+    }
+  },
+  {
+    "id": "PROD004",
+    "nombre": "Brazo de Reina con Manjar",
+    "imagen": "/public/images/productos/brazo_de_reina.jpg",
+    "precio_clp": 16500,
+    "descripcion": "Suave bizcocho enrollado relleno de manjar casero, decorado con azúcar flor",
+    "ingredientes": [
+      "huevos",
+      "harina",
+      "azúcar",
+      "manjar",
+      "esencia vainilla"
+    ],
+    "categoria": "tortas-tradicionales",
+    "stock": 10,
+    "formato_venta": "unidad",
+    "porciones": 8,
+    "peso": "900 g",
+    "duracion": "4 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 24 horas",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "04-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "04-10-2025"
+    }
+  },
+  {
+    "id": "PROD005",
+    "nombre": "Selva Negra Premium",
+    "imagen": "/public/images/productos/torta_selva_negra.jpg",
+    "precio_clp": 28000,
+    "descripcion": "Clásica torta de chocolate con cerezas, crema chantilly y viruta de chocolate, elaborada con ingredientes premium",
+    "ingredientes": [
+      "chocolate belga",
+      "cerezas",
+      "crema",
+      "harina",
+      "huevos",
+      "kirsch"
+    ],
+    "categoria": "tortas-premium",
+    "stock": 5,
+    "formato_venta": "unidad",
+    "porciones": 12,
+    "peso": "2.0 kg",
+    "duracion": "3 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 30 caracteres",
+        "decoracion": [
+          "Tradicional",
+          "Moderna",
+          "Con flores comestibles"
+        ],
+        "tamaño": [
+          "Mediana (8 porciones)",
+          "Grande (12 porciones)",
+          "Extra grande (16 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "05-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "05-10-2025"
+    }
+  },
+  {
+    "id": "PROD006",
+    "nombre": "Opera Francesa",
+    "imagen": "/public/images/productos/opera_francesa.jpg",
+    "precio_clp": 32000,
+    "descripcion": "Sofisticada torta de origen francés con capas de bizcocho de almendra, crema de café y ganache de chocolate",
+    "ingredientes": [
+      "almendra",
+      "chocolate",
+      "café",
+      "mantequilla",
+      "huevos",
+      "azúcar"
+    ],
+    "categoria": "tortas-premium",
+    "stock": 4,
+    "formato_venta": "unidad",
+    "porciones": 10,
+    "peso": "1.6 kg",
+    "duracion": "5 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 72 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 20 caracteres",
+        "decoracion": [
+          "Clásica",
+          "Con lámina de oro"
+        ],
+        "tamaño": [
+          "Mediana (8 porciones)",
+          "Grande (10 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "06-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "12-10-2025"
+    }
+  },
+  {
+    "id": "PROD007",
+    "nombre": "Cheesecake de Berries Silvestres",
+    "imagen": "/public/images/productos/cheesecake_berries.jpg",
+    "precio_clp": 26000,
+    "descripcion": "Cremoso cheesecake con base de galleta y coulis de berries silvestres chilenos",
+    "ingredientes": [
+      "queso crema",
+      "murtilla",
+      "calafate",
+      "galletas",
+      "azúcar",
+      "huevos"
+    ],
+    "categoria": "tortas-premium",
+    "stock": 7,
+    "formato_venta": "unidad",
+    "porciones": 10,
+    "peso": "1.4 kg",
+    "duracion": "5 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 30 caracteres",
+        "tamaño": [
+          "Mediana (8 porciones)",
+          "Grande (10 porciones)",
+          "Extra grande (14 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "07-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "07-10-2025"
+    }
+  },
+  {
+    "id": "PROD008",
+    "nombre": "Torta Récord Guinness 50 Aniversario",
+    "imagen": "/public/images/productos/pastel_50_anhos.jpg",
+    "precio_clp": 45000,
+    "descripcion": "Edición especial que rinde homenaje a nuestra participación en el récord Guinness de 1995. Torta de 3 pisos con decoración elaborada",
+    "ingredientes": [
+      "harina",
+      "chocolate",
+      "manjar",
+      "frutas",
+      "crema",
+      "fondant"
+    ],
+    "categoria": "tortas-especiales",
+    "stock": 3,
+    "formato_venta": "unidad",
+    "porciones": 20,
+    "peso": "3.5 kg",
+    "duracion": "4 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 96 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 50 caracteres",
+        "decoracion": [
+          "Clásica récord",
+          "Moderna",
+          "Personalizada completa"
+        ],
+        "tamaño": [
+          "Grande (20 porciones)",
+          "Extra grande (30 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "01-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "15-10-2025"
+    }
+  },
+  {
+    "id": "PROD009",
+    "nombre": "Torta de Boda Tradicional Chilena",
+    "imagen": "/public/images/productos/pastel_de_boda_chileno.jpg",
+    "precio_clp": 65000,
+    "descripcion": "Elegante torta de 3 pisos con decoración personalizada, ideal para matrimonios",
+    "ingredientes": [
+      "harina",
+      "manjar",
+      "crema",
+      "frutas",
+      "fondant",
+      "flores comestibles"
+    ],
+    "categoria": "tortas-especiales",
+    "stock": 2,
+    "formato_venta": "unidad",
+    "porciones": 40,
+    "peso": "5.0 kg",
+    "duracion": "3 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 7 días (requiere reserva)",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 100 caracteres",
+        "decoracion": [
+          "Flores naturales",
+          "Flores de azúcar",
+          "Moderna minimalista",
+          "Clásica elegante"
+        ],
+        "tamaño": [
+          "Grande (40 porciones)",
+          "Extra grande (60 porciones)",
+          "Premium (80 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "02-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "02-10-2025"
+    }
+  },
+  {
+    "id": "PROD010",
+    "nombre": "Torta Infantil Temática",
+    "imagen": "/public/images/productos/pastel_infantil.jpg",
+    "precio_clp": 35000,
+    "descripcion": "Torta especial para cumpleaños infantiles con decoración personalizada según temática elegida",
+    "ingredientes": [
+      "harina",
+      "chocolate",
+      "vainilla",
+      "manjar",
+      "fondant",
+      "colorantes naturales"
+    ],
+    "categoria": "tortas-especiales",
+    "stock": 8,
+    "formato_venta": "unidad",
+    "porciones": 15,
+    "peso": "2.2 kg",
+    "duracion": "4 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 72 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 40 caracteres",
+        "decoracion": [
+          "Princesas",
+          "Superhéroes",
+          "Animales",
+          "Dinosaurios",
+          "Unicornios"
+        ],
+        "tamaño": [
+          "Mediana (12 porciones)",
+          "Grande (15 porciones)",
+          "Extra grande (20 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "08-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "08-10-2025"
+    }
+  },
+  {
+    "id": "PROD011",
+    "nombre": "Alfajor Gigante Artesanal",
+    "imagen": "/public/images/productos/alfajor_gigante.jpg",
+    "precio_clp": 4500,
+    "descripcion": "Alfajor artesanal de gran tamaño con manjar casero y coco rallado",
+    "ingredientes": [
+      "harina",
+      "manjar",
+      "coco",
+      "mantequilla",
+      "azúcar"
+    ],
+    "categoria": "postres-individuales",
+    "stock": 30,
+    "formato_venta": "unidad",
+    "porciones": 1,
+    "peso": "180 g",
+    "duracion": "7 días en ambiente fresco",
+    "tiempo_preparacion": "Disponible inmediatamente",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "09-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "09-10-2025"
+    }
+  },
+  {
+    "id": "PROD012",
+    "nombre": "Porción de Torta Tres Leches",
+    "imagen": "/public/images/productos/porcion_torta3_leches.jpg",
+    "precio_clp": 3800,
+    "descripcion": "Esponjoso bizcocho empapado en tres tipos de leche, coronado con merengue",
+    "ingredientes": [
+      "leche evaporada",
+      "leche condensada",
+      "crema",
+      "huevos",
+      "harina",
+      "azúcar"
+    ],
+    "categoria": "postres-individuales",
+    "stock": 25,
+    "formato_venta": "unidad",
+    "porciones": 1,
+    "peso": "150 g",
+    "duracion": "3 días refrigerado",
+    "tiempo_preparacion": "Disponible inmediatamente",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "10-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "10-10-2025"
+    }
+  },
+  {
+    "id": "PROD013",
+    "nombre": "Calzones Rotos de la Abuela",
+    "imagen": "/public/images/productos/calzones_rotos.jpg",
+    "precio_clp": 2800,
+    "descripcion": "Pack de 6 calzones rotos tradicionales, fritos y espolvoreados con azúcar flor",
+    "ingredientes": [
+      "harina",
+      "huevos",
+      "mantequilla",
+      "pisco",
+      "azúcar flor"
+    ],
+    "categoria": "postres-individuales",
+    "stock": 20,
+    "formato_venta": "unidad",
+    "porciones": 6,
+    "peso": "200 g",
+    "duracion": "5 días en recipiente hermético",
+    "tiempo_preparacion": "Disponible inmediatamente",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "11-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "11-10-2025"
+    }
+  },
+  {
+    "id": "PROD014",
+    "nombre": "Torta de Zanahoria Sin Azúcar",
+    "imagen": "/public/images/productos/torta_zanahoria.jpg",
+    "precio_clp": 24000,
+    "descripcion": "Deliciosa torta de zanahoria endulzada con stevia, cubierta con frosting de queso crema sin azúcar",
+    "ingredientes": [
+      "zanahoria",
+      "harina integral",
+      "stevia",
+      "nueces",
+      "queso crema",
+      "canela"
+    ],
+    "categoria": "productos-sin-azucar",
+    "stock": 6,
+    "formato_venta": "unidad",
+    "porciones": 10,
+    "peso": "1.3 kg",
+    "duracion": "5 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 30 caracteres",
+        "tamaño": [
+          "Mediana (8 porciones)",
+          "Grande (10 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "12-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "12-10-2025"
+    }
+  },
+  {
+    "id": "PROD015",
+    "nombre": "Brownie Sin Azúcar con Chocolate Amargo",
+    "imagen": "/public/images/productos/brownie_chocolate_negro.jpg",
+    "precio_clp": 18000,
+    "descripcion": "Intenso brownie elaborado con chocolate amargo 70% y endulzado con eritritol",
+    "ingredientes": [
+      "chocolate amargo",
+      "eritritol",
+      "harina de almendra",
+      "huevos",
+      "mantequilla",
+      "nueces"
+    ],
+    "categoria": "productos-sin-azucar",
+    "stock": 8,
+    "formato_venta": "unidad",
+    "porciones": 8,
+    "peso": "800 g",
+    "duracion": "7 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 24 horas",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "13-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "13-10-2025"
+    }
+  },
+  {
+    "id": "PROD016",
+    "nombre": "Queque de Naranja Sin Gluten",
+    "imagen": "/public/images/productos/queque_naranja.jpg",
+    "precio_clp": 16500,
+    "descripcion": "Esponjoso queque de naranja elaborado con harina de arroz, sin gluten y 100% seguro para celíacos",
+    "ingredientes": [
+      "harina de arroz",
+      "naranja",
+      "huevos",
+      "azúcar",
+      "aceite",
+      "polvo de hornear sin gluten"
+    ],
+    "categoria": "productos-sin-gluten",
+    "stock": 10,
+    "formato_venta": "unidad",
+    "porciones": 8,
+    "peso": "1.0 kg",
+    "duracion": "5 días en recipiente hermético",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "14-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "14-10-2025"
+    }
+  },
+  {
+    "id": "PROD017",
+    "nombre": "Galletas de Avena Sin Gluten",
+    "imagen": "/public/images/productos/galletas_avena.jpg",
+    "precio_clp": 8500,
+    "descripcion": "Pack de 12 galletas crocantes de avena certificada sin gluten, con chips de chocolate",
+    "ingredientes": [
+      "avena sin gluten",
+      "harina de almendra",
+      "chips chocolate",
+      "miel",
+      "aceite coco"
+    ],
+    "categoria": "productos-sin-gluten",
+    "stock": 15,
+    "formato_venta": "unidad",
+    "porciones": 12,
+    "peso": "300 g",
+    "duracion": "15 días en recipiente hermético",
+    "tiempo_preparacion": "Disponible inmediatamente",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "15-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "15-10-2025"
+    }
+  },
+  {
+    "id": "PROD018",
+    "nombre": "Torta de Chocolate Vegana",
+    "imagen": "/public/images/productos/torta_choco_vegana.jpg",
+    "precio_clp": 26000,
+    "descripcion": "Húmeda torta de chocolate 100% vegana, sin productos de origen animal, con ganache de chocolate y leche de coco",
+    "ingredientes": [
+      "harina",
+      "cacao",
+      "leche coco",
+      "aceite coco",
+      "azúcar",
+      "vinagre manzana"
+    ],
+    "categoria": "productos-veganos",
+    "stock": 5,
+    "formato_venta": "unidad",
+    "porciones": 10,
+    "peso": "1.4 kg",
+    "duracion": "5 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Hasta 30 caracteres",
+        "decoracion": [
+          "Minimalista",
+          "Con frutas frescas"
+        ],
+        "tamaño": [
+          "Mediana (8 porciones)",
+          "Grande (10 porciones)"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "16-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "16-10-2025"
+    }
+  },
+  {
+    "id": "PROD019",
+    "nombre": "Muffins Veganos de Arándanos",
+    "imagen": "/public/images/productos/muffins_arandano.jpg",
+    "precio_clp": 9500,
+    "descripcion": "Pack de 6 muffins veganos con arándanos frescos, esponjosos y deliciosos",
+    "ingredientes": [
+      "harina",
+      "arándanos",
+      "leche vegetal",
+      "aceite",
+      "azúcar",
+      "polvo hornear"
+    ],
+    "categoria": "productos-veganos",
+    "stock": 12,
+    "formato_venta": "unidad",
+    "porciones": 6,
+    "peso": "400 g",
+    "duracion": "4 días en recipiente hermético",
+    "tiempo_preparacion": "Disponible para retiro en 24 horas",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "17-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "17-10-2025"
+    }
+  },
+  {
+    "id": "PROD020",
+    "nombre": "Panqueques Veganos con Manjar de Coco",
+    "imagen": "/public/images/productos/panqueque_vegano.jpg",
+    "precio_clp": 7500,
+    "descripcion": "Pack de 4 panqueques veganos rellenos con manjar elaborado con leche de coco",
+    "ingredientes": [
+      "harina",
+      "leche vegetal",
+      "plátano",
+      "manjar coco",
+      "aceite",
+      "esencia vainilla"
+    ],
+    "categoria": "productos-veganos",
+    "stock": 10,
+    "formato_venta": "unidad",
+    "porciones": 4,
+    "peso": "350 g",
+    "duracion": "3 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 24 horas",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "18-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "18-10-2025"
+    }
+  },
+  {
+    "id": "PROD021",
+    "nombre": "Café Premium Pastelería 1000 Sabores",
+    "imagen": "/public/images/productos/cafe_premium_1000sabores.jpg",
+    "precio_clp": 12500,
+    "descripcion": "Blend exclusivo de café chileno de especialidad, tostado artesanalmente. Perfecto para acompañar nuestras tortas",
+    "ingredientes": [
+      "café arábica chileno",
+      "tostado medio"
+    ],
+    "categoria": "productos-innovadores",
+    "stock": 20,
+    "formato_venta": "unidad",
+    "porciones": 1,
+    "peso": "250 g",
+    "duracion": "6 meses en empaque sellado",
+    "tiempo_preparacion": "Disponible inmediatamente",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "05-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "05-10-2025"
+    }
+  },
+  {
+    "id": "PROD022",
+    "nombre": "Box Desayuno Dulce",
+    "imagen": "/public/images/productos/box_desayuno_dulce.jpg",
+    "precio_clp": 18500,
+    "descripcion": "Box especial con selección de productos dulces: 2 muffins, 2 alfajores, mermelada artesanal y café. Ideal para regalo",
+    "ingredientes": [
+      "muffins variados",
+      "alfajores",
+      "mermelada",
+      "café",
+      "servilletas decorativas"
+    ],
+    "categoria": "productos-innovadores",
+    "stock": 10,
+    "formato_venta": "unidad",
+    "porciones": 2,
+    "peso": "600 g",
+    "duracion": "5 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 24 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Tarjeta personalizada hasta 50 caracteres",
+        "decoracion": [
+          "Romántico",
+          "Cumpleaños",
+          "Agradecimiento"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "06-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "14-10-2025"
+    }
+  },
+  {
+    "id": "PROD023",
+    "nombre": "Mermelada Artesanal de Berries Chilenos",
+    "imagen": "/public/images/productos/mermelada_berries.jpg",
+    "precio_clp": 8500,
+    "descripcion": "Mermelada artesanal elaborada con murtilla y calafate, berries nativos de Chile. Sin conservantes",
+    "ingredientes": [
+      "murtilla",
+      "calafate",
+      "azúcar",
+      "pectina natural"
+    ],
+    "categoria": "productos-innovadores",
+    "stock": 25,
+    "formato_venta": "unidad",
+    "porciones": 1,
+    "peso": "350 g",
+    "duracion": "12 meses en refrigeración después de abierto",
+    "tiempo_preparacion": "Disponible inmediatamente",
+    "opcion_personalizacion": {
+      "disponible": false
+    },
+    "metadatos": {
+      "creado_por": "emp_002",
+      "fecha_creacion": "08-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "08-10-2025"
+    }
+  },
+  {
+    "id": "PROD024",
+    "nombre": "Bombones de Chocolate Artesanal",
+    "imagen": "/public/images/productos/bombones_chocolate.jpg",
+    "precio_clp": 15000,
+    "descripcion": "Caja premium con 12 bombones de chocolate artesanal con rellenos variados: manjar, licor de oro, frambuesa",
+    "ingredientes": [
+      "chocolate belga",
+      "manjar",
+      "licor de oro",
+      "frambuesa",
+      "crema"
+    ],
+    "categoria": "productos-innovadores",
+    "stock": 15,
+    "formato_venta": "unidad",
+    "porciones": 12,
+    "peso": "300 g",
+    "duracion": "30 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "mensaje": "Tarjeta personalizada",
+        "decoracion": [
+          "Caja clásica",
+          "Caja premium con lazo"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "09-10-2025",
+      "modificado_por": "admin_001",
+      "fecha_modificacion": "09-10-2025"
+    }
+  },
+  {
+    "id": "PROD025",
+    "nombre": "Tabla de Quesos y Dulces Artesanales",
+    "imagen": "/public/images/productos/tabla_quesos_y_dulces.jpg",
+    "precio_clp": 28000,
+    "descripcion": "Tabla gourmet con selección de quesos chilenos, mermeladas artesanales, frutos secos y galletas. Perfecta para compartir",
+    "ingredientes": [
+      "queso de cabra",
+      "queso mantecoso",
+      "mermelada",
+      "nueces",
+      "almendras",
+      "galletas artesanales"
+    ],
+    "categoria": "productos-innovadores",
+    "stock": 8,
+    "formato_venta": "unidad",
+    "porciones": 4,
+    "peso": "800 g",
+    "duracion": "7 días refrigerado",
+    "tiempo_preparacion": "Disponible para retiro en 48 horas",
+    "opcion_personalizacion": {
+      "disponible": true,
+      "opciones": {
+        "tamaño": [
+          "Para 4 personas",
+          "Para 6 personas",
+          "Para 8 personas"
+        ]
+      }
+    },
+    "metadatos": {
+      "creado_por": "admin_001",
+      "fecha_creacion": "10-10-2025",
+      "modificado_por": "emp_002",
+      "fecha_modificacion": "16-10-2025"
+    }
+  }
+]

@@ -1,16 +1,30 @@
-# React + Vite
+# 🍰 Mil Sabores 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 50 años endulzando a Chile con las mejores tortas y postres tradicionales
 
-Currently, two official plugins are available:
+## Instalación y Uso
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+# Clonar el repositorio
+git clone https://github.com/catluvies/project-react-dsy1104.git
 
-## React Compiler
+# Instalar dependencias
+npm install
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Ejecutar en desarrollo
+npm run dev
+```
 
-## Expanding the ESLint configuration
+##  Pruebas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+El proyecto incluye 1 prueba con Vitest: 
+
+```bash
+# Ejecutar todas las pruebas una sola vez
+npm test
+
+# Ejecutar pruebas en modo watch (se re-ejecutan automáticamente al cambiar código)
+npm run test -- --watch
+```
+
+Desarrollado con ❤️ para endulzar a Chile

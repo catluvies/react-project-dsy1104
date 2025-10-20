@@ -1,0 +1,201 @@
+.checkout {
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  background-color: var(--color-blanco);
+}
+
+.checkout__contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.checkout__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 2.5rem;
+  margin-bottom: var(--espacio-2xl);
+}
+
+.checkout__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--espacio-2xl);
+}
+
+.checkout__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-xl);
+}
+
+/* Usa clase global .card */
+.checkout__card {
+  overflow: hidden;
+}
+
+.checkout__card-titulo {
+  background-color: var(--color-cafe-claro);
+  color: var(--color-blanco);
+  padding: var(--espacio-lg);
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.checkout__card-contenido {
+  padding: var(--espacio-xl);
+}
+
+.checkout__fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espacio-lg);
+  margin-bottom: var(--espacio-lg);
+}
+
+.checkout__fila:last-child {
+  margin-bottom: 0;
+}
+
+.checkout__campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout__label {
+  color: var(--color-cafe-muy-oscuro);
+  font-weight: 600;
+  margin-bottom: var(--espacio-sm);
+}
+
+/* Input/select usan estilos globales */
+
+.checkout__ayuda {
+  color: var(--color-cafe-oscuro);
+  font-size: 0.85rem;
+  margin-top: var(--espacio-xs);
+}
+
+.checkout__radio {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-sm);
+  padding: var(--espacio-md);
+  border: var(--border-width) solid var(--color-borde);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--espacio-md);
+  cursor: pointer;
+}
+
+.checkout__radio:last-child {
+  margin-bottom: 0;
+}
+
+.checkout__radio input {
+  cursor: pointer;
+}
+
+.checkout__radio label {
+  color: var(--color-cafe-muy-oscuro);
+  cursor: pointer;
+  flex: 1;
+}
+
+.checkout__resumen {
+  position: sticky;
+  top: var(--espacio-lg);
+  height: fit-content;
+}
+
+/* Usa clase global .card */
+.checkout__resumen-card {
+  padding: var(--espacio-xl);
+}
+
+.checkout__resumen-titulo {
+  background-color: var(--color-rosa-pastel);
+  color: var(--color-blanco);
+  margin: calc(-1 * var(--espacio-xl)) calc(-1 * var(--espacio-xl)) var(--espacio-xl);
+  padding: var(--espacio-lg) var(--espacio-xl);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  font-size: 1.3rem;
+}
+
+.checkout__producto {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--espacio-md);
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 0.9rem;
+}
+
+.checkout__resumen-divider {
+  border-top: var(--border-width) solid var(--color-borde);
+  margin: var(--espacio-lg) 0;
+}
+
+.checkout__resumen-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--espacio-md);
+  color: var(--color-cafe-muy-oscuro);
+}
+
+.checkout__resumen-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--espacio-lg);
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 1.5rem;
+}
+
+.checkout__resumen-total strong:last-child {
+  color: var(--color-rosa-pastel);
+}
+
+.checkout__resumen-nota {
+  background-color: var(--color-amarillo-claro);
+  border: var(--border-width) solid var(--color-amarillo-palido);
+  color: var(--color-cafe-oscuro);
+  padding: var(--espacio-md);
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  margin-bottom: var(--espacio-lg);
+}
+
+/* Botón usa clase global .boton .boton--primario .boton--block */
+
+.checkout-vacio {
+  padding: var(--espacio-4xl) var(--espacio-lg);
+  background-color: var(--color-blanco);
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.checkout-vacio__contenedor {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.checkout-vacio__titulo {
+  color: var(--color-cafe-muy-oscuro);
+  font-size: 2.5rem;
+  margin-bottom: var(--espacio-lg);
+}
+
+.checkout-vacio__descripcion {
+  color: var(--color-cafe-oscuro);
+  font-size: 1.1rem;
+  margin-bottom: var(--espacio-xl);
+}
+
+/* Botón vacío usa clase global .boton .boton--primario */
+
+@media (max-width: 968px) {
+  .checkout__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout__fila {
+    grid-template-columns: 1fr;
+  }
+}

@@ -83,10 +83,20 @@
 
 .inicio-producto-card__imagen {
   background: linear-gradient(135deg, var(--color-amarillo-palido) 0%, var(--color-amarillo-claro) 100%);
-  height: 200px;
+  /* Controla la altura del slide para que no sea gigante */
+  height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* Evita que la imagen se salga del contenedor */
+}
+
+/* Hace que la imagen se adapte al contenedor sin deformarse */
+.inicio-producto-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .inicio-producto-card__placeholder {
@@ -148,10 +158,16 @@
   .inicio-productos__grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .inicio-producto-card__imagen {
+    height: 240px;
+  }
 }
 
 @media (max-width: 480px) {
   .inicio-productos__grid {
     grid-template-columns: 1fr;
+  }
+  .inicio-producto-card__imagen {
+    height: 180px;
   }
 }

@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import AdminHeader from './components/AdminHeader'
 
 // Páginas públicas
 import InicioPage from './pages/InicioPage'
@@ -17,6 +18,11 @@ import DetalleBlogPage from './pages/DetalleBlogPage'
 import ContactoPage from './pages/ContactoPage'
 import LoginPage from './pages/LoginPage'
 import RegistroPage from './pages/RegistroPage'
+
+// Páginas admin
+import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminOrdersPage from './pages/admin/AdminOrdersPage'
+import AdminProductsPage from './pages/admin/AdminProductsPage'
 
 import './App.css'
 
@@ -54,28 +60,20 @@ function App() {
         </>
       } />
 
-      {/* Rutas admin - PENDIENTES
+      {/* Rutas admin */}
       <Route path="/admin/*" element={
         <div className="admin-layout">
           <AdminHeader />
-          <div className="admin-container">
-            <AdminSidebar />
-            <main className="admin-content">
-              <Routes>
-                <Route path="/" element={<DashboardPage />} />
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/productos" element={<AdminProductosPage />} />
-                <Route path="/categorias" element={<AdminCategoriasPage />} />
-                <Route path="/pedidos" element={<AdminPedidosPage />} />
-                <Route path="/usuarios" element={<AdminUsuariosPage />} />
-                <Route path="/reportes" element={<AdminReportesPage />} />
-                <Route path="/perfil" element={<AdminPerfilPage />} />
-              </Routes>
-            </main>
-          </div>
+          <main className="admin-content">
+            <Routes>
+              <Route path="/" element={<AdminDashboardPage />} />
+              <Route path="/dashboard" element={<AdminDashboardPage />} />
+              <Route path="/ordenes" element={<AdminOrdersPage />} />
+              <Route path="/productos" element={<AdminProductsPage />} />
+            </Routes>
+          </main>
         </div>
       } />
-      */}
     </Routes>
   )
 }

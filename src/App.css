@@ -382,6 +382,18 @@ textarea {
 }
 
 /* ========================================
+   ADMIN LAYOUT
+   ======================================== */
+.admin-layout {
+  min-height: 100vh;
+  background-color: var(--color-gris-claro);
+}
+
+.admin-content {
+  min-height: calc(100vh - 80px);
+}
+
+/* ========================================
    RESPONSIVE
    ======================================== */
 @media (max-width: 768px) {

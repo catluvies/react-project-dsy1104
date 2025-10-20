@@ -21,9 +21,19 @@
 .header__logo {
   text-decoration: none;
   color: var(--color-blanco);
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-sm);
+}
+
+.header__logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
 .header__logo h1 {
+  font-family: 'Pacifico', cursive;
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0;
@@ -94,5 +104,23 @@
 @media (max-width: 968px) {
   .header__nav {
     display: none;
+  }
+  
+  .header__logo-img {
+    height: 35px;
+  }
+  
+  .header__logo h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__logo-img {
+    height: 30px;
+  }
+  
+  .header__logo h1 {
+    font-size: 1.4rem;
   }
 }

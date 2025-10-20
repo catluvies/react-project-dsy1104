@@ -11,6 +11,7 @@
 }
 
 .inicio-hero__titulo {
+  font-family: 'Pacifico', cursive;
   font-size: 4rem;
   font-weight: 700;
   margin-bottom: var(--espacio-lg);

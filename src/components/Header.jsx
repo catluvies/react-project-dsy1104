@@ -12,6 +12,11 @@ function Header() {
     <header className="header">
       <div className="header__contenedor">
         <Link to="/" className="header__logo">
+          <img 
+            src="/logo.png" 
+            alt="Logo Mil Sabores" 
+            className="header__logo-img"
+          />
           <h1>Mil Sabores</h1>
         </Link>
 

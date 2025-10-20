@@ -49,20 +49,25 @@ export const validarTexto = (texto, minCaracteres = 10) => {
  * @returns {boolean} true si es válido
  */
 export const validarRUT = (rut) => {
-  // Remover puntos y guión
-  rut = rut.replace(/\./g, '').replace(/-/g, '')
+  if (typeof rut !== 'string') return false
+  // Normalizar: quitar espacios, puntos, guión y asegurar DV en mayúscula
+  const limpio = rut.trim().toUpperCase().replace(/\./g, '').replace(/-/g, '')
 
-  if (rut.length < 2) return false
+  if (limpio.length < 2) return false
 
-  const cuerpo = rut.slice(0, -1)
-  const dv = rut.slice(-1).toUpperCase()
+  const cuerpo = limpio.slice(0, -1)
+  const dv = limpio.slice(-1)
+
+  // Validaciones de formato: cuerpo 7-8 dígitos y DV 0-9/K
+  if (!/^\d{7,8}$/.test(cuerpo)) return false
+  if (!/^[0-9K]$/.test(dv)) return false
 
   // Calcular dígito verificador
   let suma = 0
   let multiplo = 2
 
   for (let i = cuerpo.length - 1; i >= 0; i--) {
-    suma += parseInt(cuerpo.charAt(i)) * multiplo
+    suma += Number(cuerpo.charAt(i)) * multiplo
     multiplo = multiplo === 7 ? 2 : multiplo + 1
   }
 

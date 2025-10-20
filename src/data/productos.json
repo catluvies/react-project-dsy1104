@@ -2,7 +2,7 @@
   {
     "id": "PROD001",
     "nombre": "Torta Mil Hojas Tradicional",
-    "imagen": "/public/images/productos/torta_milhojas.jpg",
+    "imagen": "/images/productos/torta_milhojas.jpg",
     "precio_clp": 18500,
     "descripcion": "Clásica torta mil hojas con manjar y hojarasca, un ícono de la repostería chilena con capas crujientes y dulce de leche casero",
     "ingredientes": [
@@ -44,7 +44,7 @@
   {
     "id": "PROD002",
     "nombre": "Kuchen de Manzana Alemán",
-    "imagen": "/public/images/productos/kuchen_manzana.jpg",
+    "imagen": "/images/productos/kuchen_manzana.jpg",
     "precio_clp": 15000,
     "descripcion": "Tradicional kuchen de manzana con canela, herencia de la colonización alemana en el sur de Chile",
     "ingredientes": [
@@ -75,7 +75,7 @@
   {
     "id": "PROD003",
     "nombre": "Torta de Lúcuma",
-    "imagen": "/public/images/productos/torta_lucuma.jpg",
+    "imagen": "/images/productos/torta_lucuma.jpg",
     "precio_clp": 22000,
     "descripcion": "Exquisita torta con lúcuma chilena, fruta autóctona que aporta un sabor único y especial",
     "ingredientes": [
@@ -119,7 +119,7 @@
   {
     "id": "PROD004",
     "nombre": "Brazo de Reina con Manjar",
-    "imagen": "/public/images/productos/brazo_de_reina.jpg",
+    "imagen": "/images/productos/brazo_de_reina.jpg",
     "precio_clp": 16500,
     "descripcion": "Suave bizcocho enrollado relleno de manjar casero, decorado con azúcar flor",
     "ingredientes": [
@@ -149,7 +149,7 @@
   {
     "id": "PROD005",
     "nombre": "Selva Negra Premium",
-    "imagen": "/public/images/productos/torta_selva_negra.jpg",
+    "imagen": "/images/productos/torta_selva_negra.jpg",
     "precio_clp": 28000,
     "descripcion": "Clásica torta de chocolate con cerezas, crema chantilly y viruta de chocolate, elaborada con ingredientes premium",
     "ingredientes": [
@@ -193,7 +193,7 @@
   {
     "id": "PROD006",
     "nombre": "Opera Francesa",
-    "imagen": "/public/images/productos/opera_francesa.jpg",
+    "imagen": "/images/productos/opera_francesa.jpg",
     "precio_clp": 32000,
     "descripcion": "Sofisticada torta de origen francés con capas de bizcocho de almendra, crema de café y ganache de chocolate",
     "ingredientes": [
@@ -235,7 +235,7 @@
   {
     "id": "PROD007",
     "nombre": "Cheesecake de Berries Silvestres",
-    "imagen": "/public/images/productos/cheesecake_berries.jpg",
+    "imagen": "/images/productos/cheesecake_berries.jpg",
     "precio_clp": 26000,
     "descripcion": "Cremoso cheesecake con base de galleta y coulis de berries silvestres chilenos",
     "ingredientes": [
@@ -274,7 +274,7 @@
   {
     "id": "PROD008",
     "nombre": "Torta Récord Guinness 50 Aniversario",
-    "imagen": "/public/images/productos/pastel_50_anhos.jpg",
+    "imagen": "/images/productos/pastel_50_anhos.jpg",
     "precio_clp": 45000,
     "descripcion": "Edición especial que rinde homenaje a nuestra participación en el récord Guinness de 1995. Torta de 3 pisos con decoración elaborada",
     "ingredientes": [
@@ -317,7 +317,7 @@
   {
     "id": "PROD009",
     "nombre": "Torta de Boda Tradicional Chilena",
-    "imagen": "/public/images/productos/pastel_de_boda_chileno.jpg",
+    "imagen": "/images/productos/pastel_de_boda_chileno.jpg",
     "precio_clp": 65000,
     "descripcion": "Elegante torta de 3 pisos con decoración personalizada, ideal para matrimonios",
     "ingredientes": [
@@ -362,7 +362,7 @@
   {
     "id": "PROD010",
     "nombre": "Torta Infantil Temática",
-    "imagen": "/public/images/productos/pastel_infantil.jpg",
+    "imagen": "/images/productos/pastel_infantil.jpg",
     "precio_clp": 35000,
     "descripcion": "Torta especial para cumpleaños infantiles con decoración personalizada según temática elegida",
     "ingredientes": [
@@ -408,7 +408,7 @@
   {
     "id": "PROD011",
     "nombre": "Alfajor Gigante Artesanal",
-    "imagen": "/public/images/productos/alfajor_gigante.jpg",
+    "imagen": "/images/productos/alfajor_gigante.jpg",
     "precio_clp": 4500,
     "descripcion": "Alfajor artesanal de gran tamaño con manjar casero y coco rallado",
     "ingredientes": [
@@ -438,7 +438,7 @@
   {
     "id": "PROD012",
     "nombre": "Porción de Torta Tres Leches",
-    "imagen": "/public/images/productos/porcion_torta3_leches.jpg",
+    "imagen": "/images/productos/porcion_torta3_leches.jpg",
     "precio_clp": 3800,
     "descripcion": "Esponjoso bizcocho empapado en tres tipos de leche, coronado con merengue",
     "ingredientes": [
@@ -469,7 +469,7 @@
   {
     "id": "PROD013",
     "nombre": "Calzones Rotos de la Abuela",
-    "imagen": "/public/images/productos/calzones_rotos.jpg",
+    "imagen": "/images/productos/calzones_rotos.jpg",
     "precio_clp": 2800,
     "descripcion": "Pack de 6 calzones rotos tradicionales, fritos y espolvoreados con azúcar flor",
     "ingredientes": [
@@ -499,7 +499,7 @@
   {
     "id": "PROD014",
     "nombre": "Torta de Zanahoria Sin Azúcar",
-    "imagen": "/public/images/productos/torta_zanahoria.jpg",
+    "imagen": "/images/productos/torta_zanahoria.jpg",
     "precio_clp": 24000,
     "descripcion": "Deliciosa torta de zanahoria endulzada con stevia, cubierta con frosting de queso crema sin azúcar",
     "ingredientes": [
@@ -537,7 +537,7 @@
   {
     "id": "PROD015",
     "nombre": "Brownie Sin Azúcar con Chocolate Amargo",
-    "imagen": "/public/images/productos/brownie_chocolate_negro.jpg",
+    "imagen": "/images/productos/brownie_chocolate_negro.jpg",
     "precio_clp": 18000,
     "descripcion": "Intenso brownie elaborado con chocolate amargo 70% y endulzado con eritritol",
     "ingredientes": [
@@ -568,7 +568,7 @@
   {
     "id": "PROD016",
     "nombre": "Queque de Naranja Sin Gluten",
-    "imagen": "/public/images/productos/queque_naranja.jpg",
+    "imagen": "/images/productos/queque_naranja.jpg",
     "precio_clp": 16500,
     "descripcion": "Esponjoso queque de naranja elaborado con harina de arroz, sin gluten y 100% seguro para celíacos",
     "ingredientes": [
@@ -599,7 +599,7 @@
   {
     "id": "PROD017",
     "nombre": "Galletas de Avena Sin Gluten",
-    "imagen": "/public/images/productos/galletas_avena.jpg",
+    "imagen": "/images/productos/galletas_avena.jpg",
     "precio_clp": 8500,
     "descripcion": "Pack de 12 galletas crocantes de avena certificada sin gluten, con chips de chocolate",
     "ingredientes": [
@@ -629,7 +629,7 @@
   {
     "id": "PROD018",
     "nombre": "Torta de Chocolate Vegana",
-    "imagen": "/public/images/productos/torta_choco_vegana.jpg",
+    "imagen": "/images/productos/torta_choco_vegana.jpg",
     "precio_clp": 26000,
     "descripcion": "Húmeda torta de chocolate 100% vegana, sin productos de origen animal, con ganache de chocolate y leche de coco",
     "ingredientes": [
@@ -671,7 +671,7 @@
   {
     "id": "PROD019",
     "nombre": "Muffins Veganos de Arándanos",
-    "imagen": "/public/images/productos/muffins_arandano.jpg",
+    "imagen": "/images/productos/muffins_arandano.jpg",
     "precio_clp": 9500,
     "descripcion": "Pack de 6 muffins veganos con arándanos frescos, esponjosos y deliciosos",
     "ingredientes": [
@@ -702,7 +702,7 @@
   {
     "id": "PROD020",
     "nombre": "Panqueques Veganos con Manjar de Coco",
-    "imagen": "/public/images/productos/panqueque_vegano.jpg",
+    "imagen": "/images/productos/panqueque_vegano.jpg",
     "precio_clp": 7500,
     "descripcion": "Pack de 4 panqueques veganos rellenos con manjar elaborado con leche de coco",
     "ingredientes": [
@@ -733,7 +733,7 @@
   {
     "id": "PROD021",
     "nombre": "Café Premium Pastelería 1000 Sabores",
-    "imagen": "/public/images/productos/cafe_premium_1000sabores.jpg",
+    "imagen": "/images/productos/cafe_premium_1000sabores.jpg",
     "precio_clp": 12500,
     "descripcion": "Blend exclusivo de café chileno de especialidad, tostado artesanalmente. Perfecto para acompañar nuestras tortas",
     "ingredientes": [
@@ -760,7 +760,7 @@
   {
     "id": "PROD022",
     "nombre": "Box Desayuno Dulce",
-    "imagen": "/public/images/productos/box_desayuno_dulce.jpg",
+    "imagen": "/images/productos/box_desayuno_dulce.jpg",
     "precio_clp": 18500,
     "descripcion": "Box especial con selección de productos dulces: 2 muffins, 2 alfajores, mermelada artesanal y café. Ideal para regalo",
     "ingredientes": [
@@ -798,7 +798,7 @@
   {
     "id": "PROD023",
     "nombre": "Mermelada Artesanal de Berries Chilenos",
-    "imagen": "/public/images/productos/mermelada_berries.jpg",
+    "imagen": "/images/productos/mermelada_berries.jpg",
     "precio_clp": 8500,
     "descripcion": "Mermelada artesanal elaborada con murtilla y calafate, berries nativos de Chile. Sin conservantes",
     "ingredientes": [
@@ -827,7 +827,7 @@
   {
     "id": "PROD024",
     "nombre": "Bombones de Chocolate Artesanal",
-    "imagen": "/public/images/productos/bombones_chocolate.jpg",
+    "imagen": "/images/productos/bombones_chocolate.jpg",
     "precio_clp": 15000,
     "descripcion": "Caja premium con 12 bombones de chocolate artesanal con rellenos variados: manjar, licor de oro, frambuesa",
     "ingredientes": [
@@ -864,7 +864,7 @@
   {
     "id": "PROD025",
     "nombre": "Tabla de Quesos y Dulces Artesanales",
-    "imagen": "/public/images/productos/tabla_quesos_y_dulces.jpg",
+    "imagen": "/images/productos/tabla_quesos_y_dulces.jpg",
     "precio_clp": 28000,
     "descripcion": "Tabla gourmet con selección de quesos chilenos, mermeladas artesanales, frutos secos y galletas. Perfecta para compartir",
     "ingredientes": [

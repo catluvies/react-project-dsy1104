@@ -32,7 +32,7 @@ function NosotrosContenido() {
           </div>
           <div className="nosotros-imagen">
             <img 
-              src="/public/images/nosotros/guiness_torta_gigante.jpg"
+              src="/images/nosotros/guiness_torta_gigante.jpg"
               alt="Historia de Mil Sabores - Pastelería familiar desde 1975"
               className="nosotros-imagen__img"
             />
@@ -57,7 +57,7 @@ function NosotrosContenido() {
           </div>
           <div className="nosotros-imagen">
             <img 
-              src="/public/images/nosotros/historia_pasteleria.jpg"
+              src="/images/nosotros/historia_pasteleria.jpg"
               alt="Nuestra misión - Calidad y tradición en repostería"
               className="nosotros-imagen__img"
             />

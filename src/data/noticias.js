@@ -3,7 +3,7 @@ export const noticiasData = [
   {
     id: 'BLOG001',
     titulo: 'Mil Sabores Busca Estudiantes DuocUC para Pasantías Remuneradas',
-    imagen: '/src/assets/images/blog/pasantias-duocuc.jpg',
+    imagen: '/images/blog/1000_sabores_busca_estudiantes.jpg',
     categoria: 'Oportunidades',
     autor: 'Ahri González',
     fecha: '18-10-2025',
@@ -14,7 +14,7 @@ export const noticiasData = [
   {
     id: 'BLOG002',
     titulo: 'Mil Sabores Viaja a China: Catering Oficial para T1 en Worlds 2025',
-    imagen: '/src/assets/images/blog/t1-china-catering.jpg',
+    imagen: '/images/blog/1000_sabores_t1.jpg',
     categoria: 'Novedades',
     autor: 'Yasuo Silva',
     fecha: '15-10-2025',
@@ -25,6 +25,7 @@ export const noticiasData = [
   {
     id: 'BLOG003',
     titulo: 'Estudiante de DuocUC le Entrega Mil Hojas a Faker en Backstage',
+    imagen: '/images/blog/estudiante_torta_faker.jpg',
     categoria: 'Historia',
     autor: 'Jinx Torres',
     fecha: '12-10-2025',
@@ -35,6 +36,7 @@ export const noticiasData = [
   {
     id: 'BLOG004',
     titulo: 'Alianza Estratégica con Riot Games Chile: Postres Oficiales para Torneos',
+    imagen: '/images/blog/100sabores_x_riot.jpg',
     categoria: 'Novedades',
     autor: 'Lux Ramírez',
     fecha: '08-10-2025',
@@ -45,6 +47,7 @@ export const noticiasData = [
   {
     id: 'BLOG005',
     titulo: 'Nueva Línea de Tortas Temáticas de League of Legends',
+    imagen: '/images/blog/tortas_lol.jpg',
     categoria: 'Productos',
     autor: 'Zed Morales',
     fecha: '05-10-2025',
@@ -55,6 +58,7 @@ export const noticiasData = [
   {
     id: 'BLOG006',
     titulo: 'Worlds 2025: Fiesta de Visualización en Mil Sabores con Promociones',
+    imagen: '/images/blog/1000_sabores_worlds_2025.jpg',
     categoria: 'Eventos',
     autor: 'Akali Vega',
     fecha: '02-10-2025',
@@ -65,6 +69,7 @@ export const noticiasData = [
   {
     id: 'BLOG007',
     titulo: 'Detrás de Escena: Cómo Creamos las Tortas para el Equipo T1',
+    imagen: '/images/blog/tortas_para_t1.jpg',
     categoria: 'Behind the Scenes',
     autor: 'Thresh Ramírez',
     fecha: '28-09-2025',
@@ -75,6 +80,7 @@ export const noticiasData = [
   {
     id: 'BLOG008',
     titulo: 'De Estudiante a Pastelero: Historia de Éxito de un Alumno DuocUC',
+    imagen: '/images/blog/ezreal_pastelero_de_exito.jpg',
     categoria: 'Inspiración',
     autor: 'Seraphine Torres',
     fecha: '25-09-2025',

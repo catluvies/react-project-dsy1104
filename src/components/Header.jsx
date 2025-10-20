@@ -13,7 +13,7 @@ function Header() {
       <div className="header__contenedor">
         <Link to="/" className="header__logo">
           <img 
-            src="/logo.png" 
+            src="/logo_sanic.jpg" 
             alt="Logo Mil Sabores" 
             className="header__logo-img"
           />

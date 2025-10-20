@@ -20,7 +20,16 @@ function InicioProductosDestacados(props) {
               className="inicio-producto-card"
             >
               <div className="inicio-producto-card__imagen">
-                <span className="inicio-producto-card__placeholder">[Imagen]</span>
+                {producto.imagen ? (
+                  <img 
+                    src={producto.imagen} 
+                    alt={producto.nombre}
+                    className="inicio-producto-card__img"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="inicio-producto-card__placeholder">[Imagen]</span>
+                )}
               </div>
               <div className="inicio-producto-card__info">
                 <h3 className="inicio-producto-card__nombre">{producto.nombre}</h3>

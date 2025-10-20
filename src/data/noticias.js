@@ -3,6 +3,7 @@ export const noticiasData = [
   {
     id: 'BLOG001',
     titulo: 'Mil Sabores Busca Estudiantes DuocUC para Pasantías Remuneradas',
+    imagen: '/src/assets/images/blog/pasantias-duocuc.jpg',
     categoria: 'Oportunidades',
     autor: 'Ahri González',
     fecha: '18-10-2025',
@@ -13,6 +14,7 @@ export const noticiasData = [
   {
     id: 'BLOG002',
     titulo: 'Mil Sabores Viaja a China: Catering Oficial para T1 en Worlds 2025',
+    imagen: '/src/assets/images/blog/t1-china-catering.jpg',
     categoria: 'Novedades',
     autor: 'Yasuo Silva',
     fecha: '15-10-2025',

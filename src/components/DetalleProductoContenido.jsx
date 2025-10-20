@@ -78,7 +78,15 @@ function DetalleProductoContenido(props) {
         {/* Detalle del producto */}
         <div className="detalle-producto__grid">
           <div className="detalle-producto__imagen">
-            <span className="detalle-producto__placeholder">[Imagen del producto]</span>
+            {producto.imagen ? (
+              <img 
+                src={producto.imagen} 
+                alt={producto.nombre}
+                className="detalle-producto__img"
+              />
+            ) : (
+              <span className="detalle-producto__placeholder">[Imagen del producto]</span>
+            )}
             <span className="detalle-producto__id">ID: {producto.id}</span>
           </div>
 

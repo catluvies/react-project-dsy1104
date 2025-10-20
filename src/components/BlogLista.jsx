@@ -14,11 +14,20 @@ function BlogLista(props) {
           {noticias.map(noticia => (
             <Link key={noticia.id} to={`/blog/${noticia.id}`} className="blog-card">
               <div className="blog-card__imagen">
-                <span className="blog-card__placeholder">[Imagen]</span>
+                {noticia.imagen ? (
+                  <img 
+                    src={noticia.imagen} 
+                    alt={noticia.titulo}
+                    className="blog-card__img"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="blog-card__placeholder">[Imagen]</span>
+                )}
               </div>
               <div className="blog-card__contenido">
                 <h3 className="blog-card__titulo">{noticia.titulo}</h3>
-                <p className="blog-card__extracto">{truncarTexto(noticia.extracto, 100)}</p>
+                <p className="blog-card__extracto">{truncarTexto(noticia.excerpt, 100)}</p>
                 <div className="blog-card__meta">
                   <span>{noticia.autor}</span>
                   <span>•</span>

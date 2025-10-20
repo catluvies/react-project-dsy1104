@@ -31,7 +31,11 @@ function NosotrosContenido() {
             </p>
           </div>
           <div className="nosotros-imagen">
-            <span>[Imagen histórica]</span>
+            <img 
+              src="/src/assets/images/nosotros/historia-pasteleria.jpg"
+              alt="Historia de Mil Sabores - Pastelería familiar desde 1975"
+              className="nosotros-imagen__img"
+            />
           </div>
         </div>
       </section>
@@ -52,7 +56,11 @@ function NosotrosContenido() {
             </p>
           </div>
           <div className="nosotros-imagen">
-            <span>[Imagen de misión]</span>
+            <img 
+              src="/src/assets/images/nosotros/mision-calidad.jpg"
+              alt="Nuestra misión - Calidad y tradición en repostería"
+              className="nosotros-imagen__img"
+            />
           </div>
         </div>
       </section>

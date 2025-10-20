@@ -2,6 +2,7 @@
   {
     "id": "PROD001",
     "nombre": "Torta Mil Hojas Tradicional",
+    "imagen": "/src/assets/images/productos/torta-mil-hojas.jpg",
     "precio_clp": 18500,
     "descripcion": "Clásica torta mil hojas con manjar y hojarasca, un ícono de la repostería chilena con capas crujientes y dulce de leche casero",
     "ingredientes": [
@@ -43,6 +44,7 @@
   {
     "id": "PROD002",
     "nombre": "Kuchen de Manzana Alemán",
+    "imagen": "/src/assets/images/productos/kuchen-manzana.jpg",
     "precio_clp": 15000,
     "descripcion": "Tradicional kuchen de manzana con canela, herencia de la colonización alemana en el sur de Chile",
     "ingredientes": [

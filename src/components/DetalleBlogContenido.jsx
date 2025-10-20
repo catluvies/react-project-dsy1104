@@ -40,7 +40,15 @@ function DetalleBlogContenido() {
           </div>
 
           <div className="detalle-blog__imagen">
-            <span>[Imagen del artículo]</span>
+            {noticia.imagen ? (
+              <img 
+                src={noticia.imagen} 
+                alt={noticia.titulo}
+                className="detalle-blog__img"
+              />
+            ) : (
+              <span>[Imagen del artículo]</span>
+            )}
           </div>
 
           <div

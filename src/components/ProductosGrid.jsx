@@ -25,7 +25,16 @@ function ProductosGrid(props) {
           className="card card--hover producto-card"
         >
           <div className="producto-card__imagen">
-            <span className="producto-card__placeholder">[Imagen]</span>
+            {producto.imagen ? (
+              <img 
+                src={producto.imagen} 
+                alt={producto.nombre}
+                className="producto-card__img"
+                loading="lazy"
+              />
+            ) : (
+              <span className="producto-card__placeholder">[Imagen]</span>
+            )}
           </div>
 
           <div className="producto-card__contenido">

@@ -101,25 +101,25 @@ function NosotrosContenido() {
         <h2 className="nosotros-titulo-seccion">Nuestro Equipo</h2>
         <div className="nosotros-equipo">
           <div className="nosotros-miembro-card">
-            <div className="nosotros-miembro-card__avatar">DM</div>
-            <h5 className="nosotros-miembro-card__nombre">Doña María</h5>
-            <p className="nosotros-miembro-card__cargo">Maestra Pastelera</p>
+            <div className="nosotros-miembro-card__avatar">OB</div>
+            <h5 className="nosotros-miembro-card__nombre">Orenji Benz</h5>
+            <p className="nosotros-miembro-card__cargo">Maestro de la decoración</p>
             <p className="nosotros-miembro-card__descripcion">
               45 años de experiencia en repostería tradicional
             </p>
           </div>
           <div className="nosotros-miembro-card">
-            <div className="nosotros-miembro-card__avatar">CG</div>
-            <h5 className="nosotros-miembro-card__nombre">Carlos González</h5>
+            <div className="nosotros-miembro-card__avatar">KW</div>
+            <h5 className="nosotros-miembro-card__nombre">Knuckles Wang</h5>
             <p className="nosotros-miembro-card__cargo">Chef Ejecutivo</p>
             <p className="nosotros-miembro-card__descripcion">
               Especialista en repostería francesa y moderna
             </p>
           </div>
           <div className="nosotros-miembro-card">
-            <div className="nosotros-miembro-card__avatar">VT</div>
-            <h5 className="nosotros-miembro-card__nombre">Valentina Torres</h5>
-            <p className="nosotros-miembro-card__cargo">Jefa de Producción</p>
+            <div className="nosotros-miembro-card__avatar">SC</div>
+            <h5 className="nosotros-miembro-card__nombre">Sonic Carvajal</h5>
+            <p className="nosotros-miembro-card__cargo">Jefe de Producción</p>
             <p className="nosotros-miembro-card__descripcion">
               Experta en productos sin azúcar y veganos
             </p>

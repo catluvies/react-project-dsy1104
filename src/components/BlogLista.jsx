@@ -1,40 +1,42 @@
 import { Link } from 'react-router-dom'
 import { truncarTexto } from '../utils/helpers'
-import './BlogLista.css'
 
-// lista de noticias del blog
 function BlogLista(props) {
-  // recibir noticias como prop
   const noticias = props.noticias
 
   return (
-    <section className="blog-lista">
-      <div className="blog-lista__contenedor">
-        <div className="blog-lista__grid">
+    <section className="py-5">
+      <div className="container">
+        <div className="row g-4">
           {noticias.map(noticia => (
-            <Link key={noticia.id} to={`/blog/${noticia.id}`} className="blog-card">
-              <div className="blog-card__imagen">
-                {noticia.imagen ? (
-                  <img 
-                    src={noticia.imagen} 
-                    alt={noticia.titulo}
-                    className="blog-card__img"
-                    loading="lazy"
-                  />
-                ) : (
-                  <span className="blog-card__placeholder">[Imagen]</span>
-                )}
-              </div>
-              <div className="blog-card__contenido">
-                <h3 className="blog-card__titulo">{noticia.titulo}</h3>
-                <p className="blog-card__extracto">{truncarTexto(noticia.excerpt, 100)}</p>
-                <div className="blog-card__meta">
-                  <span>{noticia.autor}</span>
-                  <span>•</span>
-                  <span>{noticia.fecha}</span>
+            <div key={noticia.id} className="col-12 col-md-6 col-lg-4">
+              <Link to={`/blog/${noticia.id}`} className="text-decoration-none">
+                <div className="card h-100 shadow-sm">
+                  {noticia.imagen ? (
+                    <img
+                      src={noticia.imagen}
+                      alt={noticia.titulo}
+                      className="card-img-top"
+                      style={{height: '200px', objectFit: 'cover'}}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style={{height: '200px'}}>
+                      [Imagen]
+                    </div>
+                  )}
+                  <div className="card-body">
+                    <h3 className="card-title h5">{noticia.titulo}</h3>
+                    <p className="card-text text-muted">{truncarTexto(noticia.excerpt, 100)}</p>
+                    <div className="d-flex gap-2 text-muted small">
+                      <span>{noticia.autor}</span>
+                      <span>•</span>
+                      <span>{noticia.fecha}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

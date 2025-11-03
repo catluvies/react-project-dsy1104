@@ -1,20 +1,18 @@
 import { Link } from 'react-router-dom'
-import './InicioHero.css'
 
-// hero de la página principal
 function InicioHero() {
   return (
-    <section className="inicio-hero">
-      <div className="inicio-hero__contenedor">
-        <h1 className="inicio-hero__titulo">Mil Sabores</h1>
-        <p className="inicio-hero__subtitulo">
+    <section className="bg-primary text-white py-5 mb-5">
+      <div className="container text-center py-5">
+        <h1 className="display-2 mb-4">Mil Sabores</h1>
+        <p className="lead fs-4 mb-4">
           50 años endulzando a Chile con las mejores tortas y postres tradicionales
         </p>
-        <div className="inicio-hero__botones">
-          <Link to="/productos" className="boton boton--primario">
+        <div className="d-flex gap-3 justify-content-center">
+          <Link to="/productos" className="btn btn-light btn-lg">
             Ver Productos
           </Link>
-          <Link to="/nosotros" className="boton boton--secundario">
+          <Link to="/nosotros" className="btn btn-secondary btn-lg">
             Nuestra Historia
           </Link>
         </div>

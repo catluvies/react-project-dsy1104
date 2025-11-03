@@ -2,19 +2,14 @@ import { Link } from 'react-router-dom'
 import productosData from '../data/productos.json'
 import { obtenerCategoriasUnicas } from '../utils/productos'
 import { formatearCategoria } from '../utils/formateo'
-import './CategoriasGrid.css'
 
-// grilla de categorías
 function CategoriasGrid() {
-  // obtener categorías sin repetir
   const categoriasUnicas = obtenerCategoriasUnicas(productosData)
 
-  // contar productos por categoría
   const categoriasConInfo = []
   for (let i = 0; i < categoriasUnicas.length; i++) {
     const categoria = categoriasUnicas[i]
 
-    // contar productos en esta categoría
     let cantidad = 0
     for (let j = 0; j < productosData.length; j++) {
       if (productosData[j].categoria === categoria) {
@@ -22,7 +17,6 @@ function CategoriasGrid() {
       }
     }
 
-    // agregar al array
     categoriasConInfo.push({
       nombre: categoria,
       cantidad: cantidad
@@ -30,31 +24,41 @@ function CategoriasGrid() {
   }
 
   return (
-    <section className="categorias">
-      <div className="categorias__contenedor">
-        <h1 className="categorias__titulo">Categorías</h1>
-        <p className="categorias__descripcion">
-          Explora nuestras categorías y encuentra el producto perfecto
-        </p>
+    <>
+      <section className="bg-primary text-white text-center py-5">
+        <div className="container">
+          <h1 className="display-4 fw-bold">Categorías</h1>
+          <p className="lead">Explora nuestras categorías y encuentra el producto perfecto</p>
+        </div>
+      </section>
+      <section className="py-5">
+        <div className="container">
 
-        <div className="categorias__grid">
+        <div className="row g-4">
           {categoriasConInfo.map(categoria => (
-            <div key={categoria.nombre} className="categoria-card">
-              <h5 className="categoria-card__nombre">{formatearCategoria(categoria.nombre)}</h5>
-              <p className="categoria-card__cantidad">
-                {categoria.cantidad} {categoria.cantidad === 1 ? 'producto' : 'productos'}
-              </p>
-              <Link
-                to={`/productos?categoria=${categoria.nombre}`}
-                className="categoria-card__link"
-              >
-                Ver Productos
-              </Link>
+            <div key={categoria.nombre} className="col-md-6 col-lg-4">
+              <div className="card h-100 text-center border-2">
+                <div className="card-body">
+                  <h5 className="card-title text-cafe">{formatearCategoria(categoria.nombre)}</h5>
+                  <p className="card-text text-muted mb-3">
+                    <span className="badge" style={{backgroundColor: '#FFB6C1', color: '#654321'}}>
+                      {categoria.cantidad} {categoria.cantidad === 1 ? 'producto' : 'productos'}
+                    </span>
+                  </p>
+                  <Link
+                    to={`/productos?categoria=${categoria.nombre}`}
+                    className="btn btn-primary"
+                  >
+                    Ver Productos
+                  </Link>
+                </div>
+              </div>
             </div>
           ))}
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   )
 }
 

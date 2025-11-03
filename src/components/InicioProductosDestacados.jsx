@@ -1,64 +1,55 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatearPrecio } from '../utils/formateo'
-import './InicioProductosDestacados.css'
 
 function InicioProductosDestacados(props) {
-  const [slide, setSlide] = useState(0)
   const productos = props.productos
 
   return (
-    <section className="inicio-productos">
-      <div className="inicio-productos__contenedor">
-        <h2 className="inicio-productos__titulo">Nuestros Mejores Productos</h2>
+    <section className="container my-5">
+      <h2 className="text-center mb-5">Nuestros Mejores Productos</h2>
 
-        <div className="inicio-productos__carrusel">
-          <button 
-            className="inicio-productos__flecha inicio-productos__flecha--prev"
-            onClick={() => setSlide(slide === 0 ? productos.length - 1 : slide - 1)}
-          >
-            ‹
-          </button>
-          
-          <div className="inicio-productos__contenido">
-            <div 
-              className="inicio-productos__slides"
-              style={{ transform: `translateX(-${slide * 100}%)` }}
-            >
-              {productos.map(producto => (
-                <div key={producto.id} className="inicio-productos__slide">
-                  <Link to={`/producto/${producto.id}`} className="inicio-producto-card">
-                    <div className="inicio-producto-card__imagen">
+      <div id="productosCarousel" className="carousel slide" data-bs-ride="carousel">
+        <div className="carousel-inner">
+          {productos.map((producto, index) => (
+            <div key={producto.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+              <div className="row justify-content-center">
+                <div className="col-md-6">
+                  <Link to={`/producto/${producto.id}`} className="text-decoration-none">
+                    <div className="card border-2">
                       {producto.imagen ? (
-                        <img src={producto.imagen} alt={producto.nombre} className="inicio-producto-card__img" loading="lazy" />
+                        <img src={producto.imagen} alt={producto.nombre} className="card-img-top" loading="lazy" style={{height: '300px', objectFit: 'cover'}} />
                       ) : (
-                        <span className="inicio-producto-card__placeholder">[Imagen]</span>
+                        <div className="card-img-top bg-light d-flex align-items-center justify-content-center" style={{height: '300px'}}>
+                          <span className="text-muted">[Imagen]</span>
+                        </div>
                       )}
-                    </div>
-                    <div className="inicio-producto-card__info">
-                      <h3 className="inicio-producto-card__nombre">{producto.nombre}</h3>
-                      <p className="inicio-producto-card__descripcion">{producto.descripcion}</p>
-                      <p className="inicio-producto-card__precio">${formatearPrecio(producto.precio_clp)}</p>
+                      <div className="card-body text-center">
+                        <h3 className="card-title h5 text-cafe">{producto.nombre}</h3>
+                        <p className="card-text text-muted">{producto.descripcion}</p>
+                        <p className="fw-bold fs-4 text-cafe">${formatearPrecio(producto.precio_clp)}</p>
+                      </div>
                     </div>
                   </Link>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-
-          <button 
-            className="inicio-productos__flecha inicio-productos__flecha--next"
-            onClick={() => setSlide((slide + 1) % productos.length)}
-          >
-            ›
-          </button>
+          ))}
         </div>
 
-        <div className="inicio-productos__cta">
-          <Link to="/productos" className="inicio-productos__boton">
-            Ver Todos los Productos
-          </Link>
-        </div>
+        <button className="carousel-control-prev" type="button" data-bs-target="#productosCarousel" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Anterior</span>
+        </button>
+        <button className="carousel-control-next" type="button" data-bs-target="#productosCarousel" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+
+      <div className="text-center mt-4">
+        <Link to="/productos" className="btn btn-primary btn-lg">
+          Ver Todos los Productos
+        </Link>
       </div>
     </section>
   )

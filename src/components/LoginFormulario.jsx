@@ -1,22 +1,16 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { validarEmail } from '../utils/validaciones'
-import './LoginFormulario.css'
 
 function LoginFormulario() {
   const [formData, setFormData] = useState({ email: '', contrasena: '' })
   const [errores, setErrores] = useState({})
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
 
-  // manejar cambios en inputs
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-
-    // actualizar datos del formulario
     setFormData({ ...formData, [name]: value })
-
-    // limpiar error si había
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }
@@ -37,63 +31,68 @@ function LoginFormulario() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!validarFormulario()) return
-    // solo valida, no hace login real
     alert('Login exitoso (simulado)')
   }
 
   return (
-    <section className="login">
-      <div className="login__contenedor">
-        <div className="login__card">
-          <h2 className="login__titulo">Iniciar Sesión</h2>
+    <section className="py-5">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card shadow">
+              <div className="card-body p-4">
+                <h2 className="card-title text-center mb-4">Iniciar Sesión</h2>
 
-          <form onSubmit={handleSubmit}>
-            <div className="login__campo">
-              <label className="login__label">Email *</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={errores.email ? 'login__input--error' : ''}
-              />
-              {errores.email && <span className="login__error">{errores.email}</span>}
-            </div>
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <label className="form-label">Email *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={`form-control ${errores.email ? 'is-invalid' : ''}`}
+                    />
+                    {errores.email && <div className="invalid-feedback">{errores.email}</div>}
+                  </div>
 
-            <div className="login__campo">
-              <label className="login__label">Contraseña *</label>
-              <div className="login__password">
-                <input
-                  type={mostrarContrasena ? 'text' : 'password'}
-                  name="contrasena"
-                  value={formData.contrasena}
-                  onChange={handleChange}
-                  className={errores.contrasena ? 'login__input--error' : ''}
-                />
-                <button
-                  type="button"
-                  onClick={() => setMostrarContrasena(!mostrarContrasena)}
-                  className="login__toggle"
-                >
-                  {mostrarContrasena ? '👁️' : '👁️‍🗨️'}
-                </button>
+                  <div className="mb-3">
+                    <label className="form-label">Contraseña *</label>
+                    <div className="input-group">
+                      <input
+                        type={mostrarContrasena ? 'text' : 'password'}
+                        name="contrasena"
+                        value={formData.contrasena}
+                        onChange={handleChange}
+                        className={`form-control ${errores.contrasena ? 'is-invalid' : ''}`}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setMostrarContrasena(!mostrarContrasena)}
+                        className="btn btn-outline-secondary"
+                      >
+                        👁️
+                      </button>
+                      {errores.contrasena && <div className="invalid-feedback">{errores.contrasena}</div>}
+                    </div>
+                  </div>
+
+                  <div className="mb-3 text-end">
+                    <a href="#" className="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                  </div>
+
+                  <button type="submit" className="btn btn-primary w-100 mb-3">
+                    Iniciar Sesión
+                  </button>
+
+                  <div className="text-center">
+                    <span>¿No tienes cuenta? </span>
+                    <Link to="/registro" className="text-decoration-none">Regístrate aquí</Link>
+                  </div>
+                </form>
               </div>
-              {errores.contrasena && <span className="login__error">{errores.contrasena}</span>}
             </div>
-
-            <div className="login__olvidar">
-              <a href="#">¿Olvidaste tu contraseña?</a>
-            </div>
-
-            <button type="submit" className="boton boton--primario boton--block">
-              Iniciar Sesión
-            </button>
-
-            <div className="login__registro">
-              <span>¿No tienes cuenta? </span>
-              <Link to="/registro">Regístrate aquí</Link>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>

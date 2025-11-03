@@ -25,9 +25,6 @@ import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminOrdersPage from './pages/admin/AdminOrdersPage'
 import AdminProductsPage from './pages/admin/AdminProductsPage'
 
-import './App.css'
-
-// Configuración de rutas y layout principal de la aplicación
 function App() {
 
   return (

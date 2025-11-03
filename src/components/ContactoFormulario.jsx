@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { validarEmail, validarTelefono, validarNombre, validarTexto } from '../utils/validaciones'
-import './ContactoFormulario.css'
 
 function ContactoFormulario() {
   const [formData, setFormData] = useState({
@@ -13,15 +12,10 @@ function ContactoFormulario() {
   const [errores, setErrores] = useState({})
   const [enviado, setEnviado] = useState(false)
 
-  // manejar cambios en inputs
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-
-    // actualizar datos del formulario
     setFormData({ ...formData, [name]: value })
-
-    // limpiar error si había
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }
@@ -65,128 +59,141 @@ function ContactoFormulario() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="contacto-hero">
-        <div className="contacto-hero__contenedor">
-          <h1 className="contacto-hero__titulo">Contacto</h1>
-          <p className="contacto-hero__descripcion">Estamos aquí para ayudarte</p>
+      <section className="bg-primary text-white text-center py-5">
+        <div className="container">
+          <h1>Contacto</h1>
+          <p className="lead">Estamos aquí para ayudarte</p>
         </div>
       </section>
 
-      {/* Contenido */}
-      <section className="contacto-contenido">
-        <div className="contacto-contenido__contenedor">
+      <section className="py-5">
+        <div className="container">
           {enviado && (
-            <div className="alerta alerta--exito" style={{ position: 'relative' }}>
+            <div className="alert alert-success alert-dismissible fade show" role="alert">
               ¡Mensaje enviado correctamente! Te contactaremos pronto.
               <button
                 type="button"
-                className="contacto-alerta__cerrar"
+                className="btn-close"
                 onClick={() => setEnviado(false)}
-              >
-                ×
-              </button>
+                aria-label="Close"
+              ></button>
             </div>
           )}
 
-          {/* info cards */}
-          <div className="contacto-info">
-            <div className="card contacto-info-card">
-              <h5 className="contacto-info-card__titulo">Dirección</h5>
-              <p className="contacto-info-card__texto">
-                Av. Providencia 1234<br />
-                Santiago, Chile
-              </p>
+          <div className="row g-4 mb-5">
+            <div className="col-md-4">
+              <div className="card h-100">
+                <div className="card-body">
+                  <h5 className="card-title">Dirección</h5>
+                  <p className="card-text">
+                    Av. Providencia 1234<br />
+                    Santiago, Chile
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="card contacto-info-card">
-              <h5 className="contacto-info-card__titulo">Teléfono</h5>
-              <p className="contacto-info-card__texto">
-                +56 9 1234 5678<br />
-                Lunes a Domingo<br />
-                9:00 - 20:00
-              </p>
+            <div className="col-md-4">
+              <div className="card h-100">
+                <div className="card-body">
+                  <h5 className="card-title">Teléfono</h5>
+                  <p className="card-text">
+                    +56 9 1234 5678<br />
+                    Lunes a Domingo<br />
+                    9:00 - 20:00
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="card contacto-info-card">
-              <h5 className="contacto-info-card__titulo">Email</h5>
-              <p className="contacto-info-card__texto">
-                contacto@milsabores.cl<br />
-                Respuesta en 24 horas
-              </p>
+            <div className="col-md-4">
+              <div className="card h-100">
+                <div className="card-body">
+                  <h5 className="card-title">Email</h5>
+                  <p className="card-text">
+                    contacto@milsabores.cl<br />
+                    Respuesta en 24 horas
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* formulario */}
-          <div className="card contacto-form-card">
-            <h5 className="contacto-form-card__titulo">Envíanos un Mensaje</h5>
+          <div className="row justify-content-center">
+            <div className="col-md-8">
+              <div className="card shadow">
+                <div className="card-body p-4">
+                  <h5 className="card-title text-center mb-4">Envíanos un Mensaje</h5>
 
-            <form onSubmit={handleSubmit}>
-              <div className="contacto-campo">
-                <label className="contacto-label">Nombre *</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  value={formData.nombre}
-                  onChange={handleChange}
-                  className={errores.nombre ? 'contacto-input--error' : ''}
-                />
-                {errores.nombre && <span className="contacto-error">{errores.nombre}</span>}
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <label className="form-label">Nombre *</label>
+                      <input
+                        type="text"
+                        name="nombre"
+                        value={formData.nombre}
+                        onChange={handleChange}
+                        className={`form-control ${errores.nombre ? 'is-invalid' : ''}`}
+                      />
+                      {errores.nombre && <div className="invalid-feedback">{errores.nombre}</div>}
+                    </div>
+
+                    <div className="mb-3">
+                      <label className="form-label">Email *</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={`form-control ${errores.email ? 'is-invalid' : ''}`}
+                      />
+                      {errores.email && <div className="invalid-feedback">{errores.email}</div>}
+                    </div>
+
+                    <div className="mb-3">
+                      <label className="form-label">Teléfono *</label>
+                      <input
+                        type="tel"
+                        name="telefono"
+                        value={formData.telefono}
+                        onChange={handleChange}
+                        placeholder="+56 9 1234 5678"
+                        className={`form-control ${errores.telefono ? 'is-invalid' : ''}`}
+                      />
+                      {errores.telefono && <div className="invalid-feedback">{errores.telefono}</div>}
+                    </div>
+
+                    <div className="mb-3">
+                      <label className="form-label">Asunto *</label>
+                      <input
+                        type="text"
+                        name="asunto"
+                        value={formData.asunto}
+                        onChange={handleChange}
+                        className={`form-control ${errores.asunto ? 'is-invalid' : ''}`}
+                      />
+                      {errores.asunto && <div className="invalid-feedback">{errores.asunto}</div>}
+                    </div>
+
+                    <div className="mb-3">
+                      <label className="form-label">Mensaje *</label>
+                      <textarea
+                        name="mensaje"
+                        value={formData.mensaje}
+                        onChange={handleChange}
+                        rows={5}
+                        className={`form-control ${errores.mensaje ? 'is-invalid' : ''}`}
+                      />
+                      {errores.mensaje && <div className="invalid-feedback">{errores.mensaje}</div>}
+                    </div>
+
+                    <button type="submit" className="btn btn-primary w-100">
+                      Enviar Mensaje
+                    </button>
+                  </form>
+                </div>
               </div>
-
-              <div className="contacto-campo">
-                <label className="contacto-label">Email *</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={errores.email ? 'contacto-input--error' : ''}
-                />
-                {errores.email && <span className="contacto-error">{errores.email}</span>}
-              </div>
-
-              <div className="contacto-campo">
-                <label className="contacto-label">Teléfono *</label>
-                <input
-                  type="tel"
-                  name="telefono"
-                  value={formData.telefono}
-                  onChange={handleChange}
-                  placeholder="+56 9 1234 5678"
-                  className={errores.telefono ? 'contacto-input--error' : ''}
-                />
-                {errores.telefono && <span className="contacto-error">{errores.telefono}</span>}
-              </div>
-
-              <div className="contacto-campo">
-                <label className="contacto-label">Asunto *</label>
-                <input
-                  type="text"
-                  name="asunto"
-                  value={formData.asunto}
-                  onChange={handleChange}
-                  className={errores.asunto ? 'contacto-input--error' : ''}
-                />
-                {errores.asunto && <span className="contacto-error">{errores.asunto}</span>}
-              </div>
-
-              <div className="contacto-campo">
-                <label className="contacto-label">Mensaje *</label>
-                <textarea
-                  name="mensaje"
-                  value={formData.mensaje}
-                  onChange={handleChange}
-                  rows={5}
-                  className={errores.mensaje ? 'contacto-textarea--error' : ''}
-                />
-                {errores.mensaje && <span className="contacto-error">{errores.mensaje}</span>}
-              </div>
-
-              <button type="submit" className="boton boton--primario boton--block">
-                Enviar Mensaje
-              </button>
-            </form>
+            </div>
           </div>
         </div>
       </section>

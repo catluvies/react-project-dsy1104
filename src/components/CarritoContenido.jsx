@@ -2,109 +2,121 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { formatearPrecio, formatearCategoria } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
-import './CarritoContenido.css'
 
-// contenido del carrito
 function CarritoContenido() {
-  // usar el contexto del carrito
   const { carrito, subtotal } = useContext(CarritoContext)
   const navigate = useNavigate()
 
   if (carrito.length === 0) {
     return (
-      <section className="carrito-vacio">
-        <div className="carrito-vacio__contenedor">
-          <h2 className="carrito-vacio__titulo">Tu carrito está vacío</h2>
-          <p className="carrito-vacio__descripcion">Agrega productos para comenzar tu compra</p>
-          <Link to="/productos" className="boton boton--primario">
+      <div className="container py-5">
+        <div className="text-center">
+          <h2>Tu carrito está vacío</h2>
+          <p className="text-muted">Agrega productos para comenzar tu compra</p>
+          <Link to="/productos" className="btn btn-primary">
             Ver Productos
           </Link>
         </div>
-      </section>
+      </div>
     )
   }
 
   return (
-    <section className="carrito">
-      <div className="carrito__contenedor">
-        <h1 className="carrito__titulo">Carrito de Compras</h1>
+    <div className="container py-4">
+      <h1 className="mb-4">Carrito de Compras</h1>
 
-        <div className="carrito__grid">
-          {/* lista de productos */}
-          <div className="carrito__lista">
-            <div className="card carrito__card">
-              {carrito.map(item => (
-                <div key={item.id} className="carrito-item">
-                  <div className="carrito-item__imagen">
-                    <span>[Imagen]</span>
-                  </div>
-
-                  <div className="carrito-item__info">
-                    <h6 className="carrito-item__nombre">{item.nombre}</h6>
-                    <p className="carrito-item__categoria">
-                      {formatearCategoria(item.categoria)}
-                    </p>
-                  </div>
-
-                  <div className="carrito-item__precio">
-                    <p><strong>${formatearPrecio(item.precio_clp)}</strong></p>
-                    <small>c/u</small>
-                  </div>
-
-                  <div className="carrito-item__cantidad">
-                    <span className="carrito-item__cantidad-texto">
-                      Cantidad: {item.cantidad}
-                    </span>
-                  </div>
-
-                  <div className="carrito-item__total">
-                    <p><strong>${formatearPrecio(item.precio_clp * item.cantidad)}</strong></p>
-                  </div>
-                </div>
-              ))}
+      <div className="row g-4">
+        <div className="col-lg-8">
+          <div className="card">
+            <div className="card-body">
+              <table className="table table-striped mb-0">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {carrito.map(item => (
+                    <tr key={item.id}>
+                      <td>
+                        <div className="d-flex align-items-center gap-3">
+                          {item.imagen ? (
+                            <img src={item.imagen} alt={item.nombre} style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} />
+                          ) : (
+                            <div className="bg-light d-flex align-items-center justify-content-center" style={{width: '80px', height: '80px', borderRadius: '8px'}}>
+                              <span className="text-muted small">Sin imagen</span>
+                            </div>
+                          )}
+                          <div>
+                            <h6 className="mb-0">{item.nombre}</h6>
+                            <small className="text-muted">
+                              {formatearCategoria(item.categoria)}
+                            </small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <strong>${formatearPrecio(item.precio_clp)}</strong>
+                        <br />
+                        <small>c/u</small>
+                      </td>
+                      <td>
+                        <span>Cantidad: {item.cantidad}</span>
+                      </td>
+                      <td>
+                        <strong>${formatearPrecio(item.precio_clp * item.cantidad)}</strong>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
+        </div>
 
-          {/* resumen del pedido */}
-          <div className="carrito__resumen">
-            <div className="card carrito__resumen-card">
-              <h5 className="carrito__resumen-titulo">Resumen del Pedido</h5>
+        <div className="col-lg-4">
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Resumen del Pedido</h5>
 
-              <div className="carrito__resumen-item">
+              <div className="d-flex justify-content-between mb-2">
                 <span>Subtotal:</span>
                 <span>${formatearPrecio(subtotal)}</span>
               </div>
-              <div className="carrito__resumen-item">
+              <div className="d-flex justify-content-between mb-3">
                 <span>Envío:</span>
-                <span className="carrito__resumen-nota">A calcular</span>
+                <span className="text-muted">A calcular</span>
               </div>
 
-              <div className="carrito__resumen-divider"></div>
+              <hr />
 
-              <div className="carrito__resumen-total">
+              <div className="d-flex justify-content-between mb-3">
                 <strong>Total:</strong>
                 <strong>${formatearPrecio(subtotal)}</strong>
               </div>
 
-              <p className="carrito__resumen-texto">
+              <p className="text-muted small">
                 * El costo de envío se calculará según tu comuna en el checkout
               </p>
 
               <button
-                className="boton boton--primario boton--block"
+                className="btn btn-primary w-100 mb-2"
                 onClick={() => navigate('/checkout')}
               >
                 Proceder al Pago
               </button>
 
-              <Link to="/productos" className="boton boton--secundario boton--block">
+              <Link to="/productos" className="btn btn-outline-secondary w-100">
                 Seguir Comprando
               </Link>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 

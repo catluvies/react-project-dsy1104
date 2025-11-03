@@ -1,48 +1,54 @@
 import { Link, useLocation } from 'react-router-dom'
-import './AdminHeader.css'
 
 function AdminHeader() {
   const location = useLocation()
 
   const isActive = (path) => {
-    return location.pathname === path || location.pathname.startsWith(path + '/')
+    if (path === '/admin') {
+      return location.pathname === '/admin' || location.pathname === '/admin/dashboard'
+    }
+    return location.pathname.startsWith(path)
   }
 
   return (
-    <header className="admin-header">
-      <div className="admin-header__contenedor">
-        <Link to="/admin" className="admin-header__logo">
-          <h1>🏪 Admin - Mil Sabores</h1>
+    <nav className="navbar navbar-dark bg-dark border-bottom">
+      <div className="container-fluid">
+        <Link to="/admin" className="navbar-brand">
+          <h1 className="h4 mb-0">🏪 Admin - Mil Sabores</h1>
         </Link>
 
-        <nav className="admin-header__nav">
-          <Link 
-            to="/admin" 
-            className={`admin-header__link ${isActive('/admin') && !location.pathname.includes('/admin/ordenes') && !location.pathname.includes('/admin/productos') ? 'admin-header__link--active' : ''}`}
-          >
-            Dashboard
-          </Link>
-          <Link 
-            to="/admin/ordenes" 
-            className={`admin-header__link ${isActive('/admin/ordenes') ? 'admin-header__link--active' : ''}`}
-          >
-            Órdenes
-          </Link>
-          <Link 
-            to="/admin/productos" 
-            className={`admin-header__link ${isActive('/admin/productos') ? 'admin-header__link--active' : ''}`}
-          >
-            Productos
-          </Link>
-        </nav>
+        <ul className="nav nav-pills">
+          <li className="nav-item">
+            <Link
+              to="/admin"
+              className={`nav-link ${isActive('/admin') ? 'active' : 'text-light'}`}
+            >
+              Dashboard
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/admin/ordenes"
+              className={`nav-link ${isActive('/admin/ordenes') ? 'active' : 'text-light'}`}
+            >
+              Órdenes
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/admin/productos"
+              className={`nav-link ${isActive('/admin/productos') ? 'active' : 'text-light'}`}
+            >
+              Productos
+            </Link>
+          </li>
+        </ul>
 
-        <div className="admin-header__acciones">
-          <Link to="/" className="admin-header__volver">
-            ← Volver al sitio
-          </Link>
-        </div>
+        <Link to="/" className="btn btn-outline-light btn-sm">
+          ← Volver al sitio
+        </Link>
       </div>
-    </header>
+    </nav>
   )
 }
 

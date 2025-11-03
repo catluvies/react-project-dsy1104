@@ -5,19 +5,12 @@ import { obtenerCostoEnvioComuna } from '../utils/helpers'
 import { formatearPrecio } from '../utils/formateo'
 import { validarNombre, validarEmail, validarTelefono } from '../utils/validaciones'
 import { CarritoContext } from '../context/CarritoContext'
-import './CheckoutFormulario.css'
 
-// formulario para finalizar compra
 function CheckoutFormulario() {
-  // usar el carrito
   const { carrito, subtotal } = useContext(CarritoContext)
 
   const navigate = useNavigate()
-
-  // estado para la comuna
   const [comunaSeleccionada, setComunaSeleccionada] = useState('')
-
-  // datos del formulario
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -25,22 +18,16 @@ function CheckoutFormulario() {
     telefono: '',
     direccion: ''
   })
-
-  // errores del formulario
   const [errores, setErrores] = useState({})
 
-  // manejar cambios en inputs
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
-
-    // limpiar error si había
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }
   }
 
-  // validar formulario completo
   const validarFormulario = () => {
     const nuevosErrores = {}
 
@@ -74,15 +61,15 @@ function CheckoutFormulario() {
 
   if (carrito.length === 0) {
     return (
-      <section className="checkout-vacio">
-        <div className="checkout-vacio__contenedor">
-          <h2 className="checkout-vacio__titulo">No hay productos en tu carrito</h2>
-          <p className="checkout-vacio__descripcion">Agrega productos antes de proceder al checkout</p>
-          <Link to="/productos" className="boton boton--primario">
+      <div className="container py-5">
+        <div className="text-center">
+          <h2>No hay productos en tu carrito</h2>
+          <p className="text-muted">Agrega productos antes de proceder al checkout</p>
+          <Link to="/productos" className="btn btn-primary">
             Ver Productos
           </Link>
         </div>
-      </section>
+      </div>
     )
   }
 
@@ -90,210 +77,211 @@ function CheckoutFormulario() {
   const total = subtotal + costoEnvio
 
   return (
-    <section className="checkout">
-      <div className="checkout__contenedor">
-        <h1 className="checkout__titulo">Finalizar Compra</h1>
+    <div className="container py-4">
+      <h1 className="mb-4">Finalizar Compra</h1>
 
-        <form onSubmit={(e) => {
-          e.preventDefault()
-          if (!validarFormulario()) {
-            alert('Por favor, corrige los errores en el formulario')
-            return
-          }
-          navigate('/exito')
-        }}>
-          <div className="checkout__grid">
-            {/* formulario */}
-            <div className="checkout__formulario">
-              {/* información personal */}
-              <div className="card checkout__card">
-                <h5 className="checkout__card-titulo">Información Personal</h5>
-                <div className="checkout__card-contenido">
-                  <div className="checkout__fila">
-                    <div className="checkout__campo">
-                      <label className="checkout__label">Nombre *</label>
-                      <input
-                        type="text"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleChange}
-                        className={errores.nombre ? 'checkout__input--error' : ''}
-                      />
-                      {errores.nombre && <span className="checkout__error">{errores.nombre}</span>}
-                    </div>
-
-                    <div className="checkout__campo">
-                      <label className="checkout__label">Apellido *</label>
-                      <input
-                        type="text"
-                        name="apellido"
-                        value={formData.apellido}
-                        onChange={handleChange}
-                        className={errores.apellido ? 'checkout__input--error' : ''}
-                      />
-                      {errores.apellido && <span className="checkout__error">{errores.apellido}</span>}
-                    </div>
-                  </div>
-
-                  <div className="checkout__fila">
-                    <div className="checkout__campo">
-                      <label className="checkout__label">Email *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={errores.email ? 'checkout__input--error' : ''}
-                      />
-                      {errores.email && <span className="checkout__error">{errores.email}</span>}
-                    </div>
-
-                    <div className="checkout__campo">
-                      <label className="checkout__label">Teléfono</label>
-                      <input
-                        type="tel"
-                        name="telefono"
-                        value={formData.telefono}
-                        onChange={handleChange}
-                        placeholder="+56 9 1234 5678"
-                        className={errores.telefono ? 'checkout__input--error' : ''}
-                      />
-                      {errores.telefono && <span className="checkout__error">{errores.telefono}</span>}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* entrega */}
-              <div className="card checkout__card">
-                <h5 className="checkout__card-titulo">Información de Entrega</h5>
-                <div className="checkout__card-contenido">
-                  <div className="checkout__campo">
-                    <label className="checkout__label">Comuna (Región Metropolitana) *</label>
-                    <select
-                      name="comuna"
-                      value={comunaSeleccionada}
-                      onChange={(e) => {
-                        setComunaSeleccionada(e.target.value)
-                        if (errores.comuna) {
-                          setErrores({ ...errores, comuna: '' })
-                        }
-                      }}
-                      className={errores.comuna ? 'checkout__input--error' : ''}
-                    >
-                      <option value="">Selecciona tu comuna</option>
-                      {comunasData.map(comuna => (
-                        <option key={comuna.nombre} value={comuna.nombre}>
-                          {comuna.nombre} - Envío: ${formatearPrecio(comuna.costoEnvio)}
-                        </option>
-                      ))}
-                    </select>
-                    {errores.comuna && <span className="checkout__error">{errores.comuna}</span>}
-                    <small className="checkout__ayuda">El costo de envío se agregará según tu comuna</small>
-                  </div>
-
-                  <div className="checkout__campo">
-                    <label className="checkout__label">Dirección *</label>
+      <form onSubmit={(e) => {
+        e.preventDefault()
+        if (!validarFormulario()) {
+          alert('Por favor, corrige los errores en el formulario')
+          return
+        }
+        navigate('/exito')
+      }}>
+        <div className="row g-4">
+          <div className="col-lg-8">
+            <div className="card mb-4">
+              <div className="card-body">
+                <h5 className="card-title">Información Personal</h5>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label">Nombre *</label>
                     <input
                       type="text"
-                      name="direccion"
-                      value={formData.direccion}
+                      name="nombre"
+                      value={formData.nombre}
                       onChange={handleChange}
-                      placeholder="Calle, número, departamento"
-                      className={errores.direccion ? 'checkout__input--error' : ''}
+                      className={`form-control ${errores.nombre ? 'is-invalid' : ''}`}
                     />
-                    {errores.direccion && <span className="checkout__error">{errores.direccion}</span>}
-                  </div>
-                </div>
-              </div>
-
-              {/* método de pago */}
-              <div className="card checkout__card">
-                <h5 className="checkout__card-titulo">Método de Pago</h5>
-                <div className="checkout__card-contenido">
-                  <div className="checkout__radio">
-                    <input
-                      type="radio"
-                      name="metodoPago"
-                      value="tarjeta"
-                      defaultChecked
-                      id="tarjeta"
-                    />
-                    <label htmlFor="tarjeta">Tarjeta de Crédito/Débito</label>
+                    {errores.nombre && <div className="invalid-feedback">{errores.nombre}</div>}
                   </div>
 
-                  <div className="checkout__radio">
+                  <div className="col-md-6">
+                    <label className="form-label">Apellido *</label>
                     <input
-                      type="radio"
-                      name="metodoPago"
-                      value="transferencia"
-                      id="transferencia"
+                      type="text"
+                      name="apellido"
+                      value={formData.apellido}
+                      onChange={handleChange}
+                      className={`form-control ${errores.apellido ? 'is-invalid' : ''}`}
                     />
-                    <label htmlFor="transferencia">Transferencia Bancaria</label>
+                    {errores.apellido && <div className="invalid-feedback">{errores.apellido}</div>}
                   </div>
 
-                  <div className="checkout__radio">
+                  <div className="col-md-6">
+                    <label className="form-label">Email *</label>
                     <input
-                      type="radio"
-                      name="metodoPago"
-                      value="efectivo"
-                      id="efectivo"
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={`form-control ${errores.email ? 'is-invalid' : ''}`}
                     />
-                    <label htmlFor="efectivo">Efectivo (Pago contra entrega)</label>
+                    {errores.email && <div className="invalid-feedback">{errores.email}</div>}
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="form-label">Teléfono</label>
+                    <input
+                      type="tel"
+                      name="telefono"
+                      value={formData.telefono}
+                      onChange={handleChange}
+                      placeholder="+56 9 1234 5678"
+                      className={`form-control ${errores.telefono ? 'is-invalid' : ''}`}
+                    />
+                    {errores.telefono && <div className="invalid-feedback">{errores.telefono}</div>}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* resumen */}
-            <div className="checkout__resumen">
-              <div className="card checkout__resumen-card">
-                <h5 className="checkout__resumen-titulo">Resumen de Compra</h5>
+            <div className="card mb-4">
+              <div className="card-body">
+                <h5 className="card-title">Información de Entrega</h5>
+                <div className="mb-3">
+                  <label className="form-label">Comuna (Región Metropolitana) *</label>
+                  <select
+                    name="comuna"
+                    value={comunaSeleccionada}
+                    onChange={(e) => {
+                      setComunaSeleccionada(e.target.value)
+                      if (errores.comuna) {
+                        setErrores({ ...errores, comuna: '' })
+                      }
+                    }}
+                    className={`form-select ${errores.comuna ? 'is-invalid' : ''}`}
+                  >
+                    <option value="">Selecciona tu comuna</option>
+                    {comunasData.map(comuna => (
+                      <option key={comuna.nombre} value={comuna.nombre}>
+                        {comuna.nombre} - Envío: ${formatearPrecio(comuna.costoEnvio)}
+                      </option>
+                    ))}
+                  </select>
+                  {errores.comuna && <div className="invalid-feedback">{errores.comuna}</div>}
+                  <small className="form-text text-muted">El costo de envío se agregará según tu comuna</small>
+                </div>
 
-                {/* lista de productos del carrito */}
+                <div className="mb-3">
+                  <label className="form-label">Dirección *</label>
+                  <input
+                    type="text"
+                    name="direccion"
+                    value={formData.direccion}
+                    onChange={handleChange}
+                    placeholder="Calle, número, departamento"
+                    className={`form-control ${errores.direccion ? 'is-invalid' : ''}`}
+                  />
+                  {errores.direccion && <div className="invalid-feedback">{errores.direccion}</div>}
+                </div>
+              </div>
+            </div>
+
+            <div className="card mb-4">
+              <div className="card-body">
+                <h5 className="card-title">Método de Pago</h5>
+                <div className="form-check mb-2">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="metodoPago"
+                    value="tarjeta"
+                    defaultChecked
+                    id="tarjeta"
+                  />
+                  <label className="form-check-label" htmlFor="tarjeta">
+                    Tarjeta de Crédito/Débito
+                  </label>
+                </div>
+
+                <div className="form-check mb-2">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="metodoPago"
+                    value="transferencia"
+                    id="transferencia"
+                  />
+                  <label className="form-check-label" htmlFor="transferencia">
+                    Transferencia Bancaria
+                  </label>
+                </div>
+
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="metodoPago"
+                    value="efectivo"
+                    id="efectivo"
+                  />
+                  <label className="form-check-label" htmlFor="efectivo">
+                    Efectivo (Pago contra entrega)
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-4">
+            <div className="card position-sticky" style={{top: '20px'}}>
+              <div className="card-body">
+                <h5 className="card-title">Resumen de Compra</h5>
+
                 {carrito.map(item => (
-                  <div key={item.id} className="checkout__producto">
+                  <div key={item.id} className="d-flex justify-content-between mb-2 small">
                     <span>{item.nombre} x{item.cantidad}</span>
                     <span>${formatearPrecio(item.precio_clp * item.cantidad)}</span>
                   </div>
                 ))}
 
-                <div className="checkout__resumen-divider"></div>
+                <hr />
 
-                <div className="checkout__resumen-item">
+                <div className="d-flex justify-content-between mb-2">
                   <span>Subtotal:</span>
                   <span>${formatearPrecio(subtotal)}</span>
                 </div>
 
-                <div className="checkout__resumen-item">
+                <div className="d-flex justify-content-between mb-3">
                   <span>Envío:</span>
                   <span>
                     {comunaSeleccionada ? `$${formatearPrecio(costoEnvio)}` : 'Selecciona comuna'}
                   </span>
                 </div>
 
-                <div className="checkout__resumen-divider"></div>
+                <hr />
 
-                <div className="checkout__resumen-total">
+                <div className="d-flex justify-content-between mb-3">
                   <strong>Total:</strong>
                   <strong>${formatearPrecio(total)}</strong>
                 </div>
 
                 {!comunaSeleccionada && (
-                  <p className="checkout__resumen-nota">
+                  <p className="text-muted small">
                     * Selecciona tu comuna para calcular el envío
                   </p>
                 )}
 
-                <button type="submit" className="boton boton--primario boton--block">
+                <button type="submit" className="btn btn-primary w-100">
                   Confirmar Compra
                 </button>
               </div>
             </div>
           </div>
-        </form>
-      </div>
-    </section>
+        </div>
+      </form>
+    </div>
   )
 }
 

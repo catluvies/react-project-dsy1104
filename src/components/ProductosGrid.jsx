@@ -1,66 +1,68 @@
 import { Link } from 'react-router-dom'
 import { formatearPrecio, formatearCategoria } from '../utils/formateo'
 import { truncarTexto } from '../utils/helpers'
-import './ProductosGrid.css'
 
-// grilla de productos
 function ProductosGrid(props) {
-  // recibir productos como prop
   const productos = props.productos
 
   if (productos.length === 0) {
     return (
-      <div className="productos-grid-vacio">
-        <p>No se encontraron productos con los filtros aplicados.</p>
+      <div className="text-center py-5">
+        <p className="text-muted">No se encontraron productos con los filtros aplicados.</p>
       </div>
     )
   }
 
   return (
-    <div className="productos-grid">
+    <div className="row">
       {productos.map(producto => (
-        <Link
-          key={producto.id}
-          to={`/producto/${producto.id}`}
-          className="card card--hover producto-card"
-        >
-          <div className="producto-card__imagen">
+        <div key={producto.id} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+          <Link
+            to={`/producto/${producto.id}`}
+            className="card h-100 text-decoration-none"
+            style={{transition: 'transform 0.2s'}}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
             {producto.imagen ? (
-              <img 
-                src={producto.imagen} 
+              <img
+                src={producto.imagen}
                 alt={producto.nombre}
-                className="producto-card__img"
+                className="card-img-top img-fluid"
+                style={{height: '200px', objectFit: 'cover'}}
                 loading="lazy"
               />
             ) : (
-              <span className="producto-card__placeholder">[Imagen]</span>
+              <div className="card-img-top bg-light d-flex align-items-center justify-content-center" style={{height: '200px'}}>
+                <span className="text-muted">[Imagen]</span>
+              </div>
             )}
-          </div>
 
-          <div className="producto-card__contenido">
-            <span className="badge badge--primario producto-card__categoria">
-              {formatearCategoria(producto.categoria)}
-            </span>
-
-            <h3 className="producto-card__nombre">{producto.nombre}</h3>
-
-            <p className="producto-card__descripcion">
-              {truncarTexto(producto.descripcion, 80)}
-            </p>
-
-            <div className="producto-card__footer">
-              <span className="producto-card__precio">
-                ${formatearPrecio(producto.precio_clp)}
+            <div className="card-body d-flex flex-column">
+              <span className="badge bg-primary mb-2 align-self-start">
+                {formatearCategoria(producto.categoria)}
               </span>
-              {producto.stock === 0 && (
-                <span className="producto-card__sin-stock">Sin stock</span>
-              )}
-              {producto.stock > 0 && producto.stock <= 5 && (
-                <span className="producto-card__poco-stock">¡Pocas unidades!</span>
-              )}
+
+              <h5 className="card-title">{producto.nombre}</h5>
+
+              <p className="card-text text-muted small flex-grow-1">
+                {truncarTexto(producto.descripcion, 80)}
+              </p>
+
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <span className="fw-bold text-primary">
+                  ${formatearPrecio(producto.precio_clp)}
+                </span>
+                {producto.stock === 0 && (
+                  <span className="badge bg-danger">Sin stock</span>
+                )}
+                {producto.stock > 0 && producto.stock <= 5 && (
+                  <span className="badge bg-warning text-dark">¡Pocas unidades!</span>
+                )}
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        </div>
       ))}
     </div>
   )

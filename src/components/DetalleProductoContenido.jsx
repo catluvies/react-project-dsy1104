@@ -3,18 +3,13 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import productosData from '../data/productos.json'
 import { formatearPrecio, formatearCategoria } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
-import './DetalleProductoContenido.css'
 
-// detalle de producto
 function DetalleProductoContenido() {
-  // obtener el id desde la url
   const { id } = useParams()
   const navigate = useNavigate()
 
-  // usar el carrito
   const { agregarAlCarrito } = useContext(CarritoContext)
 
-  // estados del componente
   const [cantidad, setCantidad] = useState(1)
   const [mensajeAgregado, setMensajeAgregado] = useState(false)
 
@@ -22,12 +17,12 @@ function DetalleProductoContenido() {
 
   if (!producto) {
     return (
-      <section className="detalle-producto-error">
-        <div className="detalle-producto-error__contenedor">
-          <div className="detalle-producto-error__alerta">
+      <section className="py-5">
+        <div className="container text-center">
+          <div className="alert alert-danger" role="alert">
             Producto no encontrado
           </div>
-          <Link to="/productos" className="boton boton--primario">
+          <Link to="/productos" className="btn btn-primary">
             Volver a Productos
           </Link>
         </div>
@@ -51,60 +46,59 @@ function DetalleProductoContenido() {
   }
 
   return (
-    <section className="detalle-producto">
-      <div className="detalle-producto__contenedor">
-        {/* breadcrumb */}
-        <nav className="detalle-producto__breadcrumb">
-          <Link to="/">Inicio</Link>
-          <span> / </span>
-          <Link to="/productos">Productos</Link>
-          <span> / </span>
-          <span>{producto.nombre}</span>
+    <section className="py-5">
+      <div className="container">
+        <nav aria-label="breadcrumb" className="mb-4">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><Link to="/">Inicio</Link></li>
+            <li className="breadcrumb-item"><Link to="/productos">Productos</Link></li>
+            <li className="breadcrumb-item active" aria-current="page">{producto.nombre}</li>
+          </ol>
         </nav>
 
-        {/* mensaje de éxito */}
         {mensajeAgregado && (
-          <div className="alerta alerta--exito detalle-producto__mensaje">
+          <div className="alert alert-success alert-dismissible fade show" role="alert">
             Producto agregado al carrito
             <button
               type="button"
+              className="btn-close"
               onClick={() => setMensajeAgregado(false)}
-              className="detalle-producto__mensaje-cerrar"
-            >
-              ×
-            </button>
+              aria-label="Close"
+            ></button>
           </div>
         )}
 
-        {/* detalle del producto */}
-        <div className="detalle-producto__grid">
-          <div className="detalle-producto__imagen">
+        <div className="row">
+          <div className="col-md-6 mb-4">
             {producto.imagen ? (
-              <img 
-                src={producto.imagen} 
+              <img
+                src={producto.imagen}
                 alt={producto.nombre}
-                className="detalle-producto__img"
+                className="img-fluid rounded"
+                style={{objectFit: 'cover', width: '100%'}}
               />
             ) : (
-              <span className="detalle-producto__placeholder">[Imagen del producto]</span>
+              <div className="bg-light rounded d-flex align-items-center justify-content-center" style={{height: '400px'}}>
+                <span className="text-muted">[Imagen del producto]</span>
+              </div>
             )}
-            <span className="detalle-producto__id">ID: {producto.id}</span>
+            <p className="text-muted small mt-2">ID: {producto.id}</p>
           </div>
 
-          <div className="detalle-producto__info">
-            <span className="badge badge--primario detalle-producto__categoria">
+          <div className="col-md-6">
+            <span className="badge bg-primary mb-3">
               {formatearCategoria(producto.categoria)}
             </span>
 
-            <h1 className="detalle-producto__nombre">{producto.nombre}</h1>
+            <h1 className="mb-3">{producto.nombre}</h1>
 
-            <h2 className="detalle-producto__precio">
+            <h2 className="text-primary mb-4">
               ${formatearPrecio(producto.precio_clp)}
             </h2>
 
-            <p className="detalle-producto__descripcion">{producto.descripcion}</p>
+            <p className="mb-4">{producto.descripcion}</p>
 
-            <div className="detalle-producto__detalles">
+            <div className="mb-4">
               <p><strong>Ingredientes:</strong> {producto.ingredientes.join(', ')}</p>
               <p><strong>Porciones:</strong> {producto.porciones}</p>
               <p><strong>Peso:</strong> {producto.peso}</p>
@@ -112,33 +106,33 @@ function DetalleProductoContenido() {
               <p><strong>Tiempo de preparación:</strong> {producto.tiempo_preparacion}</p>
               <p>
                 <strong>Stock disponible:</strong>{' '}
-                <span className={`detalle-producto__stock ${producto.stock === 0 ? 'detalle-producto__stock--sin' : producto.stock <= 5 ? 'detalle-producto__stock--poco' : ''}`}>
+                <span className={producto.stock === 0 ? 'text-danger' : producto.stock <= 5 ? 'text-warning' : 'text-success'}>
                   {producto.stock} unidades
                 </span>
               </p>
             </div>
 
-            {/* mostrar opción de personalización si está disponible */}
             {producto.opcion_personalizacion && producto.opcion_personalizacion.disponible && (
-              <div className="detalle-producto__personalizacion">
-                <strong>✨ Este producto es personalizable</strong>
-                <p>Para personalizar tu pedido, contáctanos por WhatsApp:</p>
+              <div className="alert alert-info mb-4">
+                <strong>Este producto es personalizable</strong>
+                <p className="mb-0">Para personalizar tu pedido, contáctanos por WhatsApp:</p>
                 <a
                   href="https://wa.me/56912345678"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="detalle-producto__whatsapp"
+                  className="btn btn-success btn-sm mt-2"
                 >
-                  📱 +56 9 1234 5678
+                  +56 9 1234 5678
                 </a>
               </div>
             )}
 
-            {/* selector de cantidad */}
-            <div className="detalle-producto__cantidad">
-              <label><strong>Cantidad:</strong></label>
-              <div className="detalle-producto__cantidad-control">
+            <div className="mb-3">
+              <label className="form-label"><strong>Cantidad:</strong></label>
+              <div className="input-group" style={{maxWidth: '200px'}}>
                 <button
+                  className="btn btn-outline-secondary"
+                  type="button"
                   onClick={() => cantidad > 1 && setCantidad(cantidad - 1)}
                   disabled={cantidad <= 1}
                 >
@@ -146,12 +140,15 @@ function DetalleProductoContenido() {
                 </button>
                 <input
                   type="number"
+                  className="form-control text-center"
                   value={cantidad}
                   onChange={handleCantidadChange}
                   min="1"
                   max={producto.stock}
                 />
                 <button
+                  className="btn btn-outline-secondary"
+                  type="button"
                   onClick={() => cantidad < producto.stock && setCantidad(cantidad + 1)}
                   disabled={cantidad >= producto.stock}
                 >
@@ -160,12 +157,12 @@ function DetalleProductoContenido() {
               </div>
             </div>
 
-            <p className="detalle-producto__total">
-              <strong>Total:</strong> ${formatearPrecio(total)}
+            <p className="mb-3 fs-5">
+              <strong>Total:</strong> <span className="text-primary">${formatearPrecio(total)}</span>
             </p>
 
             <button
-              className="boton boton--primario boton--block"
+              className="btn btn-primary w-100 mb-3"
               onClick={handleAgregarCarrito}
               disabled={producto.stock === 0}
             >
@@ -173,7 +170,7 @@ function DetalleProductoContenido() {
             </button>
 
             <button
-              className="boton boton--secundario boton--block"
+              className="btn btn-secondary w-100"
               onClick={() => navigate('/productos')}
             >
               Seguir Comprando

@@ -1,46 +1,51 @@
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { CarritoContext } from '../context/CarritoContext'
-import './Header.css'
 
-// header principal de la página
 function Header() {
-  // usar el contexto del carrito
   const { totalItems } = useContext(CarritoContext)
 
   return (
-    <header className="header">
-      <div className="header__contenedor">
-        <Link to="/" className="header__logo">
-          <img 
-            src="/logo_sanic.jpg" 
-            alt="Logo Mil Sabores" 
-            className="header__logo-img"
+    <nav className="navbar navbar-expand-lg bg-pastel-cream border-bottom border-3">
+      <div className="container">
+        <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
+          <img
+            src="/logo_sanic.jpg"
+            alt="Logo Mil Sabores"
+            style={{width: '50px', height: '50px', borderRadius: '50%'}}
           />
-          <h1>Mil Sabores</h1>
+          <h1 className="h3 mb-0">Mil Sabores</h1>
         </Link>
 
-        <nav className="header__nav">
-          <Link to="/" className="header__link">Inicio</Link>
-          <Link to="/productos" className="header__link">Productos</Link>
-          <Link to="/categorias" className="header__link">Categorías</Link>
-          <Link to="/ofertas" className="header__link">Ofertas</Link>
-          <Link to="/blog" className="header__link">Blog</Link>
-          <Link to="/nosotros" className="header__link">Nosotros</Link>
-          <Link to="/contacto" className="header__link">Contacto</Link>
-        </nav>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-        <div className="header__acciones">
-          <Link to="/carrito" className="header__carrito">
-            🛒 Carrito
-            {totalItems > 0 && <span className="header__badge">{totalItems}</span>}
-          </Link>
-          <Link to="/login" className="header__login">
-            Ingresar
-          </Link>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav mx-auto">
+            <li className="nav-item"><Link to="/" className="nav-link">Inicio</Link></li>
+            <li className="nav-item"><Link to="/productos" className="nav-link">Productos</Link></li>
+            <li className="nav-item"><Link to="/categorias" className="nav-link">Categorías</Link></li>
+            <li className="nav-item"><Link to="/ofertas" className="nav-link">Ofertas</Link></li>
+            <li className="nav-item"><Link to="/blog" className="nav-link">Blog</Link></li>
+            <li className="nav-item"><Link to="/nosotros" className="nav-link">Nosotros</Link></li>
+            <li className="nav-item"><Link to="/contacto" className="nav-link">Contacto</Link></li>
+          </ul>
+
+          <div className="d-flex gap-2">
+            <Link to="/carrito" className="btn btn-outline-primary position-relative">
+              🛒 Carrito
+              {totalItems > 0 && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+            <Link to="/login" className="btn btn-primary">Ingresar</Link>
+          </div>
         </div>
       </div>
-    </header>
+    </nav>
   )
 }
 

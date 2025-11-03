@@ -1,12 +1,9 @@
-import './BlogHero.css'
-
-// hero del blog
 function BlogHero() {
   return (
-    <section className="blog-hero">
-      <div className="blog-hero__contenedor">
-        <h1 className="blog-hero__titulo">Blog</h1>
-        <p className="blog-hero__descripcion">
+    <section className="bg-primary text-white py-5">
+      <div className="container text-center">
+        <h1 className="display-4 fw-bold">Blog</h1>
+        <p className="lead">
           Historias, recetas y novedades de Mil Sabores
         </p>
       </div>

@@ -1,0 +1,172 @@
+:root {
+  --bs-primary: #8B4513;
+  --bs-primary-rgb: 139, 69, 19;
+  --bs-secondary: #FFB6C1;
+  --bs-secondary-rgb: 255, 182, 193;
+
+  --color-cafe-oscuro: #8B4513;
+  --color-cafe-muy-oscuro: #654321;
+  --color-cafe-claro: #D2B48C;
+  --color-rosa-pastel: #FFB6C1;
+  --color-rosa-claro: #FFC0CB;
+  --color-crema: #FFFDD0;
+  --color-whatsapp: #25D366;
+}
+
+body {
+  color: #333333;
+  background-color: #FFFFFF;
+}
+
+a:not(.btn):not(.navbar-brand):not(.nav-link) {
+  color: var(--color-cafe-oscuro);
+  text-decoration: none;
+}
+
+a:not(.btn):not(.navbar-brand):not(.nav-link):hover {
+  color: var(--color-cafe-muy-oscuro);
+  text-decoration: underline;
+}
+
+footer a {
+  color: #FFFDD0 !important;
+}
+
+footer a:hover {
+  color: #F5F5DC !important;
+}
+
+.btn {
+  text-decoration: none !important;
+}
+
+.btn-link {
+  color: var(--color-cafe-oscuro) !important;
+}
+
+.btn-link:hover {
+  color: var(--color-cafe-muy-oscuro) !important;
+}
+
+.navbar-brand {
+  color: var(--color-cafe-oscuro) !important;
+}
+
+.nav-link {
+  color: var(--color-cafe-oscuro) !important;
+}
+
+.nav-link:hover {
+  color: var(--color-cafe-muy-oscuro) !important;
+}
+
+.btn-outline-primary {
+  color: var(--color-cafe-oscuro) !important;
+  border-color: var(--color-cafe-oscuro) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-cafe-oscuro) !important;
+  border-color: var(--color-cafe-oscuro) !important;
+  color: white !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pacifico', cursive;
+}
+
+.bg-primary h1,
+.bg-primary h2,
+.bg-primary h3,
+.bg-primary h4,
+.bg-primary h5,
+.bg-primary h6 {
+  color: white;
+}
+
+section:not(.bg-primary) h1,
+section:not(.bg-primary) h2,
+section:not(.bg-primary) h3,
+section:not(.bg-primary) h4,
+section:not(.bg-primary) h5,
+section:not(.bg-primary) h6 {
+  color: var(--color-cafe-oscuro);
+}
+
+.btn-primary {
+  background-color: var(--color-cafe-oscuro);
+  border-color: var(--color-cafe-oscuro);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-cafe-muy-oscuro);
+  border-color: var(--color-cafe-muy-oscuro);
+}
+
+.btn-secondary {
+  background-color: var(--color-rosa-pastel);
+  border-color: var(--color-rosa-pastel);
+  color: var(--color-cafe-muy-oscuro);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-rosa-claro);
+  border-color: var(--color-rosa-claro);
+}
+
+.card {
+  border-color: var(--color-cafe-claro);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+}
+
+.bg-pastel-cream {
+  background-color: var(--color-crema);
+}
+
+.bg-pastel-pink {
+  background-color: #FFF0F5;
+}
+
+.text-cafe {
+  color: var(--color-cafe-oscuro);
+}
+
+main {
+  min-height: calc(100vh - 200px);
+}
+
+.admin-layout {
+  background-color: #F5F5F5;
+}
+
+.admin-content {
+  min-height: calc(100vh - 80px);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+  background-color: var(--color-cafe-oscuro);
+  border-radius: 50%;
+  padding: 15px;
+}
+
+.carousel-control-prev {
+  left: 15%;
+}
+
+.carousel-control-next {
+  right: 15%;
+}

@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import AdminHeader from './components/AdminHeader'
+import ScrollToTop from './components/ScrollToTop'
 
 // Páginas públicas
 import InicioPage from './pages/InicioPage'
@@ -30,9 +31,11 @@ import './App.css'
 function App() {
 
   return (
-    <Routes>
-      {/* Rutas públicas con Header y Footer normales */}
-      <Route path="/*" element={
+    <>
+      <ScrollToTop />
+      <Routes>
+        {/* Rutas públicas con Header y Footer normales */}
+        <Route path="/*" element={
         <>
           <Header />
           <main>
@@ -71,7 +74,8 @@ function App() {
           </main>
         </div>
       } />
-    </Routes>
+      </Routes>
+    </>
   )
 }
 

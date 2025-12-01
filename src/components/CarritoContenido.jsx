@@ -4,7 +4,7 @@ import { formatearPrecio, formatearCategoria } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
 
 function CarritoContenido() {
-  const { carrito, subtotal } = useContext(CarritoContext)
+  const { carrito, subtotal, actualizarCantidad, eliminarDelCarrito } = useContext(CarritoContext)
   const navigate = useNavigate()
 
   if (carrito.length === 0) {
@@ -36,6 +36,7 @@ function CarritoContenido() {
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Total</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -64,10 +65,33 @@ function CarritoContenido() {
                         <small>c/u</small>
                       </td>
                       <td>
-                        <span>Cantidad: {item.cantidad}</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <button
+                            className="btn btn-outline-secondary btn-sm"
+                            onClick={() => actualizarCantidad(item.id, item.cantidad - 1)}
+                            disabled={item.cantidad <= 1}
+                          >
+                            -
+                          </button>
+                          <span className="px-2">{item.cantidad}</span>
+                          <button
+                            className="btn btn-outline-secondary btn-sm"
+                            onClick={() => actualizarCantidad(item.id, item.cantidad + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
                       </td>
                       <td>
                         <strong>${formatearPrecio((item.precio || item.precio_clp) * item.cantidad)}</strong>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-outline-danger btn-sm"
+                          onClick={() => eliminarDelCarrito(item.id)}
+                        >
+                          Eliminar
+                        </button>
                       </td>
                     </tr>
                   ))}

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { formatearPrecio } from '../utils/formateo'
+import { productosService } from '../api/productosService'
 
 function InicioProductosDestacados(props) {
   const productos = props.productos || []
@@ -19,14 +20,16 @@ function InicioProductosDestacados(props) {
 
       <div id="productosCarousel" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
-          {productos.map((producto, index) => (
+          {productos.map((producto, index) => {
+            const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
+            return (
             <div key={producto.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
               <div className="row justify-content-center">
                 <div className="col-md-6">
                   <Link to={`/producto/${producto.id}`} className="text-decoration-none">
                     <div className="card border-2">
-                      {producto.imagen ? (
-                        <img src={producto.imagen} alt={producto.nombre} className="card-img-top" loading="lazy" style={{height: '300px', objectFit: 'cover'}} />
+                      {imagenUrl ? (
+                        <img src={imagenUrl} alt={producto.nombre} className="card-img-top" loading="lazy" style={{height: '300px', objectFit: 'cover'}} />
                       ) : (
                         <div className="card-img-top bg-light d-flex align-items-center justify-content-center" style={{height: '300px'}}>
                           <span className="text-muted">[Imagen]</span>
@@ -42,7 +45,8 @@ function InicioProductosDestacados(props) {
                 </div>
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
 
         <button className="carousel-control-prev" type="button" data-bs-target="#productosCarousel" data-bs-slide="prev">

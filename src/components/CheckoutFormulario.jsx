@@ -218,6 +218,27 @@ function CheckoutFormulario() {
                     />
                     {errores.telefono && <div className="invalid-feedback">{errores.telefono}</div>}
                   </div>
+
+                  <div className="col-md-6">
+                    <label className="form-label">RUT</label>
+                    <input
+                      type="text"
+                      value={usuario?.rut || ''}
+                      className="form-control"
+                      disabled
+                    />
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="form-label">Región</label>
+                    <input
+                      type="text"
+                      value="Región Metropolitana"
+                      className="form-control"
+                      disabled
+                    />
+                    <small className="text-muted">Solo operamos en la Región Metropolitana</small>
+                  </div>
                 </div>
               </div>
             </div>

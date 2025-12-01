@@ -138,9 +138,6 @@ function DetalleProductoContenido() {
               {producto.porciones && (
                 <p><strong>Porciones:</strong> {producto.porciones}</p>
               )}
-              {producto.peso && (
-                <p><strong>Peso:</strong> {producto.peso}</p>
-              )}
               {producto.duracion && (
                 <p><strong>Duración:</strong> {producto.duracion}</p>
               )}

@@ -2,7 +2,16 @@ import { Link } from 'react-router-dom'
 import { formatearPrecio } from '../utils/formateo'
 
 function InicioProductosDestacados(props) {
-  const productos = props.productos
+  const productos = props.productos || []
+
+  if (productos.length === 0) {
+    return (
+      <section className="container my-5">
+        <h2 className="text-center mb-5">Nuestros Mejores Productos</h2>
+        <p className="text-center text-muted">Cargando productos...</p>
+      </section>
+    )
+  }
 
   return (
     <section className="container my-5">
@@ -26,7 +35,7 @@ function InicioProductosDestacados(props) {
                       <div className="card-body text-center">
                         <h3 className="card-title h5 text-cafe">{producto.nombre}</h3>
                         <p className="card-text text-muted">{producto.descripcion}</p>
-                        <p className="fw-bold fs-4 text-cafe">${formatearPrecio(producto.precio_clp)}</p>
+                        <p className="fw-bold fs-4 text-cafe">${formatearPrecio(producto.precio)}</p>
                       </div>
                     </div>
                   </Link>

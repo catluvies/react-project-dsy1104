@@ -1,19 +1,26 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { validarEmail } from '../utils/validaciones'
+import { AuthContext } from '../context/AuthContext'
+import { ROLES } from '../api/usuariosService'
 
 function LoginFormulario() {
+  const navigate = useNavigate()
+  const { login } = useContext(AuthContext)
+
   const [formData, setFormData] = useState({ email: '', contrasena: '' })
   const [errores, setErrores] = useState({})
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
+  const [cargando, setCargando] = useState(false)
+  const [errorGeneral, setErrorGeneral] = useState('')
 
   const handleChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
+    const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
     if (errores[name]) {
       setErrores({ ...errores, [name]: '' })
     }
+    setErrorGeneral('')
   }
 
   const validarFormulario = () => {
@@ -28,10 +35,29 @@ function LoginFormulario() {
     return Object.keys(nuevosErrores).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validarFormulario()) return
-    alert('Login exitoso (simulado)')
+
+    setCargando(true)
+    setErrorGeneral('')
+
+    try {
+      const usuario = await login(formData.email, formData.contrasena)
+
+      if (usuario.rol === ROLES.ADMIN) {
+        navigate('/admin/dashboard')
+      } else if (usuario.rol === ROLES.VENDEDOR) {
+        navigate('/admin/ordenes')
+      } else {
+        navigate('/')
+      }
+    } catch (error) {
+      const mensaje = error.response?.data?.mensaje || 'Error al iniciar sesión. Verifica tus credenciales.'
+      setErrorGeneral(mensaje)
+    } finally {
+      setCargando(false)
+    }
   }
 
   return (
@@ -43,6 +69,12 @@ function LoginFormulario() {
               <div className="card-body p-4">
                 <h2 className="card-title text-center mb-4">Iniciar Sesión</h2>
 
+                {errorGeneral && (
+                  <div className="alert alert-danger" role="alert">
+                    {errorGeneral}
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label className="form-label">Email *</label>
@@ -52,6 +84,7 @@ function LoginFormulario() {
                       value={formData.email}
                       onChange={handleChange}
                       className={`form-control ${errores.email ? 'is-invalid' : ''}`}
+                      disabled={cargando}
                     />
                     {errores.email && <div className="invalid-feedback">{errores.email}</div>}
                   </div>
@@ -65,24 +98,33 @@ function LoginFormulario() {
                         value={formData.contrasena}
                         onChange={handleChange}
                         className={`form-control ${errores.contrasena ? 'is-invalid' : ''}`}
+                        disabled={cargando}
                       />
                       <button
                         type="button"
                         onClick={() => setMostrarContrasena(!mostrarContrasena)}
                         className="btn btn-outline-secondary"
+                        disabled={cargando}
                       >
-                        👁️
+                        {mostrarContrasena ? '🙈' : '👁️'}
                       </button>
                       {errores.contrasena && <div className="invalid-feedback">{errores.contrasena}</div>}
                     </div>
                   </div>
 
-                  <div className="mb-3 text-end">
-                    <a href="#" className="text-decoration-none">¿Olvidaste tu contraseña?</a>
-                  </div>
-
-                  <button type="submit" className="btn btn-primary w-100 mb-3">
-                    Iniciar Sesión
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-100 mb-3"
+                    disabled={cargando}
+                  >
+                    {cargando ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                        Iniciando sesión...
+                      </>
+                    ) : (
+                      'Iniciar Sesión'
+                    )}
                   </button>
 
                   <div className="text-center">

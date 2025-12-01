@@ -1,26 +1,56 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import productosData from '../data/productos.json'
-import { formatearPrecio, formatearCategoria } from '../utils/formateo'
+import { formatearPrecio } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
+import { productosService } from '../api/productosService'
 
 function DetalleProductoContenido() {
   const { id } = useParams()
   const navigate = useNavigate()
-
   const { agregarAlCarrito } = useContext(CarritoContext)
 
+  const [producto, setProducto] = useState(null)
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState(null)
   const [cantidad, setCantidad] = useState(1)
   const [mensajeAgregado, setMensajeAgregado] = useState(false)
 
-  const producto = productosData.find(p => p.id === id)
+  useEffect(() => {
+    cargarProducto()
+  }, [id])
 
-  if (!producto) {
+  const cargarProducto = async () => {
+    try {
+      setCargando(true)
+      const data = await productosService.obtenerPorId(id)
+      setProducto(data)
+    } catch (err) {
+      setError('Producto no encontrado')
+      console.error(err)
+    } finally {
+      setCargando(false)
+    }
+  }
+
+  if (cargando) {
+    return (
+      <section className="py-5">
+        <div className="container text-center">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Cargando...</span>
+          </div>
+          <p className="mt-3 text-muted">Cargando producto...</p>
+        </div>
+      </section>
+    )
+  }
+
+  if (error || !producto) {
     return (
       <section className="py-5">
         <div className="container text-center">
           <div className="alert alert-danger" role="alert">
-            Producto no encontrado
+            {error || 'Producto no encontrado'}
           </div>
           <Link to="/productos" className="btn btn-primary">
             Volver a Productos
@@ -30,13 +60,15 @@ function DetalleProductoContenido() {
     )
   }
 
+  const precio = producto.precio || 0
+  const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
+  const total = precio * cantidad
+
   const handleAgregarCarrito = () => {
     agregarAlCarrito(producto, cantidad)
     setMensajeAgregado(true)
     setTimeout(() => setMensajeAgregado(false), 3000)
   }
-
-  const total = producto.precio_clp * cantidad
 
   const handleCantidadChange = (e) => {
     const valor = parseInt(e.target.value)
@@ -70,40 +102,51 @@ function DetalleProductoContenido() {
 
         <div className="row">
           <div className="col-md-6 mb-4">
-            {producto.imagen ? (
+            {imagenUrl ? (
               <img
-                src={producto.imagen}
+                src={imagenUrl}
                 alt={producto.nombre}
                 className="img-fluid rounded"
                 style={{objectFit: 'cover', width: '100%'}}
               />
             ) : (
               <div className="bg-light rounded d-flex align-items-center justify-content-center" style={{height: '400px'}}>
-                <span className="text-muted">[Imagen del producto]</span>
+                <span className="text-muted">Sin imagen</span>
               </div>
             )}
-            <p className="text-muted small mt-2">ID: {producto.id}</p>
           </div>
 
           <div className="col-md-6">
-            <span className="badge bg-primary mb-3">
-              {formatearCategoria(producto.categoria)}
-            </span>
+            {producto.categoriaNombre && (
+              <span className="badge bg-primary mb-3">
+                {producto.categoriaNombre}
+              </span>
+            )}
 
             <h1 className="mb-3">{producto.nombre}</h1>
 
             <h2 className="text-primary mb-4">
-              ${formatearPrecio(producto.precio_clp)}
+              ${formatearPrecio(precio)}
             </h2>
 
             <p className="mb-4">{producto.descripcion}</p>
 
             <div className="mb-4">
-              <p><strong>Ingredientes:</strong> {producto.ingredientes.join(', ')}</p>
-              <p><strong>Porciones:</strong> {producto.porciones}</p>
-              <p><strong>Peso:</strong> {producto.peso}</p>
-              <p><strong>Duración:</strong> {producto.duracion}</p>
-              <p><strong>Tiempo de preparación:</strong> {producto.tiempo_preparacion}</p>
+              {producto.ingredientes && (
+                <p><strong>Ingredientes:</strong> {producto.ingredientes}</p>
+              )}
+              {producto.porciones && (
+                <p><strong>Porciones:</strong> {producto.porciones}</p>
+              )}
+              {producto.peso && (
+                <p><strong>Peso:</strong> {producto.peso}</p>
+              )}
+              {producto.duracion && (
+                <p><strong>Duración:</strong> {producto.duracion}</p>
+              )}
+              {producto.tiempoPreparacion && (
+                <p><strong>Tiempo de preparación:</strong> {producto.tiempoPreparacion}</p>
+              )}
               <p>
                 <strong>Stock disponible:</strong>{' '}
                 <span className={producto.stock === 0 ? 'text-danger' : producto.stock <= 5 ? 'text-warning' : 'text-success'}>
@@ -112,18 +155,9 @@ function DetalleProductoContenido() {
               </p>
             </div>
 
-            {producto.opcion_personalizacion && producto.opcion_personalizacion.disponible && (
+            {producto.notas && (
               <div className="alert alert-info mb-4">
-                <strong>Este producto es personalizable</strong>
-                <p className="mb-0">Para personalizar tu pedido, contáctanos por WhatsApp:</p>
-                <a
-                  href="https://wa.me/56912345678"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-success btn-sm mt-2"
-                >
-                  +56 9 1234 5678
-                </a>
+                <strong>Información:</strong> {producto.notas}
               </div>
             )}
 

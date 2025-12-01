@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom'
-import { formatearPrecio, formatearCategoria } from '../utils/formateo'
+import { formatearPrecio } from '../utils/formateo'
 import { truncarTexto } from '../utils/helpers'
+import { productosService } from '../api/productosService'
 
-function ProductosGrid(props) {
-  const productos = props.productos
-
+function ProductosGrid({ productos }) {
   if (productos.length === 0) {
     return (
       <div className="text-center py-5">
@@ -15,55 +14,62 @@ function ProductosGrid(props) {
 
   return (
     <div className="row">
-      {productos.map(producto => (
-        <div key={producto.id} className="col-sm-6 col-md-4 col-lg-3 mb-4">
-          <Link
-            to={`/producto/${producto.id}`}
-            className="card h-100 text-decoration-none"
-            style={{transition: 'transform 0.2s'}}
-            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
-            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            {producto.imagen ? (
-              <img
-                src={producto.imagen}
-                alt={producto.nombre}
-                className="card-img-top img-fluid"
-                style={{height: '200px', objectFit: 'cover'}}
-                loading="lazy"
-              />
-            ) : (
-              <div className="card-img-top bg-light d-flex align-items-center justify-content-center" style={{height: '200px'}}>
-                <span className="text-muted">[Imagen]</span>
-              </div>
-            )}
+      {productos.map(producto => {
+        const precio = producto.precio || producto.precio_clp || 0
+        const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
 
-            <div className="card-body d-flex flex-column">
-              <span className="badge bg-primary mb-2 align-self-start">
-                {formatearCategoria(producto.categoria)}
-              </span>
+        return (
+          <div key={producto.id} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <Link
+              to={`/producto/${producto.id}`}
+              className="card h-100 text-decoration-none"
+              style={{transition: 'transform 0.2s'}}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              {imagenUrl ? (
+                <img
+                  src={imagenUrl}
+                  alt={producto.nombre}
+                  className="card-img-top img-fluid"
+                  style={{height: '200px', objectFit: 'cover'}}
+                  loading="lazy"
+                />
+              ) : (
+                <div className="card-img-top bg-light d-flex align-items-center justify-content-center" style={{height: '200px'}}>
+                  <span className="text-muted">Sin imagen</span>
+                </div>
+              )}
 
-              <h5 className="card-title">{producto.nombre}</h5>
-
-              <p className="card-text text-muted small flex-grow-1">
-                {truncarTexto(producto.descripcion, 80)}
-              </p>
-
-              <div className="d-flex justify-content-between align-items-center mt-2">
-                <span className="fw-bold text-primary">
-                  ${formatearPrecio(producto.precio_clp)}
-                </span>
-                {producto.stock === 0 && (
-                  <span className="badge bg-danger">Sin stock</span>
+              <div className="card-body d-flex flex-column">
+                {producto.categoriaNombre && (
+                  <span className="badge bg-primary mb-2 align-self-start">
+                    {producto.categoriaNombre}
+                  </span>
                 )}
-                {producto.stock > 0 && producto.stock <= 5 && (
-                  <span className="badge bg-warning text-dark">¡Pocas unidades!</span>
-                )}
+
+                <h5 className="card-title">{producto.nombre}</h5>
+
+                <p className="card-text text-muted small flex-grow-1">
+                  {truncarTexto(producto.descripcion, 80)}
+                </p>
+
+                <div className="d-flex justify-content-between align-items-center mt-2">
+                  <span className="fw-bold text-primary">
+                    ${formatearPrecio(precio)}
+                  </span>
+                  {producto.stock === 0 && (
+                    <span className="badge bg-danger">Sin stock</span>
+                  )}
+                  {producto.stock > 0 && producto.stock <= 5 && (
+                    <span className="badge bg-warning text-dark">Pocas unidades</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </Link>
-        </div>
-      ))}
+            </Link>
+          </div>
+        )
+      })}
     </div>
   )
 }

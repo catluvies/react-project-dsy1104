@@ -1,12 +1,4 @@
-import { formatearCategoria } from '../utils/formateo'
-
-function ProductosFiltros(props) {
-  const busqueda = props.busqueda
-  const onBusquedaChange = props.onBusquedaChange
-  const categoriaFiltro = props.categoriaFiltro
-  const onCategoriaChange = props.onCategoriaChange
-  const categorias = props.categorias
-
+function ProductosFiltros({ busqueda, onBusquedaChange, categoriaFiltro, onCategoriaChange, categorias }) {
   return (
     <div className="row mb-4">
       <div className="col-md-6 mb-3 mb-md-0">
@@ -27,8 +19,8 @@ function ProductosFiltros(props) {
         >
           <option value="todas">Todas las categorías</option>
           {categorias.map(categoria => (
-            <option key={categoria} value={categoria}>
-              {formatearCategoria(categoria)}
+            <option key={categoria.id} value={categoria.id}>
+              {categoria.nombre}
             </option>
           ))}
         </select>

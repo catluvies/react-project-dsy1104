@@ -1,9 +1,17 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { CarritoContext } from '../context/CarritoContext'
+import { AuthContext } from '../context/AuthContext'
 
 function Header() {
   const { totalItems } = useContext(CarritoContext)
+  const { usuario, logout, isAdmin, isVendedor } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-pastel-cream border-bottom border-3">
@@ -32,7 +40,7 @@ function Header() {
             <li className="nav-item"><Link to="/contacto" className="nav-link">Contacto</Link></li>
           </ul>
 
-          <div className="d-flex gap-2">
+          <div className="d-flex gap-2 align-items-center">
             <Link to="/carrito" className="btn btn-outline-primary position-relative">
               🛒 Carrito
               {totalItems > 0 && (
@@ -41,7 +49,49 @@ function Header() {
                 </span>
               )}
             </Link>
-            <Link to="/login" className="btn btn-primary">Ingresar</Link>
+
+            {usuario ? (
+              <div className="dropdown">
+                <button
+                  className="btn btn-primary dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {usuario.nombre}
+                </button>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  {(isAdmin() || isVendedor()) && (
+                    <>
+                      <li>
+                        <Link to="/admin/dashboard" className="dropdown-item">
+                          Panel Admin
+                        </Link>
+                      </li>
+                      <li><hr className="dropdown-divider" /></li>
+                    </>
+                  )}
+                  <li>
+                    <Link to="/perfil" className="dropdown-item">
+                      Mi Perfil
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/mis-compras" className="dropdown-item">
+                      Mis Compras
+                    </Link>
+                  </li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li>
+                    <button onClick={handleLogout} className="dropdown-item text-danger">
+                      Cerrar Sesión
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/login" className="btn btn-primary">Ingresar</Link>
+            )}
           </div>
         </div>
       </div>

@@ -1,29 +1,82 @@
-import { useState } from 'react'
-import productosData from '../data/productos.json'
+import { useState, useEffect, useContext, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
+import { productosService } from '../api/productosService'
+import { categoriasService } from '../api/categoriasService'
+import { formatearPrecio } from '../utils/formateo'
 
 function AdminProducts() {
-  const [productos] = useState(productosData)
+  const { isAdmin, isVendedor, isAuthenticated } = useContext(AuthContext)
+  const navigate = useNavigate()
+  const fileInputRef = useRef(null)
+
+  const [productos, setProductos] = useState([])
+  const [categorias, setCategorias] = useState([])
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState(null)
+
   const [filtroCategoria, setFiltroCategoria] = useState('todas')
   const [filtroStock, setFiltroStock] = useState('todos')
+  const [busqueda, setBusqueda] = useState('')
 
-  const categorias = ['todas', ...Array.from(new Set(productos.map(p => p.categoria)))]
+  const [modalAbierto, setModalAbierto] = useState(false)
+  const [productoEditando, setProductoEditando] = useState(null)
+  const [imagenSeleccionada, setImagenSeleccionada] = useState(null)
+  const [previewImagen, setPreviewImagen] = useState(null)
+  const [guardando, setGuardando] = useState(false)
+  const [erroresForm, setErroresForm] = useState({})
 
-  const formatCategoria = (categoria) => {
-    return categoria.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+  const [formData, setFormData] = useState({
+    nombre: '',
+    descripcion: '',
+    precio: '',
+    stock: '',
+    categoriaId: '',
+    activo: true
+  })
+
+  useEffect(() => {
+    if (!isAuthenticated() || (!isAdmin() && !isVendedor())) {
+      navigate('/')
+      return
+    }
+    cargarDatos()
+  }, [])
+
+  const cargarDatos = async () => {
+    try {
+      setCargando(true)
+      const [productosData, categoriasData] = await Promise.all([
+        productosService.obtenerTodos(),
+        categoriasService.obtenerTodas()
+      ])
+      setProductos(productosData)
+      setCategorias(categoriasData)
+    } catch (err) {
+      console.error('Error cargando datos:', err)
+      setError('Error al cargar los productos')
+    } finally {
+      setCargando(false)
+    }
   }
 
   const productosFiltrados = productos.filter(producto => {
-    const categoriaMatch = filtroCategoria === 'todas' || producto.categoria === filtroCategoria
+    const categoriaMatch = filtroCategoria === 'todas' ||
+      producto.categoriaId?.toString() === filtroCategoria
+
     const stockMatch = filtroStock === 'todos' ||
       (filtroStock === 'con-stock' && producto.stock > 0) ||
       (filtroStock === 'sin-stock' && producto.stock === 0) ||
       (filtroStock === 'stock-bajo' && producto.stock > 0 && producto.stock < 5)
 
-    return categoriaMatch && stockMatch
+    const busquedaMatch = !busqueda.trim() ||
+      producto.nombre?.toLowerCase().includes(busqueda.toLowerCase())
+
+    return categoriaMatch && stockMatch && busquedaMatch
   })
 
   const productosOrdenados = [...productosFiltrados].sort((a, b) =>
-    a.nombre.localeCompare(b.nombre)
+    (a.nombre || '').localeCompare(b.nombre || '')
   )
 
   const getStockBadge = (stock) => {
@@ -33,126 +86,469 @@ function AdminProducts() {
     return { badge: 'bg-success', text: 'Stock alto' }
   }
 
+  const abrirModalNuevo = () => {
+    setProductoEditando(null)
+    setFormData({
+      nombre: '',
+      descripcion: '',
+      precio: '',
+      stock: '',
+      categoriaId: categorias.length > 0 ? categorias[0].id.toString() : '',
+      activo: true
+    })
+    setImagenSeleccionada(null)
+    setPreviewImagen(null)
+    setErroresForm({})
+    setModalAbierto(true)
+  }
+
+  const abrirModalEditar = (producto) => {
+    setProductoEditando(producto)
+    setFormData({
+      nombre: producto.nombre || '',
+      descripcion: producto.descripcion || '',
+      precio: producto.precio?.toString() || '',
+      stock: producto.stock?.toString() || '',
+      categoriaId: producto.categoriaId?.toString() || '',
+      activo: producto.activo !== false
+    })
+    setImagenSeleccionada(null)
+    setPreviewImagen(producto.imagenUrl ? productosService.obtenerUrlImagen(producto.imagenUrl) : null)
+    setErroresForm({})
+    setModalAbierto(true)
+  }
+
+  const cerrarModal = () => {
+    setModalAbierto(false)
+    setProductoEditando(null)
+    setImagenSeleccionada(null)
+    setPreviewImagen(null)
+  }
+
+  const handleFormChange = (e) => {
+    const { name, value, type, checked } = e.target
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    })
+    if (erroresForm[name]) {
+      setErroresForm({ ...erroresForm, [name]: '' })
+    }
+  }
+
+  const handleImagenChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setErroresForm({ ...erroresForm, imagen: 'Solo se permiten archivos de imagen' })
+        return
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setErroresForm({ ...erroresForm, imagen: 'La imagen no puede superar 5MB' })
+        return
+      }
+      setImagenSeleccionada(file)
+      setPreviewImagen(URL.createObjectURL(file))
+      setErroresForm({ ...erroresForm, imagen: '' })
+    }
+  }
+
+  const validarFormulario = () => {
+    const nuevosErrores = {}
+
+    if (!formData.nombre || formData.nombre.trim().length < 2) {
+      nuevosErrores.nombre = 'El nombre es requerido (mínimo 2 caracteres)'
+    }
+
+    if (!formData.precio || isNaN(formData.precio) || Number(formData.precio) <= 0) {
+      nuevosErrores.precio = 'El precio debe ser un número mayor a 0'
+    }
+
+    if (formData.stock === '' || isNaN(formData.stock) || Number(formData.stock) < 0) {
+      nuevosErrores.stock = 'El stock debe ser un número igual o mayor a 0'
+    }
+
+    if (!formData.categoriaId) {
+      nuevosErrores.categoriaId = 'Debes seleccionar una categoría'
+    }
+
+    setErroresForm(nuevosErrores)
+    return Object.keys(nuevosErrores).length === 0
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!validarFormulario()) return
+
+    setGuardando(true)
+    try {
+      const productoData = {
+        nombre: formData.nombre.trim(),
+        descripcion: formData.descripcion?.trim() || null,
+        precio: Number(formData.precio),
+        stock: Number(formData.stock),
+        categoriaId: Number(formData.categoriaId),
+        activo: formData.activo
+      }
+
+      if (productoEditando) {
+        await productosService.actualizar(productoEditando.id, productoData, imagenSeleccionada)
+      } else {
+        await productosService.crear(productoData, imagenSeleccionada)
+      }
+
+      cerrarModal()
+      await cargarDatos()
+    } catch (err) {
+      console.error('Error guardando producto:', err)
+      const msg = err.response?.data?.mensaje || 'Error al guardar el producto'
+      setErroresForm({ general: msg })
+    } finally {
+      setGuardando(false)
+    }
+  }
+
+  const handleEliminar = async (producto) => {
+    if (!confirm(`¿Estás seguro de eliminar "${producto.nombre}"?`)) return
+
+    try {
+      await productosService.eliminar(producto.id)
+      await cargarDatos()
+    } catch (err) {
+      console.error('Error eliminando producto:', err)
+      alert('Error al eliminar el producto')
+    }
+  }
+
+  if (cargando) {
+    return (
+      <div className="container py-4">
+        <h1 className="mb-4">Gestión de Productos</h1>
+        <div className="text-center py-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Cargando...</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="container py-4">
+        <h1 className="mb-4">Gestión de Productos</h1>
+        <div className="alert alert-danger">{error}</div>
+        <button onClick={cargarDatos} className="btn btn-primary">Reintentar</button>
+      </div>
+    )
+  }
+
   return (
     <div className="container py-4">
-      <div className="mb-4">
-        <h1 className="mb-3">Gestión de Productos</h1>
-
-        <div className="d-flex flex-wrap gap-2 mb-3">
-          <button className="btn btn-primary">
-            ✏️ Editar Productos
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="mb-0">Gestión de Productos</h1>
+        {isAdmin() && (
+          <button onClick={abrirModalNuevo} className="btn btn-primary">
+            + Nuevo Producto
           </button>
-          <button className="btn btn-primary">
-            📋 Ver Historial de Cambios
-          </button>
-        </div>
-
-        <div className="d-flex flex-wrap gap-2">
-          <select
-            value={filtroCategoria}
-            onChange={(e) => setFiltroCategoria(e.target.value)}
-            className="form-select"
-            style={{width: 'auto'}}
-          >
-            {categorias.map(categoria => (
-              <option key={categoria} value={categoria}>
-                {categoria === 'todas' ? 'Todas las categorías' : formatCategoria(categoria)}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={filtroStock}
-            onChange={(e) => setFiltroStock(e.target.value)}
-            className="form-select"
-            style={{width: 'auto'}}
-          >
-            <option value="todos">Todos los productos</option>
-            <option value="con-stock">Con stock</option>
-            <option value="sin-stock">Sin stock</option>
-            <option value="stock-bajo">Stock bajo</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <p className="text-muted">
-          Mostrando {productosOrdenados.length} de {productos.length} productos
-        </p>
-      </div>
-
-      <div className="row g-3">
-        {productosOrdenados.map((producto) => {
-          const stockInfo = getStockBadge(producto.stock)
-
-          return (
-            <div key={producto.id} className="col-12">
-              <div className="card">
-                <div className="card-body">
-                  <div className="d-flex justify-content-between align-items-start mb-3">
-                    <div>
-                      <h3 className="h5 mb-1">{producto.nombre}</h3>
-                      <span className="text-muted small">ID: {producto.id}</span>
-                    </div>
-                    <span className={`badge ${stockInfo.badge}`}>
-                      {stockInfo.text}
-                    </span>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="fs-4 fw-bold mb-2">
-                        ${producto.precio_clp.toLocaleString('es-CL')}
-                      </div>
-                      <div className="mb-2 text-muted">
-                        {formatCategoria(producto.categoria)}
-                      </div>
-                      <div className="mb-1">
-                        <strong>Stock:</strong> {producto.stock} unidades
-                      </div>
-                      <div className="mb-2">
-                        <strong>Porciones:</strong> {producto.porciones}
-                      </div>
-                    </div>
-
-                    <div className="col-md-6">
-                      <p className="text-muted">{producto.descripcion}</p>
-                    </div>
-                  </div>
-
-                  {producto.metadatos && (
-                    <div className="mt-3 pt-3 border-top">
-                      <h4 className="h6 mb-2">📋 Metadatos del Producto</h4>
-                      <div className="row g-2">
-                        <div className="col-md-6">
-                          <div className="small">
-                            <strong>Creado por:</strong> {producto.metadatos.creado_por}
-                            <div className="text-muted">{producto.metadatos.fecha_creacion}</div>
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="small">
-                            <strong>Último cambio por:</strong> {producto.metadatos.modificado_por}
-                            <div className="text-muted">{producto.metadatos.fecha_modificacion}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )
-        })}
-
-        {productosOrdenados.length === 0 && (
-          <div className="col-12">
-            <div className="alert alert-info text-center">
-              No hay productos con los filtros seleccionados
-            </div>
-          </div>
         )}
       </div>
+
+      <div className="card mb-4">
+        <div className="card-body">
+          <div className="row g-3">
+            <div className="col-md-4">
+              <input
+                type="text"
+                placeholder="Buscar producto..."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                className="form-control"
+              />
+            </div>
+            <div className="col-md-4">
+              <select
+                value={filtroCategoria}
+                onChange={(e) => setFiltroCategoria(e.target.value)}
+                className="form-select"
+              >
+                <option value="todas">Todas las categorías</option>
+                {categorias.map(cat => (
+                  <option key={cat.id} value={cat.id.toString()}>
+                    {cat.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-md-4">
+              <select
+                value={filtroStock}
+                onChange={(e) => setFiltroStock(e.target.value)}
+                className="form-select"
+              >
+                <option value="todos">Todos los productos</option>
+                <option value="con-stock">Con stock</option>
+                <option value="sin-stock">Sin stock</option>
+                <option value="stock-bajo">Stock bajo (menos de 5)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p className="text-muted mb-3">
+        Mostrando {productosOrdenados.length} de {productos.length} productos
+      </p>
+
+      <div className="table-responsive">
+        <table className="table table-hover">
+          <thead className="table-light">
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Estado</th>
+              {isAdmin() && <th>Acciones</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {productosOrdenados.map(producto => {
+              const stockInfo = getStockBadge(producto.stock)
+              const imagenUrl = producto.imagenUrl ? productosService.obtenerUrlImagen(producto.imagenUrl) : null
+
+              return (
+                <tr key={producto.id}>
+                  <td>
+                    {imagenUrl ? (
+                      <img
+                        src={imagenUrl}
+                        alt={producto.nombre}
+                        style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}
+                      />
+                    ) : (
+                      <div
+                        className="bg-light d-flex align-items-center justify-content-center"
+                        style={{ width: '50px', height: '50px', borderRadius: '4px' }}
+                      >
+                        <span className="text-muted small">N/A</span>
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    <strong>{producto.nombre}</strong>
+                    <br />
+                    <small className="text-muted">ID: {producto.id}</small>
+                  </td>
+                  <td>{producto.categoriaNombre || 'Sin categoría'}</td>
+                  <td>${formatearPrecio(producto.precio)}</td>
+                  <td>
+                    <span className={`badge ${stockInfo.badge}`}>
+                      {producto.stock} - {stockInfo.text}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`badge ${producto.activo ? 'bg-success' : 'bg-secondary'}`}>
+                      {producto.activo ? 'Activo' : 'Inactivo'}
+                    </span>
+                  </td>
+                  {isAdmin() && (
+                    <td>
+                      <button
+                        onClick={() => abrirModalEditar(producto)}
+                        className="btn btn-outline-primary btn-sm me-1"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleEliminar(producto)}
+                        className="btn btn-outline-danger btn-sm"
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {productosOrdenados.length === 0 && (
+        <div className="alert alert-info text-center">
+          No hay productos con los filtros seleccionados
+        </div>
+      )}
+
+      {modalAbierto && (
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">
+                  {productoEditando ? 'Editar Producto' : 'Nuevo Producto'}
+                </h5>
+                <button type="button" className="btn-close" onClick={cerrarModal}></button>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="modal-body">
+                  {erroresForm.general && (
+                    <div className="alert alert-danger">{erroresForm.general}</div>
+                  )}
+
+                  <div className="row g-3">
+                    <div className="col-md-8">
+                      <label className="form-label">Nombre *</label>
+                      <input
+                        type="text"
+                        name="nombre"
+                        value={formData.nombre}
+                        onChange={handleFormChange}
+                        className={`form-control ${erroresForm.nombre ? 'is-invalid' : ''}`}
+                        disabled={guardando}
+                      />
+                      {erroresForm.nombre && <div className="invalid-feedback">{erroresForm.nombre}</div>}
+                    </div>
+
+                    <div className="col-md-4">
+                      <label className="form-label">Categoría *</label>
+                      <select
+                        name="categoriaId"
+                        value={formData.categoriaId}
+                        onChange={handleFormChange}
+                        className={`form-select ${erroresForm.categoriaId ? 'is-invalid' : ''}`}
+                        disabled={guardando}
+                      >
+                        <option value="">Seleccionar...</option>
+                        {categorias.map(cat => (
+                          <option key={cat.id} value={cat.id.toString()}>
+                            {cat.nombre}
+                          </option>
+                        ))}
+                      </select>
+                      {erroresForm.categoriaId && <div className="invalid-feedback">{erroresForm.categoriaId}</div>}
+                    </div>
+
+                    <div className="col-12">
+                      <label className="form-label">Descripción</label>
+                      <textarea
+                        name="descripcion"
+                        value={formData.descripcion}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        rows="3"
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-4">
+                      <label className="form-label">Precio *</label>
+                      <div className="input-group">
+                        <span className="input-group-text">$</span>
+                        <input
+                          type="number"
+                          name="precio"
+                          value={formData.precio}
+                          onChange={handleFormChange}
+                          className={`form-control ${erroresForm.precio ? 'is-invalid' : ''}`}
+                          min="0"
+                          disabled={guardando}
+                        />
+                        {erroresForm.precio && <div className="invalid-feedback">{erroresForm.precio}</div>}
+                      </div>
+                    </div>
+
+                    <div className="col-md-4">
+                      <label className="form-label">Stock *</label>
+                      <input
+                        type="number"
+                        name="stock"
+                        value={formData.stock}
+                        onChange={handleFormChange}
+                        className={`form-control ${erroresForm.stock ? 'is-invalid' : ''}`}
+                        min="0"
+                        disabled={guardando}
+                      />
+                      {erroresForm.stock && <div className="invalid-feedback">{erroresForm.stock}</div>}
+                    </div>
+
+                    <div className="col-md-4">
+                      <label className="form-label">Estado</label>
+                      <div className="form-check mt-2">
+                        <input
+                          type="checkbox"
+                          name="activo"
+                          checked={formData.activo}
+                          onChange={handleFormChange}
+                          className="form-check-input"
+                          id="activoCheck"
+                          disabled={guardando}
+                        />
+                        <label className="form-check-label" htmlFor="activoCheck">
+                          Producto activo
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <label className="form-label">Imagen del producto</label>
+                      <div className="d-flex gap-3 align-items-start">
+                        {previewImagen && (
+                          <img
+                            src={previewImagen}
+                            alt="Preview"
+                            style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px' }}
+                          />
+                        )}
+                        <div>
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleImagenChange}
+                            accept="image/*"
+                            className="d-none"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="btn btn-outline-secondary"
+                            disabled={guardando}
+                          >
+                            {previewImagen ? 'Cambiar imagen' : 'Seleccionar imagen'}
+                          </button>
+                          {erroresForm.imagen && (
+                            <div className="text-danger small mt-1">{erroresForm.imagen}</div>
+                          )}
+                          <div className="text-muted small mt-1">
+                            JPG, PNG. Máximo 5MB.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={cerrarModal} disabled={guardando}>
+                    Cancelar
+                  </button>
+                  <button type="submit" className="btn btn-primary" disabled={guardando}>
+                    {guardando ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2"></span>
+                        Guardando...
+                      </>
+                    ) : (
+                      productoEditando ? 'Guardar Cambios' : 'Crear Producto'
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

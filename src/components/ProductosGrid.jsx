@@ -15,7 +15,7 @@ function ProductosGrid({ productos }) {
   return (
     <div className="row">
       {productos.map(producto => {
-        const precio = producto.precio || producto.precio_clp || 0
+        const precio = producto.precio || 0
         const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
 
         return (

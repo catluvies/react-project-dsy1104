@@ -68,7 +68,7 @@ export function CarritoProvider({ children }) {
   }
 
   const subtotal = carrito.reduce((total, item) => {
-    const precio = item.precio || item.precio_clp || 0
+    const precio = item.precio || 0
     return total + (precio * item.cantidad)
   }, 0)
 

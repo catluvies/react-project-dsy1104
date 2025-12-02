@@ -5,6 +5,21 @@ import { usuariosService } from '../api/usuariosService'
 import { comunasData } from '../data/comunas'
 import { validarNombre, validarEmail, validarTelefono, validarRut } from '../utils/validaciones'
 
+const AVATARES_DISPONIBLES = [
+  { id: 'cake', emoji: '🎂', nombre: 'Pastel' },
+  { id: 'cupcake', emoji: '🧁', nombre: 'Cupcake' },
+  { id: 'cookie', emoji: '🍪', nombre: 'Galleta' },
+  { id: 'donut', emoji: '🍩', nombre: 'Donut' },
+  { id: 'ice-cream', emoji: '🍦', nombre: 'Helado' },
+  { id: 'candy', emoji: '🍬', nombre: 'Caramelo' },
+  { id: 'chocolate', emoji: '🍫', nombre: 'Chocolate' },
+  { id: 'strawberry', emoji: '🍓', nombre: 'Fresa' },
+  { id: 'cherry', emoji: '🍒', nombre: 'Cereza' },
+  { id: 'heart', emoji: '💖', nombre: 'Corazon' },
+  { id: 'star', emoji: '⭐', nombre: 'Estrella' },
+  { id: 'chef', emoji: '👨‍🍳', nombre: 'Chef' }
+]
+
 function PerfilContenido() {
   const { usuario, isAuthenticated, logout } = useContext(AuthContext)
   const navigate = useNavigate()
@@ -23,6 +38,8 @@ function PerfilContenido() {
   const [guardando, setGuardando] = useState(false)
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' })
   const [modoEdicion, setModoEdicion] = useState(false)
+  const [avatarSeleccionado, setAvatarSeleccionado] = useState(null)
+  const [mostrarAvatares, setMostrarAvatares] = useState(false)
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -30,7 +47,26 @@ function PerfilContenido() {
       return
     }
     cargarPerfil()
+    const avatarGuardado = localStorage.getItem(`avatar_${usuario?.id}`)
+    if (avatarGuardado) {
+      setAvatarSeleccionado(avatarGuardado)
+    }
   }, [usuario])
+
+  const seleccionarAvatar = (avatarId) => {
+    setAvatarSeleccionado(avatarId)
+    localStorage.setItem(`avatar_${usuario?.id}`, avatarId)
+    setMostrarAvatares(false)
+    setMensaje({ tipo: 'success', texto: 'Avatar actualizado' })
+  }
+
+  const obtenerAvatarActual = () => {
+    if (avatarSeleccionado) {
+      const avatar = AVATARES_DISPONIBLES.find(a => a.id === avatarSeleccionado)
+      if (avatar) return avatar.emoji
+    }
+    return formData.nombre?.charAt(0)?.toUpperCase() || 'U'
+  }
 
   const cargarPerfil = async () => {
     if (!usuario?.id) return
@@ -152,14 +188,48 @@ function PerfilContenido() {
         <div className="col-lg-4 mb-4">
           <div className="card">
             <div className="card-body text-center">
-              <div
-                className="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center mb-3"
-                style={{ width: '100px', height: '100px' }}
-              >
-                <span className="text-white fs-1">
-                  {formData.nombre?.charAt(0)?.toUpperCase() || 'U'}
-                </span>
+              <div className="position-relative d-inline-block mb-3">
+                <div
+                  className="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center"
+                  style={{ width: '100px', height: '100px', cursor: 'pointer' }}
+                  onClick={() => setMostrarAvatares(!mostrarAvatares)}
+                  title="Cambiar avatar"
+                >
+                  <span className={avatarSeleccionado ? 'fs-1' : 'text-white fs-1'}>
+                    {obtenerAvatarActual()}
+                  </span>
+                </div>
+                <button
+                  className="btn btn-sm btn-outline-secondary position-absolute"
+                  style={{ bottom: '0', right: '-10px', borderRadius: '50%', padding: '2px 6px' }}
+                  onClick={() => setMostrarAvatares(!mostrarAvatares)}
+                  title="Cambiar avatar"
+                >
+                  ✏️
+                </button>
               </div>
+
+              {mostrarAvatares && (
+                <div className="card mb-3">
+                  <div className="card-body p-2">
+                    <p className="small text-muted mb-2">Selecciona tu avatar:</p>
+                    <div className="d-flex flex-wrap justify-content-center gap-2">
+                      {AVATARES_DISPONIBLES.map(avatar => (
+                        <button
+                          key={avatar.id}
+                          onClick={() => seleccionarAvatar(avatar.id)}
+                          className={`btn btn-sm ${avatarSeleccionado === avatar.id ? 'btn-primary' : 'btn-outline-secondary'}`}
+                          style={{ fontSize: '1.5rem', padding: '4px 8px' }}
+                          title={avatar.nombre}
+                        >
+                          {avatar.emoji}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <h4 className="card-title">{formData.nombre} {formData.apellido}</h4>
               <p className="text-muted">{formData.email}</p>
               <span className="badge bg-primary">{usuario?.rol?.replace('ROLE_', '')}</span>

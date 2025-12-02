@@ -1,12 +1,30 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { CarritoContext } from '../context/CarritoContext'
 import { AuthContext } from '../context/AuthContext'
+
+const AVATARES_MAP = {
+  'cake': '🎂', 'cupcake': '🧁', 'cookie': '🍪', 'donut': '🍩',
+  'ice-cream': '🍦', 'candy': '🍬', 'chocolate': '🍫', 'strawberry': '🍓',
+  'cherry': '🍒', 'heart': '💖', 'star': '⭐', 'chef': '👨‍🍳'
+}
 
 function Header() {
   const { totalItems } = useContext(CarritoContext)
   const { usuario, logout, isAdmin, isVendedor } = useContext(AuthContext)
   const navigate = useNavigate()
+  const [avatarEmoji, setAvatarEmoji] = useState(null)
+
+  useEffect(() => {
+    if (usuario?.id) {
+      const avatarGuardado = localStorage.getItem(`avatar_${usuario.id}`)
+      if (avatarGuardado && AVATARES_MAP[avatarGuardado]) {
+        setAvatarEmoji(AVATARES_MAP[avatarGuardado])
+      } else {
+        setAvatarEmoji(null)
+      }
+    }
+  }, [usuario])
 
   const handleLogout = () => {
     logout()
@@ -53,11 +71,12 @@ function Header() {
             {usuario ? (
               <div className="dropdown">
                 <button
-                  className="btn btn-primary dropdown-toggle"
+                  className="btn btn-primary dropdown-toggle d-flex align-items-center gap-2"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
+                  {avatarEmoji && <span>{avatarEmoji}</span>}
                   {usuario.nombre}
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end">

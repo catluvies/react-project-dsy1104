@@ -11,10 +11,10 @@ export const authService = {
     return response.data
   },
 
-  async cambiarPassword(passwordAnterior, passwordNuevo) {
+  async cambiarPassword(passwordActual, passwordNueva) {
     const response = await api.post('/auth/cambiar-password', {
-      passwordAnterior,
-      passwordNuevo
+      passwordActual,
+      passwordNueva
     })
     return response.data
   }

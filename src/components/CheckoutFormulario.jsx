@@ -113,7 +113,7 @@ function CheckoutFormulario() {
       const detalles = carrito.map(item => ({
         productoId: item.id,
         cantidad: item.cantidad,
-        precioUnitario: item.precio || item.precio_clp
+        precioUnitario: item.precio
       }))
 
       const fechaEntregaISO = new Date(fechaEntrega + 'T12:00:00').toISOString()
@@ -123,6 +123,7 @@ function CheckoutFormulario() {
         direccionEntrega: esRetiroTienda ? RETIRO_TIENDA.direccion : formData.direccion,
         comuna: comunaFinal,
         costoEnvio: costoEnvio || 0,
+        tipoEntrega: esRetiroTienda ? 'RETIRO' : 'DELIVERY',
         metodoPago,
         notasAdicionales: notas || null,
         fechaEntrega: fechaEntregaISO
@@ -432,7 +433,7 @@ function CheckoutFormulario() {
                 <h5 className="card-title">Resumen de Compra</h5>
 
                 {carrito.map(item => {
-                  const precio = item.precio || item.precio_clp || 0
+                  const precio = item.precio || 0
                   return (
                     <div key={item.id} className="d-flex justify-content-between mb-2 small">
                       <span>{item.nombre} x{item.cantidad}</span>

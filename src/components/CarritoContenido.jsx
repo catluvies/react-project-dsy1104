@@ -60,7 +60,7 @@ function CarritoContenido() {
                         </div>
                       </td>
                       <td>
-                        <strong>${formatearPrecio(item.precio || item.precio_clp)}</strong>
+                        <strong>${formatearPrecio(item.precio)}</strong>
                         <br />
                         <small>c/u</small>
                       </td>
@@ -83,7 +83,7 @@ function CarritoContenido() {
                         </div>
                       </td>
                       <td>
-                        <strong>${formatearPrecio((item.precio || item.precio_clp) * item.cantidad)}</strong>
+                        <strong>${formatearPrecio(item.precio * item.cantidad)}</strong>
                       </td>
                       <td>
                         <button

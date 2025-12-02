@@ -277,7 +277,7 @@ function AdminOrders() {
                   <p className="mb-0">{boletaSeleccionada.metodoPago}</p>
                 </div>
 
-                {isAdmin() && boletaSeleccionada.estado !== 'ENTREGADA' && boletaSeleccionada.estado !== 'CANCELADA' && (
+                {(isAdmin() || isVendedor()) && boletaSeleccionada.estado !== 'ENTREGADA' && boletaSeleccionada.estado !== 'CANCELADA' && (
                   <>
                     <hr />
                     <h6>Cambiar estado</h6>

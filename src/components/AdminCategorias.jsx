@@ -50,7 +50,7 @@ function AdminCategorias() {
   }
 
   const contarProductos = (categoriaId) => {
-    return productos.filter(p => p.categoriaId === categoriaId).length
+    return productos.filter(p => Number(p.categoriaId) === Number(categoriaId)).length
   }
 
   const abrirModalNuevo = () => {

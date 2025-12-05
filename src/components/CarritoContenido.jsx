@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
-import { formatearPrecio, formatearCategoria } from '../utils/formateo'
+import { formatearPrecio } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
+import { productosService } from '../api/productosService'
 
 function CarritoContenido() {
   const { carrito, subtotal, actualizarCantidad, eliminarDelCarrito } = useContext(CarritoContext)
@@ -40,12 +41,14 @@ function CarritoContenido() {
                   </tr>
                 </thead>
                 <tbody>
-                  {carrito.map(item => (
+                  {carrito.map(item => {
+                    const imagenUrl = productosService.obtenerUrlImagen(item.imagenUrl)
+                    return (
                     <tr key={item.id}>
                       <td>
                         <div className="d-flex align-items-center gap-3">
-                          {item.imagen ? (
-                            <img src={item.imagen} alt={item.nombre} style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} />
+                          {imagenUrl ? (
+                            <img src={imagenUrl} alt={item.nombre} style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} />
                           ) : (
                             <div className="bg-light d-flex align-items-center justify-content-center" style={{width: '80px', height: '80px', borderRadius: '8px'}}>
                               <span className="text-muted small">Sin imagen</span>
@@ -53,9 +56,11 @@ function CarritoContenido() {
                           )}
                           <div>
                             <h6 className="mb-0">{item.nombre}</h6>
-                            <small className="text-muted">
-                              {formatearCategoria(item.categoria)}
-                            </small>
+                            {item.categoriaNombre && (
+                              <small className="text-muted">
+                                Categoría: {item.categoriaNombre}
+                              </small>
+                            )}
                           </div>
                         </div>
                       </td>
@@ -94,7 +99,8 @@ function CarritoContenido() {
                         </button>
                       </td>
                     </tr>
-                  ))}
+                    )
+                  })}
                 </tbody>
               </table>
             </div>

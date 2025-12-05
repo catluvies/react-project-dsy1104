@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://api.anyararosso.com/api/v1'
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.anyararosso.com/api/v1'
 
 const api = axios.create({
   baseURL: API_URL,
@@ -9,7 +9,6 @@ const api = axios.create({
   }
 })
 
-// Interceptor para agregar token en cada request
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')
@@ -23,7 +22,6 @@ api.interceptors.request.use(
   }
 )
 
-// Interceptor para manejar errores de respuesta
 api.interceptors.response.use(
   (response) => response,
   (error) => {

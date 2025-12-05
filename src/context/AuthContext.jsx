@@ -9,11 +9,16 @@ export function AuthProvider({ children }) {
   const [cargando, setCargando] = useState(true)
 
   useEffect(() => {
-    const usuarioGuardado = localStorage.getItem('usuario')
-    const token = localStorage.getItem('token')
+    try {
+      const usuarioGuardado = localStorage.getItem('usuario')
+      const token = localStorage.getItem('token')
 
-    if (usuarioGuardado && token) {
-      setUsuario(JSON.parse(usuarioGuardado))
+      if (usuarioGuardado && token) {
+        setUsuario(JSON.parse(usuarioGuardado))
+      }
+    } catch (error) {
+      localStorage.removeItem('usuario')
+      localStorage.removeItem('token')
     }
     setCargando(false)
   }, [])

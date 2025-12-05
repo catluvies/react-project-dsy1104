@@ -46,10 +46,6 @@ function CheckoutFormulario() {
   const validarFormulario = () => {
     const nuevosErrores = {}
 
-    if (!isAuthenticated()) {
-      nuevosErrores.auth = 'Debes iniciar sesión para realizar una compra'
-    }
-
     if (!validarNombre(formData.nombre)) {
       nuevosErrores.nombre = 'Nombre inválido (mínimo 2 caracteres)'
     }
@@ -105,6 +101,10 @@ function CheckoutFormulario() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validarFormulario()) return
+    if (!usuario?.id) {
+      setErrorGeneral('Error: sesión no válida')
+      return
+    }
 
     setCargando(true)
     setErrorGeneral('')
@@ -140,19 +140,29 @@ function CheckoutFormulario() {
     }
   }
 
+  if (!isAuthenticated()) {
+    return (
+      <div className="container py-4">
+        <h1 className="mb-4">Finalizar Compra</h1>
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card text-center">
+              <div className="card-body py-5">
+                <h4 className="mb-3">Inicia sesión para continuar</h4>
+                <p className="text-muted mb-4">Necesitas una cuenta para finalizar tu compra</p>
+                <Link to="/login" className="btn btn-primary me-2">Iniciar Sesión</Link>
+                <Link to="/registro" className="btn btn-outline-primary">Registrarse</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="container py-4">
       <h1 className="mb-4">Finalizar Compra</h1>
-
-      {!isAuthenticated() && (
-        <div className="alert alert-warning mb-4">
-          <strong>Debes iniciar sesión para completar tu compra.</strong>
-          <div className="mt-2">
-            <Link to="/login" className="btn btn-primary btn-sm me-2">Iniciar Sesión</Link>
-            <Link to="/registro" className="btn btn-outline-primary btn-sm">Registrarse</Link>
-          </div>
-        </div>
-      )}
 
       {errorGeneral && (
         <div className="alert alert-danger" role="alert">
@@ -220,24 +230,7 @@ function CheckoutFormulario() {
                     {errores.telefono && <div className="invalid-feedback">{errores.telefono}</div>}
                   </div>
 
-                  <div className="col-md-6">
-                    <label className="form-label">RUT</label>
-                    <input
-                      type="text"
-                      value={usuario?.rut || ''}
-                      className="form-control"
-                      disabled
-                    />
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="form-label">Región</label>
-                    <input
-                      type="text"
-                      value="Región Metropolitana"
-                      className="form-control"
-                      disabled
-                    />
+                  <div className="col-12">
                     <small className="text-muted">Solo operamos en la Región Metropolitana</small>
                   </div>
                 </div>

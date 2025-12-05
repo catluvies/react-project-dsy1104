@@ -130,6 +130,10 @@ function PerfilContenido() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validarFormulario()) return
+    if (!usuario?.id) {
+      setMensaje({ tipo: 'danger', texto: 'Error: sesión no válida' })
+      return
+    }
 
     setGuardando(true)
     setMensaje({ tipo: '', texto: '' })
@@ -232,7 +236,7 @@ function PerfilContenido() {
 
               <h4 className="card-title">{formData.nombre} {formData.apellido}</h4>
               <p className="text-muted">{formData.email}</p>
-              <span className="badge bg-primary">{usuario?.rol?.replace('ROLE_', '')}</span>
+              <span className="badge bg-primary">{usuario?.rol?.replace('ROLE_', '') || 'Usuario'}</span>
             </div>
             <div className="list-group list-group-flush">
               <Link to="/mis-compras" className="list-group-item list-group-item-action">

@@ -4,8 +4,13 @@ export const CarritoContext = createContext()
 
 export function CarritoProvider({ children }) {
   const [carrito, setCarrito] = useState(() => {
-    const carritoGuardado = localStorage.getItem('carrito')
-    return carritoGuardado ? JSON.parse(carritoGuardado) : []
+    try {
+      const carritoGuardado = localStorage.getItem('carrito')
+      return carritoGuardado ? JSON.parse(carritoGuardado) : []
+    } catch (error) {
+      localStorage.removeItem('carrito')
+      return []
+    }
   })
 
   useEffect(() => {

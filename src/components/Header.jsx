@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect, useRef } from 'react'
 import { CarritoContext } from '../context/CarritoContext'
 import { AuthContext } from '../context/AuthContext'
 
@@ -14,6 +14,8 @@ function Header() {
   const { usuario, logout, isAdmin, isVendedor } = useContext(AuthContext)
   const navigate = useNavigate()
   const [avatarEmoji, setAvatarEmoji] = useState(null)
+  const [dropdownAbierto, setDropdownAbierto] = useState(false)
+  const dropdownRef = useRef(null)
 
   useEffect(() => {
     if (usuario?.id) {
@@ -25,6 +27,16 @@ function Header() {
       }
     }
   }, [usuario])
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownAbierto(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const handleLogout = () => {
     logout()
@@ -69,21 +81,21 @@ function Header() {
             </Link>
 
             {usuario ? (
-              <div className="dropdown">
+              <div className="dropdown" ref={dropdownRef}>
                 <button
                   className="btn btn-primary dropdown-toggle d-flex align-items-center gap-2"
                   type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  onClick={() => setDropdownAbierto(!dropdownAbierto)}
+                  aria-expanded={dropdownAbierto}
                 >
                   {avatarEmoji && <span>{avatarEmoji}</span>}
                   {usuario.nombre}
                 </button>
-                <ul className="dropdown-menu dropdown-menu-end">
+                <ul className={`dropdown-menu dropdown-menu-end ${dropdownAbierto ? 'show' : ''}`}>
                   {(isAdmin() || isVendedor()) && (
                     <>
                       <li>
-                        <Link to="/admin/dashboard" className="dropdown-item">
+                        <Link to="/admin/dashboard" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
                           Panel Admin
                         </Link>
                       </li>
@@ -91,12 +103,12 @@ function Header() {
                     </>
                   )}
                   <li>
-                    <Link to="/perfil" className="dropdown-item">
+                    <Link to="/perfil" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
                       Mi Perfil
                     </Link>
                   </li>
                   <li>
-                    <Link to="/mis-compras" className="dropdown-item">
+                    <Link to="/mis-compras" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
                       Mis Compras
                     </Link>
                   </li>

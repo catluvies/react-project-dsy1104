@@ -231,6 +231,21 @@ function AdminOrders() {
 
                 <div className="mb-3">
                   <h6>Entrega</h6>
+                  <p className="mb-1">
+                    <span className={`badge ${boletaSeleccionada.tipoEntrega === 'RETIRO' ? 'bg-info' : 'bg-primary'} me-2`}>
+                      {boletaSeleccionada.tipoEntrega === 'RETIRO' ? 'Retiro en tienda' : 'Delivery'}
+                    </span>
+                  </p>
+                  {boletaSeleccionada.fechaEntrega && (
+                    <p className="mb-1">
+                      <strong>Fecha:</strong> {new Date(boletaSeleccionada.fechaEntrega).toLocaleDateString('es-CL')}
+                    </p>
+                  )}
+                  {boletaSeleccionada.horarioEntrega && (
+                    <p className="mb-1">
+                      <strong>Horario:</strong> {boletaSeleccionada.horarioEntrega.replace('H_', '').replace('_', ':00 - ') + ':00'}
+                    </p>
+                  )}
                   <p className="mb-1">{boletaSeleccionada.direccionEntrega}</p>
                   <p className="mb-0 text-muted">{boletaSeleccionada.comunaEntrega}</p>
                 </div>

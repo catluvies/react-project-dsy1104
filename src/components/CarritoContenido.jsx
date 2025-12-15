@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
-import { formatearPrecio, formatearCategoria } from '../utils/formateo'
+import { formatearPrecio } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
+import { productosService } from '../api/productosService'
 
 function CarritoContenido() {
   const { carrito, subtotal, actualizarCantidad, eliminarDelCarrito } = useContext(CarritoContext)
@@ -40,61 +41,66 @@ function CarritoContenido() {
                   </tr>
                 </thead>
                 <tbody>
-                  {carrito.map(item => (
-                    <tr key={item.id}>
-                      <td>
-                        <div className="d-flex align-items-center gap-3">
-                          {item.imagen ? (
-                            <img src={item.imagen} alt={item.nombre} style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} />
-                          ) : (
-                            <div className="bg-light d-flex align-items-center justify-content-center" style={{width: '80px', height: '80px', borderRadius: '8px'}}>
-                              <span className="text-muted small">Sin imagen</span>
+                  {carrito.map(item => {
+                    const imagenUrl = productosService.obtenerUrlImagen(item.imagenUrl)
+                    return (
+                      <tr key={item.id}>
+                        <td>
+                          <div className="d-flex align-items-center gap-3">
+                            {imagenUrl ? (
+                              <img src={imagenUrl} alt={item.nombre} style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} />
+                            ) : (
+                              <div className="bg-light d-flex align-items-center justify-content-center" style={{width: '80px', height: '80px', borderRadius: '8px'}}>
+                                <span className="text-muted small">Sin imagen</span>
+                              </div>
+                            )}
+                            <div>
+                              <h6 className="mb-0">{item.nombre}</h6>
+                              {item.categoriaNombre && (
+                                <small className="text-muted">
+                                  {item.categoriaNombre}
+                                </small>
+                              )}
                             </div>
-                          )}
-                          <div>
-                            <h6 className="mb-0">{item.nombre}</h6>
-                            <small className="text-muted">
-                              {formatearCategoria(item.categoria)}
-                            </small>
                           </div>
-                        </div>
-                      </td>
-                      <td>
-                        <strong>${formatearPrecio(item.precio)}</strong>
-                        <br />
-                        <small>c/u</small>
-                      </td>
-                      <td>
-                        <div className="d-flex align-items-center gap-2">
+                        </td>
+                        <td>
+                          <strong>${formatearPrecio(item.precio)}</strong>
+                          <br />
+                          <small>c/u</small>
+                        </td>
+                        <td>
+                          <div className="d-flex align-items-center gap-2">
+                            <button
+                              className="btn btn-outline-secondary btn-sm"
+                              onClick={() => actualizarCantidad(item.id, item.cantidad - 1)}
+                              disabled={item.cantidad <= 1}
+                            >
+                              -
+                            </button>
+                            <span className="px-2">{item.cantidad}</span>
+                            <button
+                              className="btn btn-outline-secondary btn-sm"
+                              onClick={() => actualizarCantidad(item.id, item.cantidad + 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <strong>${formatearPrecio(item.precio * item.cantidad)}</strong>
+                        </td>
+                        <td>
                           <button
-                            className="btn btn-outline-secondary btn-sm"
-                            onClick={() => actualizarCantidad(item.id, item.cantidad - 1)}
-                            disabled={item.cantidad <= 1}
+                            className="btn btn-outline-danger btn-sm"
+                            onClick={() => eliminarDelCarrito(item.id)}
                           >
-                            -
+                            Eliminar
                           </button>
-                          <span className="px-2">{item.cantidad}</span>
-                          <button
-                            className="btn btn-outline-secondary btn-sm"
-                            onClick={() => actualizarCantidad(item.id, item.cantidad + 1)}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </td>
-                      <td>
-                        <strong>${formatearPrecio(item.precio * item.cantidad)}</strong>
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-outline-danger btn-sm"
-                          onClick={() => eliminarDelCarrito(item.id)}
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>

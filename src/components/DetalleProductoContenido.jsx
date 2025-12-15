@@ -132,17 +132,20 @@ function DetalleProductoContenido() {
             <p className="mb-4">{producto.descripcion}</p>
 
             <div className="mb-4">
+              {(producto.cantidadMedida || producto.unidadMedida) && (
+                <p><strong>Tamaño:</strong> {producto.cantidadMedida} {producto.unidadMedida}</p>
+              )}
               {producto.ingredientes && (
                 <p><strong>Ingredientes:</strong> {producto.ingredientes}</p>
               )}
               {producto.porciones && (
                 <p><strong>Porciones:</strong> {producto.porciones}</p>
               )}
-              {producto.duracion && (
-                <p><strong>Duración:</strong> {producto.duracion}</p>
+              {producto.duracionDias && (
+                <p><strong>Duración:</strong> {producto.duracionDias} días</p>
               )}
-              {producto.tiempoPreparacion && (
-                <p><strong>Tiempo de preparación:</strong> {producto.tiempoPreparacion}</p>
+              {producto.condicionConservacion && (
+                <p><strong>Conservación:</strong> {producto.condicionConservacion}</p>
               )}
               <p>
                 <strong>Stock disponible:</strong>{' '}
@@ -152,9 +155,9 @@ function DetalleProductoContenido() {
               </p>
             </div>
 
-            {producto.notas && (
-              <div className="alert alert-info mb-4">
-                <strong>Información:</strong> {producto.notas}
+            {producto.alergenos && (
+              <div className="alert alert-warning mb-4">
+                <strong>Alérgenos:</strong> {producto.alergenos}
               </div>
             )}
 

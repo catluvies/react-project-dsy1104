@@ -32,7 +32,15 @@ function AdminProducts() {
     precio: '',
     stock: '',
     categoriaId: '',
-    activo: true
+    activo: true,
+    sku: '',
+    ingredientes: '',
+    cantidadMedida: '',
+    unidadMedida: '',
+    porciones: '',
+    duracionDias: '',
+    condicionConservacion: '',
+    alergenos: ''
   })
 
   useEffect(() => {
@@ -94,7 +102,15 @@ function AdminProducts() {
       precio: '',
       stock: '',
       categoriaId: categorias.length > 0 ? categorias[0].id.toString() : '',
-      activo: true
+      activo: true,
+      sku: '',
+      ingredientes: '',
+      cantidadMedida: '',
+      unidadMedida: '',
+      porciones: '',
+      duracionDias: '',
+      condicionConservacion: '',
+      alergenos: ''
     })
     setImagenSeleccionada(null)
     setPreviewImagen(null)
@@ -110,7 +126,15 @@ function AdminProducts() {
       precio: producto.precio?.toString() || '',
       stock: producto.stock?.toString() || '',
       categoriaId: producto.categoriaId?.toString() || '',
-      activo: producto.activo !== false
+      activo: producto.activo !== false,
+      sku: producto.sku || '',
+      ingredientes: producto.ingredientes || '',
+      cantidadMedida: producto.cantidadMedida?.toString() || '',
+      unidadMedida: producto.unidadMedida || '',
+      porciones: producto.porciones?.toString() || '',
+      duracionDias: producto.duracionDias?.toString() || '',
+      condicionConservacion: producto.condicionConservacion || '',
+      alergenos: producto.alergenos || ''
     })
     setImagenSeleccionada(null)
     setPreviewImagen(producto.imagenUrl ? productosService.obtenerUrlImagen(producto.imagenUrl) : null)
@@ -188,7 +212,15 @@ function AdminProducts() {
         precio: Number(formData.precio),
         stock: Number(formData.stock),
         categoriaId: Number(formData.categoriaId),
-        activo: formData.activo
+        activo: formData.activo,
+        sku: formData.sku?.trim() || null,
+        ingredientes: formData.ingredientes?.trim() || null,
+        cantidadMedida: formData.cantidadMedida ? Number(formData.cantidadMedida) : null,
+        unidadMedida: formData.unidadMedida?.trim() || null,
+        porciones: formData.porciones ? Number(formData.porciones) : null,
+        duracionDias: formData.duracionDias ? Number(formData.duracionDias) : null,
+        condicionConservacion: formData.condicionConservacion?.trim() || null,
+        alergenos: formData.alergenos?.trim() || null
       }
 
       if (productoEditando) {
@@ -439,6 +471,118 @@ function AdminProducts() {
                         onChange={handleFormChange}
                         className="form-control"
                         rows="3"
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-6">
+                      <label className="form-label">SKU</label>
+                      <input
+                        type="text"
+                        name="sku"
+                        value={formData.sku}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        placeholder="Código único del producto"
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-6">
+                      <label className="form-label">Ingredientes</label>
+                      <input
+                        type="text"
+                        name="ingredientes"
+                        value={formData.ingredientes}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        placeholder="Harina, azúcar, huevos..."
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-3">
+                      <label className="form-label">Cantidad</label>
+                      <input
+                        type="number"
+                        name="cantidadMedida"
+                        value={formData.cantidadMedida}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        placeholder="350"
+                        min="0"
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-3">
+                      <label className="form-label">Unidad</label>
+                      <select
+                        name="unidadMedida"
+                        value={formData.unidadMedida}
+                        onChange={handleFormChange}
+                        className="form-select"
+                        disabled={guardando}
+                      >
+                        <option value="">Seleccionar</option>
+                        <option value="gr">Gramos (gr)</option>
+                        <option value="kg">Kilogramos (kg)</option>
+                        <option value="ml">Mililitros (ml)</option>
+                        <option value="lt">Litros (lt)</option>
+                        <option value="unidad">Unidad</option>
+                      </select>
+                    </div>
+
+                    <div className="col-md-3">
+                      <label className="form-label">Porciones</label>
+                      <input
+                        type="number"
+                        name="porciones"
+                        value={formData.porciones}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        placeholder="8"
+                        min="1"
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-3">
+                      <label className="form-label">Duración (días)</label>
+                      <input
+                        type="number"
+                        name="duracionDias"
+                        value={formData.duracionDias}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        placeholder="3"
+                        min="1"
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-6">
+                      <label className="form-label">Conservación</label>
+                      <input
+                        type="text"
+                        name="condicionConservacion"
+                        value={formData.condicionConservacion}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        placeholder="Mantener refrigerado"
+                        disabled={guardando}
+                      />
+                    </div>
+
+                    <div className="col-md-6">
+                      <label className="form-label">Alérgenos</label>
+                      <input
+                        type="text"
+                        name="alergenos"
+                        value={formData.alergenos}
+                        onChange={handleFormChange}
+                        className="form-control"
+                        placeholder="Gluten, lácteos, huevo..."
                         disabled={guardando}
                       />
                     </div>

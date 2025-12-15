@@ -200,6 +200,22 @@ function MisComprasContenido() {
 
                       <h6>Entrega</h6>
                       <p className="small mb-1">
+                        <strong>Tipo:</strong>{' '}
+                        <span className={`badge ${boletaSeleccionada.tipoEntrega === 'RETIRO' ? 'bg-info' : 'bg-primary'}`}>
+                          {boletaSeleccionada.tipoEntrega === 'RETIRO' ? 'Retiro en tienda' : 'Delivery'}
+                        </span>
+                      </p>
+                      {boletaSeleccionada.fechaEntrega && (
+                        <p className="small mb-1">
+                          <strong>Fecha entrega:</strong> {new Date(boletaSeleccionada.fechaEntrega).toLocaleDateString('es-CL')}
+                        </p>
+                      )}
+                      {boletaSeleccionada.horarioEntrega && (
+                        <p className="small mb-1">
+                          <strong>Horario:</strong> {boletaSeleccionada.horarioEntrega.replace('H_', '').replace('_', ':00 - ') + ':00'}
+                        </p>
+                      )}
+                      <p className="small mb-1">
                         <strong>Dirección:</strong> {boletaSeleccionada.direccionEntrega}
                       </p>
                       <p className="small mb-1">

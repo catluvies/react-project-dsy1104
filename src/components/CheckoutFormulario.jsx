@@ -12,10 +12,19 @@ function CheckoutFormulario() {
   const { usuario, isAuthenticated } = useContext(AuthContext)
 
   const navigate = useNavigate()
+  
+  const HORARIOS_ENTREGA = [
+    { valor: 'H_09_11', texto: '09:00 - 11:00' },
+    { valor: 'H_11_13', texto: '11:00 - 13:00' },
+    { valor: 'H_14_16', texto: '14:00 - 16:00' },
+    { valor: 'H_16_18', texto: '16:00 - 18:00' },
+    { valor: 'H_18_20', texto: '18:00 - 20:00' }
+  ]
   const [tipoEntrega, setTipoEntrega] = useState('despacho')
   const [comunaSeleccionada, setComunaSeleccionada] = useState('')
   const [metodoPago, setMetodoPago] = useState('TRANSFERENCIA')
   const [fechaEntrega, setFechaEntrega] = useState('')
+  const [horarioEntrega, setHorarioEntrega] = useState('')
   const [notas, setNotas] = useState('')
   const [formData, setFormData] = useState({
     nombre: usuario?.nombre || '',
@@ -79,6 +88,10 @@ function CheckoutFormulario() {
       nuevosErrores.fechaEntrega = 'Debes seleccionar una fecha de entrega'
     }
 
+    if (!horarioEntrega) {
+      nuevosErrores.horarioEntrega = 'Debes seleccionar un horario de entrega'
+    }
+
     setErrores(nuevosErrores)
     return Object.keys(nuevosErrores).length === 0
   }
@@ -126,7 +139,8 @@ function CheckoutFormulario() {
         tipoEntrega: esRetiroTienda ? 'RETIRO' : 'DELIVERY',
         metodoPago,
         notasAdicionales: notas || null,
-        fechaEntrega: fechaEntregaISO
+        fechaEntrega: fechaEntregaISO,
+        horarioEntrega
       }
 
       await boletasService.crear(usuario.id, boletaData)
@@ -349,6 +363,27 @@ function CheckoutFormulario() {
                   <small className="text-muted">Los pedidos requieren al menos 24 horas de anticipación</small>
                 </div>
 
+
+                <div className="mb-3">
+                  <label className="form-label">Horario de entrega *</label>
+                  <select
+                    value={horarioEntrega}
+                    onChange={(e) => {
+                      setHorarioEntrega(e.target.value)
+                      if (errores.horarioEntrega) {
+                        setErrores({ ...errores, horarioEntrega: '' })
+                      }
+                    }}
+                    className={`form-select ${errores.horarioEntrega ? 'is-invalid' : ''}`}
+                    disabled={cargando}
+                  >
+                    <option value="">Selecciona un horario</option>
+                    {HORARIOS_ENTREGA.map(h => (
+                      <option key={h.valor} value={h.valor}>{h.texto}</option>
+                    ))}
+                  </select>
+                  {errores.horarioEntrega && <div className="invalid-feedback">{errores.horarioEntrega}</div>}
+                </div>
                 <div className="mb-3">
                   <label className="form-label">Notas adicionales</label>
                   <textarea

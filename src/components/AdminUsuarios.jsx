@@ -16,6 +16,8 @@ function AdminUsuarios() {
   const [busqueda, setBusqueda] = useState('')
 
   const [modalAbierto, setModalAbierto] = useState(false)
+  const [modalEditarAbierto, setModalEditarAbierto] = useState(false)
+  const [usuarioEditando, setUsuarioEditando] = useState(null)
   const [guardando, setGuardando] = useState(false)
   const [erroresForm, setErroresForm] = useState({})
 
@@ -161,6 +163,76 @@ function AdminUsuarios() {
     })
   }
 
+  const abrirModalEditar = (usuario) => {
+    setUsuarioEditando(usuario)
+    setModalEditarAbierto(true)
+  }
+
+  const cerrarModalEditar = () => {
+    setModalEditarAbierto(false)
+    setUsuarioEditando(null)
+  }
+
+  const handleToggleActivo = async (usuario) => {
+    const nuevoEstado = !usuario.activo
+    const accion = nuevoEstado ? 'activar' : 'desactivar'
+
+    if (!confirm(`¿Estás seguro de ${accion} a "${usuario.nombre} ${usuario.apellido}"?`)) return
+
+    setGuardando(true)
+    try {
+      await usuariosService.actualizar(usuario.id, {
+        ...usuario,
+        activo: nuevoEstado
+      })
+      await cargarUsuarios()
+      cerrarModalEditar()
+    } catch (err) {
+      console.error('Error actualizando usuario:', err)
+      alert('Error al actualizar el usuario')
+    } finally {
+      setGuardando(false)
+    }
+  }
+
+  const handleCambiarRol = async (usuario, nuevoRol) => {
+    if (usuario.rol === nuevoRol) return
+
+    if (!confirm(`¿Cambiar rol de "${usuario.nombre}" a ${getRolLabel(nuevoRol)}?`)) return
+
+    setGuardando(true)
+    try {
+      await usuariosService.actualizar(usuario.id, {
+        ...usuario,
+        rol: nuevoRol
+      })
+      await cargarUsuarios()
+      cerrarModalEditar()
+    } catch (err) {
+      console.error('Error cambiando rol:', err)
+      alert('Error al cambiar el rol')
+    } finally {
+      setGuardando(false)
+    }
+  }
+
+  const handleEliminar = async (usuario) => {
+    if (!confirm(`¿Estás seguro de ELIMINAR permanentemente a "${usuario.nombre} ${usuario.apellido}"?\n\nEsta acción no se puede deshacer.`)) return
+
+    setGuardando(true)
+    try {
+      await usuariosService.eliminar(usuario.id)
+      await cargarUsuarios()
+      cerrarModalEditar()
+    } catch (err) {
+      console.error('Error eliminando usuario:', err)
+      const msg = err.response?.data?.mensaje || 'Error al eliminar el usuario'
+      alert(msg)
+    } finally {
+      setGuardando(false)
+    }
+  }
+
   if (cargando) {
     return (
       <div className="container py-4">
@@ -272,6 +344,7 @@ function AdminUsuarios() {
               <th>Rol</th>
               <th>Estado</th>
               <th>Registro</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -299,6 +372,14 @@ function AdminUsuarios() {
                   </span>
                 </td>
                 <td>{formatearFecha(usuario.fechaCreacion)}</td>
+                <td>
+                  <button
+                    onClick={() => abrirModalEditar(usuario)}
+                    className="btn btn-outline-primary btn-sm"
+                  >
+                    Gestionar
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -421,6 +502,82 @@ function AdminUsuarios() {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {modalEditarAbierto && usuarioEditando && (
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Gestionar Usuario</h5>
+                <button type="button" className="btn-close" onClick={cerrarModalEditar} disabled={guardando}></button>
+              </div>
+              <div className="modal-body">
+                <div className="mb-4">
+                  <h6 className="text-muted">Información del usuario</h6>
+                  <p className="mb-1"><strong>{usuarioEditando.nombre} {usuarioEditando.apellido}</strong></p>
+                  <p className="mb-1 text-muted">{usuarioEditando.email}</p>
+                  {usuarioEditando.rut && <p className="mb-1 text-muted">RUT: {usuarioEditando.rut}</p>}
+                </div>
+
+                <div className="mb-4">
+                  <h6 className="text-muted">Estado actual</h6>
+                  <div className="d-flex align-items-center gap-3">
+                    <span className={`badge ${usuarioEditando.activo ? 'bg-success' : 'bg-secondary'} fs-6`}>
+                      {usuarioEditando.activo ? 'Activo' : 'Inactivo'}
+                    </span>
+                    <button
+                      onClick={() => handleToggleActivo(usuarioEditando)}
+                      className={`btn btn-sm ${usuarioEditando.activo ? 'btn-outline-warning' : 'btn-outline-success'}`}
+                      disabled={guardando}
+                    >
+                      {guardando ? 'Procesando...' : usuarioEditando.activo ? 'Desactivar' : 'Activar'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <h6 className="text-muted">Rol actual</h6>
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    <span className={`badge ${getRolBadge(usuarioEditando.rol)} fs-6`}>
+                      {getRolLabel(usuarioEditando.rol)}
+                    </span>
+                  </div>
+                  <div className="d-flex flex-wrap gap-2">
+                    {Object.entries(ROLES).map(([key, value]) => (
+                      <button
+                        key={key}
+                        onClick={() => handleCambiarRol(usuarioEditando, value)}
+                        className={`btn btn-sm ${usuarioEditando.rol === value ? 'btn-secondary' : 'btn-outline-secondary'}`}
+                        disabled={guardando || usuarioEditando.rol === value}
+                      >
+                        Cambiar a {getRolLabel(value)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <hr />
+
+                <div className="text-center">
+                  <button
+                    onClick={() => handleEliminar(usuarioEditando)}
+                    className="btn btn-danger"
+                    disabled={guardando}
+                  >
+                    Eliminar Usuario Permanentemente
+                  </button>
+                  <p className="text-muted small mt-2">Esta acción no se puede deshacer</p>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={cerrarModalEditar} disabled={guardando}>
+                  Cerrar
+                </button>
+              </div>
             </div>
           </div>
         </div>

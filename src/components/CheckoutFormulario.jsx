@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { comunasData, RETIRO_TIENDA, obtenerCostoEnvio } from '../data/comunas'
+import { obtenerComunas, RETIRO_TIENDA, obtenerCostoEnvio } from '../data/comunas'
 import { formatearPrecio } from '../utils/formateo'
 import { validarNombre, validarEmail, validarTelefono } from '../utils/validaciones'
 import { CarritoContext } from '../context/CarritoContext'
@@ -12,7 +12,17 @@ function CheckoutFormulario() {
   const { usuario, isAuthenticated } = useContext(AuthContext)
 
   const navigate = useNavigate()
-  
+
+  const [comunas, setComunas] = useState([])
+
+  useEffect(() => {
+    const cargarComunas = async () => {
+      const data = await obtenerComunas()
+      setComunas(data)
+    }
+    cargarComunas()
+  }, [])
+
   const HORARIOS_ENTREGA = [
     { valor: 'H_09_11', texto: '09:00 - 11:00' },
     { valor: 'H_11_13', texto: '11:00 - 13:00' },
@@ -112,7 +122,7 @@ function CheckoutFormulario() {
 
   const esRetiroTienda = tipoEntrega === 'retiro'
   const comunaFinal = esRetiroTienda ? RETIRO_TIENDA.nombre : comunaSeleccionada
-  const costoEnvio = esRetiroTienda ? 0 : obtenerCostoEnvio(comunaSeleccionada)
+  const costoEnvio = esRetiroTienda ? 0 : obtenerCostoEnvio(comunaSeleccionada, comunas)
   const total = subtotal + (costoEnvio || 0)
 
   const handleSubmit = async (e) => {
@@ -234,15 +244,18 @@ function CheckoutFormulario() {
                     {errores.telefono && <div className="invalid-feedback">{errores.telefono}</div>}
                   </div>
 
-                  <div className="col-md-6">
-                    <label className="form-label">RUT</label>
-                    <input
-                      type="text"
-                      value={usuario?.rut || ''}
-                      className="form-control"
-                      disabled
-                    />
-                  </div>
+                  {usuario?.rut && (
+                    <div className="col-md-6">
+                      <label className="form-label">RUT</label>
+                      <input
+                        type="text"
+                        value={usuario.rut}
+                        className="form-control"
+                        disabled
+                      />
+                      <small className="text-muted">Registrado en tu perfil</small>
+                    </div>
+                  )}
 
                   <div className="col-md-6">
                     <label className="form-label">Región</label>
@@ -318,9 +331,9 @@ function CheckoutFormulario() {
                         disabled={cargando}
                       >
                         <option value="">Selecciona tu comuna</option>
-                        {comunasData.map(comuna => (
+                        {comunas.map(comuna => (
                           <option key={comuna.nombre} value={comuna.nombre}>
-                            {comuna.nombre} - Envío: ${formatearPrecio(comuna.costoEnvio)}
+                            {comuna.nombre} - Envio: ${formatearPrecio(comuna.costoEnvio)}
                           </option>
                         ))}
                       </select>
@@ -506,7 +519,7 @@ function CheckoutFormulario() {
 
                 {fechaEntrega && (
                   <p className="small text-muted mb-3">
-                    Fecha de entrega: {new Date(fechaEntrega).toLocaleDateString('es-CL')}
+                    Fecha de entrega: {new Date(fechaEntrega + 'T00:00:00').toLocaleDateString('es-CL')}
                   </p>
                 )}
 

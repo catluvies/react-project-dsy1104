@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { usuariosService } from '../api/usuariosService'
-import { comunasData } from '../data/comunas'
+import { obtenerComunas } from '../data/comunas'
 import { validarNombre, validarEmail, validarTelefono, validarRut } from '../utils/validaciones'
 
 const AVATARES_DISPONIBLES = [
@@ -40,6 +40,7 @@ function PerfilContenido() {
   const [modoEdicion, setModoEdicion] = useState(false)
   const [avatarSeleccionado, setAvatarSeleccionado] = useState(null)
   const [mostrarAvatares, setMostrarAvatares] = useState(false)
+  const [comunas, setComunas] = useState([])
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -47,6 +48,11 @@ function PerfilContenido() {
       return
     }
     cargarPerfil()
+    const cargarComunas = async () => {
+      const data = await obtenerComunas()
+      setComunas(data)
+    }
+    cargarComunas()
     const avatarGuardado = localStorage.getItem(`avatar_${usuario?.id}`)
     if (avatarGuardado) {
       setAvatarSeleccionado(avatarGuardado)
@@ -348,7 +354,7 @@ function PerfilContenido() {
                       disabled={!modoEdicion || guardando}
                     >
                       <option value="">Selecciona tu comuna</option>
-                      {comunasData.map(comuna => (
+                      {comunas.map(comuna => (
                         <option key={comuna.nombre} value={comuna.nombre}>
                           {comuna.nombre}
                         </option>

@@ -96,7 +96,7 @@ function Header() {
                     <>
                       <li>
                         <Link to="/admin/dashboard" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
-                          Panel Admin
+                          {isAdmin() ? 'Panel Administrador' : 'Panel Vendedor'}
                         </Link>
                       </li>
                       <li><hr className="dropdown-divider" /></li>

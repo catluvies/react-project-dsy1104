@@ -77,6 +77,15 @@ function AdminOrders() {
     return flujo[estadoActual] || null
   }
 
+  const estadoAnterior = (estadoActual) => {
+    const flujo = {
+      CONFIRMADA: 'PENDIENTE',
+      PREPARANDO: 'CONFIRMADA',
+      LISTA: 'PREPARANDO'
+    }
+    return flujo[estadoActual] || null
+  }
+
   if (cargando) {
     return (
       <div className="container py-4">
@@ -296,7 +305,16 @@ function AdminOrders() {
                   <>
                     <hr />
                     <h6>Cambiar estado</h6>
-                    <div className="d-flex flex-wrap gap-2">
+                    <div className="d-flex flex-wrap gap-2 mb-2">
+                      {estadoAnterior(boletaSeleccionada.estado) && (
+                        <button
+                          onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoAnterior(boletaSeleccionada.estado))}
+                          className="btn btn-outline-secondary btn-sm"
+                          disabled={cambiandoEstado}
+                        >
+                          {cambiandoEstado ? 'Cambiando...' : `Volver a ${estadoAnterior(boletaSeleccionada.estado)}`}
+                        </button>
+                      )}
                       {estadoSiguiente(boletaSeleccionada.estado) && (
                         <button
                           onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoSiguiente(boletaSeleccionada.estado))}
@@ -306,6 +324,8 @@ function AdminOrders() {
                           {cambiandoEstado ? 'Cambiando...' : `Pasar a ${estadoSiguiente(boletaSeleccionada.estado)}`}
                         </button>
                       )}
+                    </div>
+                    <div>
                       {boletaSeleccionada.estado !== 'CANCELADA' && (
                         <button
                           onClick={() => handleCambiarEstado(boletaSeleccionada.id, 'CANCELADA')}

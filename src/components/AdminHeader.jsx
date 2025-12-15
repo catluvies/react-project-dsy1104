@@ -19,11 +19,14 @@ function AdminHeader() {
     navigate('/')
   }
 
+  const tituloHeader = isAdmin() ? 'Admin - Mil Sabores' : 'Vendedor - Mil Sabores'
+  const colorFondo = isAdmin() ? 'bg-dark' : 'bg-primary'
+
   return (
-    <nav className="navbar navbar-dark bg-dark border-bottom">
+    <nav className={`navbar navbar-dark ${colorFondo} border-bottom`}>
       <div className="container-fluid">
         <Link to="/admin" className="navbar-brand">
-          <h1 className="h4 mb-0">Admin - Mil Sabores</h1>
+          <h1 className="h4 mb-0">{tituloHeader}</h1>
         </Link>
 
         <ul className="nav nav-pills">
@@ -73,13 +76,14 @@ function AdminHeader() {
           )}
         </ul>
 
-        <div className="d-flex align-items-center gap-2">
-          <span className="text-light small">{usuario?.nombre}</span>
-          <Link to="/" className="btn btn-outline-light btn-sm">
-            Ir al sitio
+        <div className="d-flex align-items-center gap-3">
+          <span className="text-light">{usuario?.nombre}</span>
+          <div className="vr bg-light opacity-50"></div>
+          <Link to="/" className="btn btn-warning btn-sm d-flex align-items-center gap-1">
+            <span>Ver Tienda</span>
           </Link>
           <button onClick={handleLogout} className="btn btn-outline-danger btn-sm">
-            Salir
+            Cerrar Sesion
           </button>
         </div>
       </div>

@@ -1,12 +1,22 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { validarEmail, validarTelefono, validarNombre, validarRUT, formatearRut } from '../utils/validaciones'
-import { comunasData } from '../data/comunas'
+import { obtenerComunas } from '../data/comunas'
 import { AuthContext } from '../context/AuthContext'
 
 function RegistroFormulario() {
   const navigate = useNavigate()
   const { registro } = useContext(AuthContext)
+
+  const [comunas, setComunas] = useState([])
+
+  useEffect(() => {
+    const cargarComunas = async () => {
+      const data = await obtenerComunas()
+      setComunas(data)
+    }
+    cargarComunas()
+  }, [])
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -46,7 +56,7 @@ function RegistroFormulario() {
     }
 
     if (!validarRUT(formData.rut)) {
-      nuevosErrores.rut = 'RUT inválido (formato: 12345678-9)'
+      nuevosErrores.rut = 'RUT inválido (formato: 12.345.678-9)'
     }
 
     if (!validarEmail(formData.email)) {
@@ -153,7 +163,7 @@ function RegistroFormulario() {
                       name="rut"
                       value={formData.rut}
                       onChange={handleChange}
-                      placeholder="12345678-9"
+                      placeholder="12.345.678-9"
                       className={`form-control ${errores.rut ? 'is-invalid' : ''}`}
                       disabled={cargando}
                     />
@@ -210,7 +220,7 @@ function RegistroFormulario() {
                       disabled={cargando}
                     >
                       <option value="">Selecciona tu comuna</option>
-                      {comunasData.map(comuna => (
+                      {comunas.map(comuna => (
                         <option key={comuna.nombre} value={comuna.nombre}>
                           {comuna.nombre}
                         </option>

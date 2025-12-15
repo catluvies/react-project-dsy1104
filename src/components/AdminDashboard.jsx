@@ -82,10 +82,12 @@ function AdminDashboard() {
     })
   }
 
+  const tituloDashboard = isAdmin() ? 'Dashboard Administrador' : 'Panel Vendedor'
+
   if (cargando) {
     return (
       <div className="container py-4">
-        <h1 className="mb-4">Dashboard Admin</h1>
+        <h1 className="mb-4">{tituloDashboard}</h1>
         <div className="text-center py-5">
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Cargando...</span>
@@ -99,7 +101,7 @@ function AdminDashboard() {
   if (error) {
     return (
       <div className="container py-4">
-        <h1 className="mb-4">Dashboard Admin</h1>
+        <h1 className="mb-4">{tituloDashboard}</h1>
         <div className="alert alert-danger" role="alert">
           {error}
         </div>
@@ -112,7 +114,7 @@ function AdminDashboard() {
 
   return (
     <div className="container py-4">
-      <h1 className="mb-4">Dashboard Admin</h1>
+      <h1 className="mb-4">{tituloDashboard}</h1>
 
       <div className="row g-3 mb-4">
         <div className="col-md-6 col-lg-3">

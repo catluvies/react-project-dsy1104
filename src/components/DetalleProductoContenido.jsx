@@ -195,9 +195,6 @@ function DetalleProductoContenido() {
             )}
 
             <div className="mb-4">
-              {!tieneVariantes && (producto.cantidadMedida || producto.unidadMedida) && (
-                <p><strong>Tamaño:</strong> {producto.cantidadMedida} {producto.unidadMedida}</p>
-              )}
               {producto.ingredientes && (
                 <p><strong>Ingredientes:</strong> {producto.ingredientes}</p>
               )}
@@ -217,6 +214,20 @@ function DetalleProductoContenido() {
                 </span>
               </p>
             </div>
+
+            {/* Información técnica - peso/medida */}
+            {(producto.cantidadMedida || producto.unidadMedida) && (
+              <details className="mb-4">
+                <summary className="text-muted" style={{ cursor: 'pointer', fontSize: '0.9rem' }}>
+                  <strong>Información técnica</strong>
+                </summary>
+                <div className="mt-2 ps-3">
+                  <p className="mb-0 text-muted">
+                    <strong>Peso:</strong> {producto.cantidadMedida} {producto.unidadMedida}
+                  </p>
+                </div>
+              </details>
+            )}
 
             {producto.alergenos && (
               <div className="alert alert-warning mb-4">

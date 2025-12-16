@@ -24,13 +24,23 @@ function CarritoContenido() {
 
   return (
     <div className="container py-4">
-      <h1 className="mb-4">Carrito de Compras</h1>
+      <h1 className="mb-4" style={{ color: '#5a4035', fontWeight: '600' }}>
+        Carrito de Compras
+      </h1>
 
       <div className="row g-4">
         <div className="col-lg-8">
-          <div className="card">
-            <div className="card-body">
-              <table className="table table-striped mb-0">
+          <div className="glass-card">
+            <div className="glass-title-bar">
+              <span className="title-text">Productos en tu carrito</span>
+              <div className="window-buttons">
+                <span className="window-btn window-btn-minimize"></span>
+                <span className="window-btn window-btn-maximize"></span>
+                <span className="window-btn window-btn-close"></span>
+              </div>
+            </div>
+            <div className="p-0">
+              <table className="table table-glass mb-0">
                 <thead>
                   <tr>
                     <th>Producto</th>
@@ -48,21 +58,21 @@ function CarritoContenido() {
                         <td>
                           <div className="d-flex align-items-center gap-3">
                             {imagenUrl ? (
-                              <img src={imagenUrl} alt={item.nombre} style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} />
+                              <img src={imagenUrl} alt={item.nombre} style={{width: '70px', height: '70px', objectFit: 'cover', borderRadius: '10px'}} />
                             ) : (
-                              <div className="bg-light d-flex align-items-center justify-content-center" style={{width: '80px', height: '80px', borderRadius: '8px'}}>
-                                <span className="text-muted small">Sin imagen</span>
+                              <div className="d-flex align-items-center justify-content-center" style={{width: '70px', height: '70px', borderRadius: '10px', backgroundColor: '#fef3c7'}}>
+                                <span style={{fontSize: '1.5rem'}}>🍰</span>
                               </div>
                             )}
                             <div>
-                              <h6 className="mb-0">{item.nombre}</h6>
+                              <h6 className="mb-1" style={{color: '#5a4035', fontWeight: '600', fontSize: '0.95rem'}}>{item.nombre}</h6>
                               {item.varianteNombre && (
-                                <span className="badge bg-info me-2">
+                                <span className="badge bg-warning text-dark me-1" style={{fontSize: '0.7rem'}}>
                                   {item.varianteNombre}
                                 </span>
                               )}
                               {item.categoriaNombre && (
-                                <small className="text-muted d-block">
+                                <small className="text-muted d-block" style={{fontSize: '0.8rem'}}>
                                   {item.categoriaNombre}
                                 </small>
                               )}
@@ -70,22 +80,22 @@ function CarritoContenido() {
                           </div>
                         </td>
                         <td>
-                          <strong>${formatearPrecio(item.precio)}</strong>
+                          <span style={{color: '#8B7355', fontWeight: '500'}}>${formatearPrecio(item.precio)}</span>
                           <br />
-                          <small>c/u</small>
+                          <small className="text-muted">c/u</small>
                         </td>
                         <td>
                           <div className="d-flex align-items-center gap-2">
                             <button
-                              className="btn btn-outline-secondary btn-sm"
+                              className="btn-qty"
                               onClick={() => actualizarCantidad(item.id, item.cantidad - 1)}
                               disabled={item.cantidad <= 1}
                             >
                               -
                             </button>
-                            <span className="px-2">{item.cantidad}</span>
+                            <span style={{minWidth: '24px', textAlign: 'center', fontWeight: '600', color: '#5a4035'}}>{item.cantidad}</span>
                             <button
-                              className="btn btn-outline-secondary btn-sm"
+                              className="btn-qty"
                               onClick={() => actualizarCantidad(item.id, item.cantidad + 1)}
                             >
                               +
@@ -93,12 +103,13 @@ function CarritoContenido() {
                           </div>
                         </td>
                         <td>
-                          <strong>${formatearPrecio(item.precio * item.cantidad)}</strong>
+                          <strong style={{color: '#D97706'}}>${formatearPrecio(item.precio * item.cantidad)}</strong>
                         </td>
                         <td>
                           <button
                             className="btn-aero btn-aero-rojo btn-aero-sm"
                             onClick={() => eliminarDelCarrito(item.id)}
+                            style={{padding: '6px 14px', fontSize: '0.8rem'}}
                           >
                             Eliminar
                           </button>
@@ -113,9 +124,16 @@ function CarritoContenido() {
         </div>
 
         <div className="col-lg-4">
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">Resumen del Pedido</h5>
+          <div className="glass-card">
+            <div className="glass-title-bar">
+              <span className="title-text">Resumen del Pedido</span>
+              <div className="window-buttons">
+                <span className="window-btn window-btn-minimize"></span>
+                <span className="window-btn window-btn-maximize"></span>
+                <span className="window-btn window-btn-close"></span>
+              </div>
+            </div>
+            <div className="p-4">
 
               <div className="d-flex justify-content-between mb-2">
                 <span>Subtotal:</span>

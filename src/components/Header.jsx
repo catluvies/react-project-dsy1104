@@ -78,27 +78,32 @@ function Header() {
           </ul>
 
           <div className="d-flex gap-3 align-items-center">
-            <Link
-              to="/carrito"
-              className="btn-aero btn-aero-amarillo btn-aero-sm position-relative d-flex align-items-center gap-2"
-            >
-              🛒 Carrito
+            <div className="position-relative">
+              <Link
+                to="/carrito"
+                className="btn-aero btn-aero-amarillo btn-aero-sm d-flex align-items-center gap-2"
+              >
+                🛒 Carrito
+              </Link>
               {totalItems > 0 && (
                 <span
                   className="position-absolute badge rounded-pill"
                   style={{
-                    top: '-8px',
-                    right: '-8px',
-                    backgroundColor: '#F59E0B',
+                    top: '-10px',
+                    right: '-10px',
+                    backgroundColor: '#ef4444',
                     color: 'white',
-                    fontSize: '0.75rem',
-                    padding: '4px 8px'
+                    fontSize: '0.7rem',
+                    padding: '5px 8px',
+                    zIndex: 10,
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                    border: '2px solid white'
                   }}
                 >
                   {totalItems}
                 </span>
               )}
-            </Link>
+            </div>
 
             {usuario ? (
               <div className="dropdown" ref={dropdownRef}>

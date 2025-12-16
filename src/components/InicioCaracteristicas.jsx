@@ -16,7 +16,8 @@ function InicioCaracteristicas() {
       titulo: 'Ingredientes frescos',
       descripcion: 'Productos del día',
       imagen: '/images/detalles/ingredientes-index.png',
-      cardClass: 'card-aero card-aero-verde'
+      cardClass: 'card-aero card-aero-verde',
+      iconSize: '110px'
     },
     {
       titulo: 'Calidad artesanal',
@@ -41,14 +42,13 @@ function InicioCaracteristicas() {
                   src={item.imagen}
                   alt={item.titulo}
                   className="card-aero-icon"
+                  style={item.iconSize ? { width: item.iconSize, height: item.iconSize } : {}}
                 />
                 <h3
                   style={{
-                    fontFamily: "'Playfair Display', Georgia, serif",
-                    fontStyle: 'italic',
-                    fontSize: '1.2rem',
-                    color: '#6B5B4F',
-                    fontWeight: '500',
+                    fontFamily: "'Pacifico', cursive",
+                    fontSize: '1.1rem',
+                    color: 'var(--color-cafe-oscuro)',
                     marginBottom: '0.5rem'
                   }}
                 >

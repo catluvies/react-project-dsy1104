@@ -12,9 +12,9 @@ function InicioProductosDestacados(props) {
           <h2
             className="mb-4"
             style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontStyle: 'italic',
-              color: '#8B7355'
+              fontFamily: "'Pacifico', cursive",
+              fontSize: '2.2rem',
+              color: 'var(--color-cafe-oscuro)'
             }}
           >
             Nuestros Mejores Productos
@@ -28,16 +28,14 @@ function InicioProductosDestacados(props) {
   return (
     <section className="py-5" style={{ backgroundColor: 'transparent' }}>
       <div className="container">
-        {/* Título */}
-        <div className="text-center mb-5">
-          <span style={{ fontSize: '2rem' }}>🎂</span>
+        {/* Título consistente */}
+        <div className="text-center mb-4">
           <h2
-            className="mt-2"
             style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontStyle: 'italic',
-              color: '#8B7355',
-              fontSize: '2.5rem'
+              fontFamily: "'Pacifico', cursive",
+              fontSize: '2.2rem',
+              color: 'var(--color-cafe-oscuro)',
+              marginBottom: '0.5rem'
             }}
           >
             Nuestros Mejores Productos
@@ -45,39 +43,24 @@ function InicioProductosDestacados(props) {
           <p className="text-muted">Seleccionados especialmente para ti</p>
         </div>
 
-        {/* Carrusel con flechas integradas */}
+        {/* Carrusel con estilo glass */}
         <div className="row justify-content-center">
           <div className="col-12 col-lg-10">
             <div className="position-relative">
               {/* Flecha izquierda */}
               <button
-                className="btn position-absolute d-none d-md-flex align-items-center justify-content-center"
+                className="btn btn-aero btn-aero-cafe position-absolute d-none d-md-flex align-items-center justify-content-center"
                 type="button"
                 data-bs-target="#productosCarousel"
                 data-bs-slide="prev"
                 style={{
-                  left: '-24px',
+                  left: '-20px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '52px',
-                  height: '52px',
-                  borderRadius: '16px',
-                  border: '3px solid #F59E0B',
-                  backgroundColor: 'white',
-                  color: '#F59E0B',
-                  zIndex: 10,
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F59E0B'
-                  e.currentTarget.style.color = 'white'
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = 'white'
-                  e.currentTarget.style.color = '#F59E0B'
-                  e.currentTarget.style.transform = 'translateY(-50%)'
+                  width: '48px',
+                  height: '48px',
+                  padding: '0',
+                  zIndex: 10
                 }}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -90,27 +73,21 @@ function InicioProductosDestacados(props) {
                 <div className="carousel-inner">
                   {productos.map((producto, index) => {
                     const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
+                    const tieneVariantes = producto.variantes && producto.variantes.length > 0
+                    const precioMostrar = tieneVariantes
+                      ? Math.min(...producto.variantes.map(v => v.precio))
+                      : (producto.precio || 0)
                     return (
                       <div key={producto.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
                         <Link to={`/producto/${producto.id}`} className="text-decoration-none">
-                          <div
-                            style={{
-                              backgroundColor: 'rgba(255, 251, 240, 0.95)',
-                              border: '3px dashed #F59E0B',
-                              borderRadius: '28px',
-                              overflow: 'hidden',
-                              boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                              height: '320px'
-                            }}
-                          >
-                            <div className="row g-0 h-100">
+                          <div className="card-aero card-aero-rosa" style={{ overflow: 'hidden' }}>
+                            <div className="row g-0">
                               {/* Imagen - lado izquierdo */}
-                              <div className="col-md-5 h-100">
+                              <div className="col-md-5">
                                 <div
                                   style={{
-                                    height: '100%',
-                                    minHeight: '320px',
-                                    backgroundColor: '#f8f4f0'
+                                    height: '300px',
+                                    background: 'linear-gradient(135deg, rgba(255,182,193,0.3), rgba(255,253,208,0.3))'
                                   }}
                                 >
                                   {imagenUrl ? (
@@ -136,30 +113,22 @@ function InicioProductosDestacados(props) {
                               </div>
 
                               {/* Contenido - lado derecho */}
-                              <div className="col-md-7 h-100" style={{ backgroundColor: '#FEF3C7' }}>
+                              <div className="col-md-7">
                                 <div className="d-flex flex-column justify-content-center h-100 p-4">
-                                  {/* Categoría */}
-                                  <small
-                                    style={{
-                                      color: '#92400E',
-                                      fontSize: '0.8rem',
-                                      textTransform: 'uppercase',
-                                      letterSpacing: '1px',
-                                      marginBottom: '0.5rem'
-                                    }}
+                                  {/* Categoría con badge glass */}
+                                  <span
+                                    className="badge-glass badge-glass-cafe mb-2 align-self-start"
                                   >
                                     {producto.categoriaNombre || 'Pastelería'}
-                                  </small>
+                                  </span>
 
-                                  {/* Nombre */}
+                                  {/* Nombre con fuente Pacifico */}
                                   <h3
                                     className="mb-2"
                                     style={{
-                                      fontFamily: "'Playfair Display', Georgia, serif",
-                                      fontStyle: 'italic',
-                                      color: '#6B5B4F',
-                                      fontSize: '1.6rem',
-                                      fontWeight: '600'
+                                      fontFamily: "'Pacifico', cursive",
+                                      color: 'var(--color-cafe-oscuro)',
+                                      fontSize: '1.5rem'
                                     }}
                                   >
                                     {producto.nombre}
@@ -169,9 +138,9 @@ function InicioProductosDestacados(props) {
                                   <p
                                     className="mb-3"
                                     style={{
-                                      color: '#8B7355',
-                                      fontSize: '0.95rem',
-                                      lineHeight: '1.6',
+                                      color: '#6B5B4F',
+                                      fontSize: '0.9rem',
+                                      lineHeight: '1.5',
                                       display: '-webkit-box',
                                       WebkitLineClamp: 3,
                                       WebkitBoxOrient: 'vertical',
@@ -183,16 +152,21 @@ function InicioProductosDestacados(props) {
 
                                   {/* Precio y botón */}
                                   <div className="d-flex align-items-center gap-3 mt-auto">
-                                    <span
-                                      style={{
-                                        color: '#92400E',
-                                        fontSize: '1.8rem',
-                                        fontWeight: 'bold'
-                                      }}
-                                    >
-                                      ${formatearPrecio(producto.precio)}
-                                    </span>
-                                    <span className="btn-aero btn-aero-naranja btn-aero-sm">
+                                    <div>
+                                      {tieneVariantes && (
+                                        <small className="text-muted d-block" style={{ fontSize: '0.7rem' }}>Desde</small>
+                                      )}
+                                      <span
+                                        style={{
+                                          color: 'var(--color-cafe-oscuro)',
+                                          fontSize: '1.6rem',
+                                          fontWeight: 'bold'
+                                        }}
+                                      >
+                                        ${formatearPrecio(precioMostrar)}
+                                      </span>
+                                    </div>
+                                    <span className="btn-aero btn-aero-cafe btn-aero-sm">
                                       Ver producto
                                     </span>
                                   </div>
@@ -209,33 +183,18 @@ function InicioProductosDestacados(props) {
 
               {/* Flecha derecha */}
               <button
-                className="btn position-absolute d-none d-md-flex align-items-center justify-content-center"
+                className="btn btn-aero btn-aero-cafe position-absolute d-none d-md-flex align-items-center justify-content-center"
                 type="button"
                 data-bs-target="#productosCarousel"
                 data-bs-slide="next"
                 style={{
-                  right: '-24px',
+                  right: '-20px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '52px',
-                  height: '52px',
-                  borderRadius: '16px',
-                  border: '3px solid #F59E0B',
-                  backgroundColor: 'white',
-                  color: '#F59E0B',
-                  zIndex: 10,
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F59E0B'
-                  e.currentTarget.style.color = 'white'
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = 'white'
-                  e.currentTarget.style.color = '#F59E0B'
-                  e.currentTarget.style.transform = 'translateY(-50%)'
+                  width: '48px',
+                  height: '48px',
+                  padding: '0',
+                  zIndex: 10
                 }}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -244,7 +203,7 @@ function InicioProductosDestacados(props) {
               </button>
             </div>
 
-            {/* Indicadores */}
+            {/* Indicadores con estilo aero */}
             <div className="d-flex justify-content-center gap-2 mt-4">
               {productos.map((_, index) => (
                 <button
@@ -253,13 +212,15 @@ function InicioProductosDestacados(props) {
                   data-bs-target="#productosCarousel"
                   data-bs-slide-to={index}
                   className={index === 0 ? 'active' : ''}
+                  aria-current={index === 0 ? 'true' : undefined}
                   style={{
-                    width: index === 0 ? '24px' : '10px',
-                    height: '10px',
-                    borderRadius: '5px',
-                    backgroundColor: index === 0 ? '#F59E0B' : '#ddd',
+                    width: index === 0 ? '28px' : '12px',
+                    height: '12px',
+                    borderRadius: '6px',
+                    backgroundColor: index === 0 ? 'var(--color-cafe-oscuro)' : 'var(--color-cafe-claro)',
                     border: 'none',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
                   }}
                 />
               ))}
@@ -271,7 +232,7 @@ function InicioProductosDestacados(props) {
         <div className="text-center mt-5">
           <Link
             to="/productos"
-            className="btn-aero btn-aero-cafe btn-aero-lg"
+            className="btn-aero btn-aero-cafe"
           >
             Ver Todos los Productos
           </Link>

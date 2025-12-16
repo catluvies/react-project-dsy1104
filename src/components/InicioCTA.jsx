@@ -8,12 +8,9 @@ function InicioCTA() {
     >
       <div className="container py-4">
         <div
-          className="mx-auto text-center"
+          className="card-aero card-aero-rosa mx-auto text-center"
           style={{
             maxWidth: '600px',
-            backgroundColor: '#FCE7F3',
-            border: '3px dashed #EC4899',
-            borderRadius: '28px',
             padding: '48px 32px'
           }}
         >

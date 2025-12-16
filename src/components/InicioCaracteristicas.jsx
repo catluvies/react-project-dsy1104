@@ -1,14 +1,15 @@
 function InicioCaracteristicas() {
   const caracteristicas = [
-    { titulo: '50 años', descripcion: 'de experiencia', emoji: '🎂', bg: '#FFFBEB', border: '#FCD34D' },
-    { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales', emoji: '💕', bg: '#FDF2F8', border: '#F9A8D4' },
-    { titulo: 'Ingredientes frescos', descripcion: 'Productos del día', emoji: '🌿', bg: '#F0FDF4', border: '#86EFAC' },
-    { titulo: 'Calidad artesanal', descripcion: 'Elaboración diaria', emoji: '✨', bg: '#FAF5FF', border: '#C4B5FD' }
+    { titulo: '50 años', descripcion: 'de experiencia', emoji: '🎂', bg: 'rgba(255, 251, 235, 0.85)', border: '#FCD34D' },
+    { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales', emoji: '💕', bg: 'rgba(253, 242, 248, 0.85)', border: '#F9A8D4' },
+    { titulo: 'Ingredientes frescos', descripcion: 'Productos del día', emoji: '🌿', bg: 'rgba(240, 253, 244, 0.85)', border: '#86EFAC' },
+    { titulo: 'Calidad artesanal', descripcion: 'Elaboración diaria', emoji: '✨', bg: 'rgba(250, 245, 255, 0.85)', border: '#C4B5FD' }
   ]
 
   return (
-    <section className="container my-5">
-      <div className="row g-4">
+    <section className="py-4" style={{ backgroundColor: 'transparent' }}>
+      <div className="container">
+        <div className="row g-3 g-md-4 justify-content-center">
         {caracteristicas.map((item, index) => (
           <div key={index} className="col-6 col-md-3">
             <div
@@ -50,6 +51,7 @@ function InicioCaracteristicas() {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </section>
   )

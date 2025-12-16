@@ -7,7 +7,7 @@ function InicioProductosDestacados(props) {
 
   if (productos.length === 0) {
     return (
-      <section className="py-5" style={{ backgroundColor: '#FFFEF7' }}>
+      <section className="py-5" style={{ backgroundColor: 'transparent' }}>
         <div className="container text-center">
           <h2
             className="mb-4"
@@ -26,7 +26,7 @@ function InicioProductosDestacados(props) {
   }
 
   return (
-    <section className="py-5" style={{ backgroundColor: '#FFFEF7' }}>
+    <section className="py-5" style={{ backgroundColor: 'transparent' }}>
       <div className="container">
         {/* Título */}
         <div className="text-center mb-5">
@@ -84,7 +84,7 @@ function InicioProductosDestacados(props) {
                         <Link to={`/producto/${producto.id}`} className="text-decoration-none">
                           <div
                             style={{
-                              backgroundColor: '#FFFBF0',
+                              backgroundColor: 'rgba(255, 251, 240, 0.95)',
                               border: '3px dashed #F59E0B',
                               borderRadius: '28px',
                               overflow: 'hidden',

@@ -4,7 +4,7 @@ function InicioCTA() {
   return (
     <section
       className="py-5 my-5"
-      style={{ backgroundColor: '#FDF2F8' }}
+      style={{ backgroundColor: 'rgba(253, 242, 248, 0.7)' }}
     >
       <div className="container py-4">
         <div

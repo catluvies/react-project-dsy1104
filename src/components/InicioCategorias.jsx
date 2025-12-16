@@ -148,16 +148,21 @@ function InicioCategorias() {
           <button
             onClick={anterior}
             disabled={indiceActual === 0}
-            className="btn position-absolute start-0 top-50 translate-middle-y"
+            className="btn position-absolute top-50 translate-middle-y d-none d-md-flex align-items-center justify-content-center"
             style={{
-              width: '40px',
-              height: '40px',
+              left: '-20px',
+              width: '44px',
+              height: '44px',
               borderRadius: '50%',
-              border: '1px solid #ddd',
+              border: '2px solid #F59E0B',
               backgroundColor: '#fff',
+              color: '#F59E0B',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
               zIndex: 10,
-              opacity: indiceActual === 0 ? 0.5 : 1,
-              cursor: indiceActual === 0 ? 'default' : 'pointer'
+              opacity: indiceActual === 0 ? 0.4 : 1,
+              cursor: indiceActual === 0 ? 'default' : 'pointer',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
             }}
           >
             ‹
@@ -187,8 +192,8 @@ function InicioCategorias() {
                       className="card h-100 text-center p-3"
                       style={{
                         backgroundColor: color.bg,
-                        border: `2px dashed ${color.border}`,
-                        borderRadius: '16px',
+                        border: `3px dashed ${color.border}`,
+                        borderRadius: '20px',
                         transition: 'transform 0.2s, box-shadow 0.2s',
                         cursor: 'pointer',
                         minHeight: '180px'
@@ -241,16 +246,21 @@ function InicioCategorias() {
           <button
             onClick={siguiente}
             disabled={indiceActual >= maxIndice}
-            className="btn position-absolute end-0 top-50 translate-middle-y"
+            className="btn position-absolute top-50 translate-middle-y d-none d-md-flex align-items-center justify-content-center"
             style={{
-              width: '40px',
-              height: '40px',
+              right: '-20px',
+              width: '44px',
+              height: '44px',
               borderRadius: '50%',
-              border: '1px solid #ddd',
+              border: '2px solid #F59E0B',
               backgroundColor: '#fff',
+              color: '#F59E0B',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
               zIndex: 10,
-              opacity: indiceActual >= maxIndice ? 0.5 : 1,
-              cursor: indiceActual >= maxIndice ? 'default' : 'pointer'
+              opacity: indiceActual >= maxIndice ? 0.4 : 1,
+              cursor: indiceActual >= maxIndice ? 'default' : 'pointer',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
             }}
           >
             ›

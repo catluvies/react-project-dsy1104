@@ -9,11 +9,11 @@ function InicioCaracteristicas() {
   ]
 
   return (
-    <section className="container my-5 position-relative overflow-hidden">
-      {/* Emojis kawaii flotantes */}
+    <section className="container my-5 position-relative" style={{ minHeight: '200px' }}>
+      {/* Emojis kawaii flotantes - distribuidos por porcentajes */}
       <motion.span
-        className="position-absolute"
-        style={{ top: '1rem', left: '1rem', fontSize: '1.5rem', opacity: 0.5 }}
+        className="position-absolute d-none d-md-block"
+        style={{ top: '10%', left: '5%', fontSize: '1.5rem', opacity: 0.5, zIndex: 0 }}
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -21,8 +21,8 @@ function InicioCaracteristicas() {
       </motion.span>
 
       <motion.span
-        className="position-absolute"
-        style={{ top: '2rem', right: '2rem', fontSize: '1.3rem', opacity: 0.45 }}
+        className="position-absolute d-none d-md-block"
+        style={{ top: '15%', right: '8%', fontSize: '1.3rem', opacity: 0.45, zIndex: 0 }}
         animate={{ y: [0, -8, 0], rotate: [0, 8, 0] }}
         transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
       >
@@ -30,8 +30,8 @@ function InicioCaracteristicas() {
       </motion.span>
 
       <motion.span
-        className="position-absolute"
-        style={{ bottom: '1rem', left: '3rem', fontSize: '1.4rem', opacity: 0.4 }}
+        className="position-absolute d-none d-md-block"
+        style={{ bottom: '15%', left: '12%', fontSize: '1.4rem', opacity: 0.4, zIndex: 0 }}
         animate={{ y: [0, -6, 0], rotate: [0, -6, 0] }}
         transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
       >
@@ -39,8 +39,8 @@ function InicioCaracteristicas() {
       </motion.span>
 
       <motion.span
-        className="position-absolute"
-        style={{ top: '50%', left: '0', fontSize: '1.2rem', opacity: 0.35 }}
+        className="position-absolute d-none d-lg-block"
+        style={{ top: '40%', left: '2%', fontSize: '1.2rem', opacity: 0.35, zIndex: 0 }}
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
       >
@@ -48,8 +48,8 @@ function InicioCaracteristicas() {
       </motion.span>
 
       <motion.span
-        className="position-absolute"
-        style={{ bottom: '2rem', right: '1.5rem', fontSize: '1.5rem', opacity: 0.5 }}
+        className="position-absolute d-none d-md-block"
+        style={{ bottom: '20%', right: '5%', fontSize: '1.5rem', opacity: 0.5, zIndex: 0 }}
         animate={{ y: [0, -7, 0], rotate: [0, 5, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       >
@@ -57,8 +57,8 @@ function InicioCaracteristicas() {
       </motion.span>
 
       <motion.span
-        className="position-absolute"
-        style={{ top: '1.5rem', left: '50%', fontSize: '1.3rem', opacity: 0.4 }}
+        className="position-absolute d-none d-lg-block"
+        style={{ top: '5%', left: '45%', fontSize: '1.3rem', opacity: 0.4, zIndex: 0 }}
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 2.9, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
       >
@@ -66,23 +66,23 @@ function InicioCaracteristicas() {
       </motion.span>
 
       <motion.span
-        className="position-absolute"
-        style={{ bottom: '0.5rem', right: '50%', fontSize: '1.2rem', opacity: 0.45 }}
+        className="position-absolute d-none d-lg-block"
+        style={{ bottom: '10%', right: '40%', fontSize: '1.2rem', opacity: 0.45, zIndex: 0 }}
         animate={{ y: [0, -9, 0], rotate: [0, -8, 0] }}
         transition={{ duration: 3.3, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
       >
         🥧
       </motion.span>
 
-      <div className="row g-4">
+      <div className="row g-4 position-relative" style={{ zIndex: 1 }}>
         {caracteristicas.map((item, index) => (
           <div key={index} className="col-md-3 col-sm-6">
             <div
               className="card h-100 text-center"
               style={{
                 backgroundColor: item.bg,
-                border: `2px dashed ${item.border}`,
-                borderRadius: '16px',
+                border: `3px dashed ${item.border}`,
+                borderRadius: '20px',
                 padding: '24px',
                 transition: 'transform 0.2s ease'
               }}

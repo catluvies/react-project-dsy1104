@@ -11,9 +11,9 @@ function InicioCTA() {
           className="mx-auto text-center"
           style={{
             maxWidth: '600px',
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            border: '2px dashed #F9A8D4',
-            borderRadius: '24px',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            border: '3px dashed #F9A8D4',
+            borderRadius: '28px',
             padding: '48px 32px'
           }}
         >

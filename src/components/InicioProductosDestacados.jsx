@@ -40,8 +40,8 @@ function InicioProductosDestacados(props) {
                       className="d-flex flex-column flex-md-row"
                       style={{
                         backgroundColor: '#FFFBF0',
-                        border: '2px dashed #F59E0B',
-                        borderRadius: '24px',
+                        border: '3px dashed #F59E0B',
+                        borderRadius: '28px',
                         overflow: 'hidden'
                       }}
                     >
@@ -108,22 +108,24 @@ function InicioProductosDestacados(props) {
         </div>
 
         <button
-          className="carousel-control-prev"
+          className="carousel-control-prev d-none d-md-flex"
           type="button"
           data-bs-target="#productosCarousel"
           data-bs-slide="prev"
-          style={{ width: '50px' }}
+          style={{ width: '60px', left: '-30px' }}
         >
           <span
             className="d-flex align-items-center justify-content-center"
             style={{
-              width: '40px',
-              height: '40px',
-              border: '2px dashed #F59E0B',
+              width: '44px',
+              height: '44px',
+              border: '2px solid #F59E0B',
               borderRadius: '50%',
               backgroundColor: 'white',
               color: '#F59E0B',
-              fontSize: '1.5rem'
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
             }}
           >
             ‹
@@ -131,22 +133,24 @@ function InicioProductosDestacados(props) {
           <span className="visually-hidden">Anterior</span>
         </button>
         <button
-          className="carousel-control-next"
+          className="carousel-control-next d-none d-md-flex"
           type="button"
           data-bs-target="#productosCarousel"
           data-bs-slide="next"
-          style={{ width: '50px' }}
+          style={{ width: '60px', right: '-30px' }}
         >
           <span
             className="d-flex align-items-center justify-content-center"
             style={{
-              width: '40px',
-              height: '40px',
-              border: '2px dashed #F59E0B',
+              width: '44px',
+              height: '44px',
+              border: '2px solid #F59E0B',
               borderRadius: '50%',
               backgroundColor: 'white',
               color: '#F59E0B',
-              fontSize: '1.5rem'
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
             }}
           >
             ›

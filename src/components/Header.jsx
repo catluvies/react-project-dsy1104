@@ -129,19 +129,19 @@ function Header() {
                   style={{
                     padding: '8px 16px',
                     fontSize: '0.95rem',
-                    backgroundColor: '#8B7355',
-                    color: 'white',
-                    border: '2px solid #6B5B4F',
+                    backgroundColor: '#FEF3C7',
+                    color: '#92400E',
+                    border: '2px dashed #F59E0B',
                     borderRadius: '20px',
                     fontWeight: '500',
                     transition: 'all 0.2s ease'
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = '#6B5B4F'
+                    e.currentTarget.style.backgroundColor = '#FDE68A'
                     e.currentTarget.style.transform = 'translateY(-2px)'
                   }}
                   onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = '#8B7355'
+                    e.currentTarget.style.backgroundColor = '#FEF3C7'
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
@@ -225,24 +225,24 @@ function Header() {
                 to="/login"
                 className="btn"
                 style={{
-                  backgroundColor: '#8B7355',
-                  color: 'white',
-                  border: '2px solid #6B5B4F',
+                  backgroundColor: '#FEF3C7',
+                  color: '#92400E',
+                  border: '2px dashed #F59E0B',
                   borderRadius: '20px',
                   padding: '10px 20px',
                   fontWeight: '500',
                   transition: 'all 0.2s ease'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#6B5B4F'
+                  e.currentTarget.style.backgroundColor = '#FDE68A'
                   e.currentTarget.style.transform = 'translateY(-2px)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = '#8B7355'
+                  e.currentTarget.style.backgroundColor = '#FEF3C7'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }}
               >
-                Ingresar
+                🔑 Ingresar
               </Link>
             )}
           </div>

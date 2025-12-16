@@ -188,9 +188,19 @@ function AdminProducts() {
 
   const validarFormulario = () => {
     const nuevosErrores = {}
+    const advertencias = []
 
+    // === CAMPOS OBLIGATORIOS ===
     if (!formData.nombre || formData.nombre.trim().length < 2) {
       nuevosErrores.nombre = 'El nombre es requerido (mínimo 2 caracteres)'
+    }
+
+    if (!formData.descripcion || formData.descripcion.trim().length < 10) {
+      nuevosErrores.descripcion = 'La descripción es requerida (mínimo 10 caracteres)'
+    }
+
+    if (!formData.categoriaId) {
+      nuevosErrores.categoriaId = 'Debes seleccionar una categoría'
     }
 
     const precioLimpio = limpiarPrecio(formData.precio)
@@ -202,12 +212,34 @@ function AdminProducts() {
       nuevosErrores.stock = 'El stock debe ser un número igual o mayor a 0'
     }
 
-    if (!formData.categoriaId) {
-      nuevosErrores.categoriaId = 'Debes seleccionar una categoría'
+    // === CAMPOS MUY RECOMENDADOS (advertencias, no bloquean) ===
+    if (!imagenSeleccionada && !previewImagen) {
+      advertencias.push('Se recomienda agregar una imagen del producto')
+    }
+
+    if (!formData.alergenos || formData.alergenos.trim().length === 0) {
+      advertencias.push('Se recomienda indicar los alérgenos (o escribir "Sin alérgenos" si no aplica)')
+    }
+
+    if (!formData.ingredientes || formData.ingredientes.trim().length === 0) {
+      advertencias.push('Se recomienda listar los ingredientes principales')
+    }
+
+    // Si tiene duración, debería tener condición de conservación
+    if (formData.duracionDias && !formData.condicionConservacion) {
+      advertencias.push('Si el producto tiene duración limitada, indica cómo conservarlo')
+    }
+
+    // Guardar advertencias para mostrar (no bloquean el envío)
+    if (advertencias.length > 0) {
+      nuevosErrores.advertencias = advertencias
     }
 
     setErroresForm(nuevosErrores)
-    return Object.keys(nuevosErrores).length === 0
+
+    // Solo bloquear si hay errores reales (no advertencias)
+    const erroresReales = Object.keys(nuevosErrores).filter(k => k !== 'advertencias')
+    return erroresReales.length === 0
   }
 
   const handleSubmit = async (e) => {
@@ -460,6 +492,18 @@ function AdminProducts() {
                     <div className="alert alert-danger">{erroresForm.general}</div>
                   )}
 
+                  {erroresForm.advertencias && erroresForm.advertencias.length > 0 && (
+                    <div className="alert alert-warning">
+                      <strong>Recomendaciones:</strong>
+                      <ul className="mb-0 mt-1">
+                        {erroresForm.advertencias.map((adv, idx) => (
+                          <li key={idx}>{adv}</li>
+                        ))}
+                      </ul>
+                      <small className="text-muted">Puedes continuar, pero se recomienda completar estos campos.</small>
+                    </div>
+                  )}
+
                   <div className="row g-3">
                     <div className="col-md-8">
                       <label className="form-label">Nombre *</label>
@@ -494,15 +538,17 @@ function AdminProducts() {
                     </div>
 
                     <div className="col-12">
-                      <label className="form-label">Descripción</label>
+                      <label className="form-label">Descripción *</label>
                       <textarea
                         name="descripcion"
                         value={formData.descripcion}
                         onChange={handleFormChange}
-                        className="form-control"
+                        className={`form-control ${erroresForm.descripcion ? 'is-invalid' : ''}`}
                         rows="3"
+                        placeholder="Describe el producto: sabor, presentación, ocasiones para las que es ideal..."
                         disabled={guardando}
                       />
+                      {erroresForm.descripcion && <div className="invalid-feedback">{erroresForm.descripcion}</div>}
                     </div>
 
                     <div className="col-md-6">
@@ -519,14 +565,16 @@ function AdminProducts() {
                     </div>
 
                     <div className="col-md-6">
-                      <label className="form-label">Ingredientes</label>
+                      <label className="form-label">
+                        Ingredientes <span className="badge bg-info text-dark" style={{fontSize: '0.65rem'}}>Recomendado</span>
+                      </label>
                       <input
                         type="text"
                         name="ingredientes"
                         value={formData.ingredientes}
                         onChange={handleFormChange}
                         className="form-control"
-                        placeholder="Harina, azúcar, huevos..."
+                        placeholder="Harina, azúcar, huevos, mantequilla..."
                         disabled={guardando}
                       />
                     </div>
@@ -609,16 +657,19 @@ function AdminProducts() {
                     </div>
 
                     <div className="col-md-6">
-                      <label className="form-label">Alérgenos</label>
+                      <label className="form-label">
+                        Alérgenos <span className="badge bg-warning text-dark" style={{fontSize: '0.65rem'}}>Importante</span>
+                      </label>
                       <input
                         type="text"
                         name="alergenos"
                         value={formData.alergenos}
                         onChange={handleFormChange}
                         className="form-control"
-                        placeholder="Gluten, lácteos, huevo..."
+                        placeholder="Gluten, lácteos, huevo... (o 'Sin alérgenos')"
                         disabled={guardando}
                       />
+                      <small className="text-muted">Por normativa sanitaria, indica los alérgenos presentes</small>
                     </div>
 
                     <div className="col-md-4">
@@ -672,7 +723,9 @@ function AdminProducts() {
                     </div>
 
                     <div className="col-12">
-                      <label className="form-label">Imagen del producto</label>
+                      <label className="form-label">
+                        Imagen del producto <span className="badge bg-info text-dark" style={{fontSize: '0.65rem'}}>Recomendado</span>
+                      </label>
                       <div className="d-flex gap-3 align-items-start">
                         {previewImagen && (
                           <img

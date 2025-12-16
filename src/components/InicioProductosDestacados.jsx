@@ -45,188 +45,198 @@ function InicioProductosDestacados(props) {
           <p className="text-muted">Seleccionados especialmente para ti</p>
         </div>
 
-        {/* Carrusel */}
-        <div className="position-relative px-5">
-          <div id="productosCarousel" className="carousel slide" data-bs-ride="carousel">
-            <div className="carousel-inner">
-              {productos.map((producto, index) => {
-                const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
-                return (
-                  <div key={producto.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-                    <div className="d-flex justify-content-center">
-                      <div style={{ maxWidth: '800px', width: '100%' }}>
+        {/* Carrusel con flechas integradas */}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+            <div className="position-relative">
+              {/* Flecha izquierda */}
+              <button
+                className="btn position-absolute d-flex align-items-center justify-content-center"
+                type="button"
+                data-bs-target="#productosCarousel"
+                data-bs-slide="prev"
+                style={{
+                  left: '-25px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  border: '3px solid #F59E0B',
+                  backgroundColor: 'white',
+                  color: '#F59E0B',
+                  fontSize: '1.8rem',
+                  fontWeight: 'bold',
+                  zIndex: 10,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                }}
+              >
+                ‹
+              </button>
+
+              {/* Carrusel */}
+              <div id="productosCarousel" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-inner">
+                  {productos.map((producto, index) => {
+                    const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
+                    return (
+                      <div key={producto.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
                         <Link to={`/producto/${producto.id}`} className="text-decoration-none">
                           <div
-                            className="d-flex flex-column flex-md-row align-items-stretch"
                             style={{
                               backgroundColor: '#FFFBF0',
                               border: '3px dashed #F59E0B',
                               borderRadius: '28px',
                               overflow: 'hidden',
-                              boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
+                              boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                              height: '320px'
                             }}
                           >
-                            {/* Imagen */}
-                            <div
-                              className="flex-shrink-0"
-                              style={{
-                                width: '100%',
-                                maxWidth: '320px',
-                                minHeight: '280px',
-                                backgroundColor: '#f5f5f5'
-                              }}
-                            >
-                              {imagenUrl ? (
-                                <img
-                                  src={imagenUrl}
-                                  alt={producto.nombre}
-                                  style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    minHeight: '280px',
-                                    objectFit: 'cover'
-                                  }}
-                                  loading="lazy"
-                                />
-                              ) : (
+                            <div className="row g-0 h-100">
+                              {/* Imagen - lado izquierdo */}
+                              <div className="col-md-5 h-100">
                                 <div
-                                  className="d-flex align-items-center justify-content-center h-100"
-                                  style={{ fontSize: '4rem' }}
+                                  style={{
+                                    height: '100%',
+                                    minHeight: '320px',
+                                    backgroundColor: '#f8f4f0'
+                                  }}
                                 >
-                                  🍰
+                                  {imagenUrl ? (
+                                    <img
+                                      src={imagenUrl}
+                                      alt={producto.nombre}
+                                      style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                      }}
+                                      loading="lazy"
+                                    />
+                                  ) : (
+                                    <div
+                                      className="d-flex align-items-center justify-content-center h-100"
+                                      style={{ fontSize: '5rem' }}
+                                    >
+                                      🍰
+                                    </div>
+                                  )}
                                 </div>
-                              )}
-                            </div>
+                              </div>
 
-                            {/* Contenido */}
-                            <div
-                              className="d-flex flex-column justify-content-center p-4 flex-grow-1"
-                              style={{ minHeight: '280px' }}
-                            >
-                              <div className="text-center text-md-start">
-                                <h3
-                                  className="mb-3"
-                                  style={{
-                                    fontFamily: "'Playfair Display', Georgia, serif",
-                                    fontStyle: 'italic',
-                                    color: '#6B5B4F',
-                                    fontSize: '1.8rem'
-                                  }}
-                                >
-                                  {producto.nombre}
-                                </h3>
-                                <p
-                                  className="mb-3"
-                                  style={{
-                                    color: '#8B7355',
-                                    fontSize: '1rem',
-                                    lineHeight: '1.6'
-                                  }}
-                                >
-                                  {producto.descripcion}
-                                </p>
-                                <p
-                                  className="mb-4"
-                                  style={{
-                                    color: '#F59E0B',
-                                    fontSize: '2rem',
-                                    fontWeight: 'bold'
-                                  }}
-                                >
-                                  ${formatearPrecio(producto.precio)}
-                                </p>
-                                <span
-                                  className="btn px-4 py-2"
-                                  style={{
-                                    backgroundColor: '#F59E0B',
-                                    color: 'white',
-                                    borderRadius: '9999px',
-                                    fontWeight: '500',
-                                    fontSize: '1rem',
-                                    boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
-                                  }}
-                                >
-                                  🛒 Ver Producto
-                                </span>
+                              {/* Contenido - lado derecho */}
+                              <div className="col-md-7 h-100">
+                                <div className="d-flex flex-column justify-content-center h-100 p-4 p-md-5">
+                                  {/* Badge decorativo */}
+                                  <div className="mb-3">
+                                    <span
+                                      style={{
+                                        backgroundColor: '#FEF3C7',
+                                        color: '#92400E',
+                                        padding: '6px 16px',
+                                        borderRadius: '9999px',
+                                        fontSize: '0.8rem',
+                                        fontWeight: '600'
+                                      }}
+                                    >
+                                      ⭐ Destacado
+                                    </span>
+                                  </div>
+
+                                  {/* Nombre */}
+                                  <h3
+                                    className="mb-2"
+                                    style={{
+                                      fontFamily: "'Playfair Display', Georgia, serif",
+                                      fontStyle: 'italic',
+                                      color: '#6B5B4F',
+                                      fontSize: '1.6rem'
+                                    }}
+                                  >
+                                    {producto.nombre}
+                                  </h3>
+
+                                  {/* Descripción */}
+                                  <p
+                                    className="mb-3"
+                                    style={{
+                                      color: '#8B7355',
+                                      fontSize: '0.95rem',
+                                      lineHeight: '1.5',
+                                      display: '-webkit-box',
+                                      WebkitLineClamp: 2,
+                                      WebkitBoxOrient: 'vertical',
+                                      overflow: 'hidden'
+                                    }}
+                                  >
+                                    {producto.descripcion}
+                                  </p>
+
+                                  {/* Precio y botón */}
+                                  <div className="d-flex align-items-center gap-3 flex-wrap">
+                                    <span
+                                      style={{
+                                        color: '#F59E0B',
+                                        fontSize: '1.8rem',
+                                        fontWeight: 'bold'
+                                      }}
+                                    >
+                                      ${formatearPrecio(producto.precio)}
+                                    </span>
+                                    <span
+                                      className="btn"
+                                      style={{
+                                        backgroundColor: '#F59E0B',
+                                        color: 'white',
+                                        borderRadius: '9999px',
+                                        padding: '10px 20px',
+                                        fontWeight: '500',
+                                        fontSize: '0.9rem',
+                                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
+                                      }}
+                                    >
+                                      Ver más →
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </Link>
                       </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+                    )
+                  })}
+                </div>
+              </div>
 
-            {/* Flechas del carrusel */}
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#productosCarousel"
-              data-bs-slide="prev"
-              style={{
-                left: '-60px',
-                width: '50px',
-                height: '50px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                opacity: 1
-              }}
-            >
-              <span
-                className="d-flex align-items-center justify-content-center"
+              {/* Flecha derecha */}
+              <button
+                className="btn position-absolute d-flex align-items-center justify-content-center"
+                type="button"
+                data-bs-target="#productosCarousel"
+                data-bs-slide="next"
                 style={{
+                  right: '-25px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
                   width: '50px',
                   height: '50px',
-                  border: '3px solid #F59E0B',
                   borderRadius: '50%',
+                  border: '3px solid #F59E0B',
                   backgroundColor: 'white',
                   color: '#F59E0B',
                   fontSize: '1.8rem',
                   fontWeight: 'bold',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-                }}
-              >
-                ‹
-              </span>
-              <span className="visually-hidden">Anterior</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#productosCarousel"
-              data-bs-slide="next"
-              style={{
-                right: '-60px',
-                width: '50px',
-                height: '50px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                opacity: 1
-              }}
-            >
-              <span
-                className="d-flex align-items-center justify-content-center"
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  border: '3px solid #F59E0B',
-                  borderRadius: '50%',
-                  backgroundColor: 'white',
-                  color: '#F59E0B',
-                  fontSize: '1.8rem',
-                  fontWeight: 'bold',
+                  zIndex: 10,
                   boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
                 }}
               >
                 ›
-              </span>
-              <span className="visually-hidden">Siguiente</span>
-            </button>
+              </button>
+            </div>
 
             {/* Indicadores */}
-            <div className="carousel-indicators position-relative mt-4" style={{ marginBottom: 0 }}>
+            <div className="d-flex justify-content-center gap-2 mt-4">
               {productos.map((_, index) => (
                 <button
                   key={index}
@@ -235,12 +245,12 @@ function InicioProductosDestacados(props) {
                   data-bs-slide-to={index}
                   className={index === 0 ? 'active' : ''}
                   style={{
-                    width: '12px',
-                    height: '12px',
-                    borderRadius: '50%',
+                    width: index === 0 ? '24px' : '10px',
+                    height: '10px',
+                    borderRadius: '5px',
                     backgroundColor: index === 0 ? '#F59E0B' : '#ddd',
                     border: 'none',
-                    margin: '0 5px'
+                    transition: 'all 0.3s ease'
                   }}
                 />
               ))}

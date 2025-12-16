@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { categoriasService } from '../api/categoriasService'
 
@@ -52,7 +52,8 @@ const EMOJIS_DEFAULT = {
 function InicioCategorias() {
   const [categorias, setCategorias] = useState([])
   const [cargando, setCargando] = useState(true)
-  const [paginaActual, setPaginaActual] = useState(0)
+  const [scrollPosition, setScrollPosition] = useState(0)
+  const containerRef = useRef(null)
 
   useEffect(() => {
     cargarDatos()
@@ -69,7 +70,6 @@ function InicioCategorias() {
     }
   }
 
-  // Obtener emoji para la categoría
   const obtenerEmoji = (categoria) => {
     if (categoria.imagenUrl?.startsWith('emoji:')) {
       return categoria.imagenUrl.replace('emoji:', '')
@@ -81,25 +81,31 @@ function InicioCategorias() {
     return '🍰'
   }
 
-  // Obtener color para la categoría
   const obtenerColor = (index) => {
     return COLORES_PASTEL[index % COLORES_PASTEL.length]
   }
 
-  // Siempre mostrar 4 por página
-  const itemsPorPagina = 4
-  const totalPaginas = Math.ceil(categorias.length / itemsPorPagina)
-  const categoriasVisibles = categorias.slice(
-    paginaActual * itemsPorPagina,
-    (paginaActual + 1) * itemsPorPagina
-  )
-
-  const siguiente = () => {
-    setPaginaActual(prev => (prev + 1) % totalPaginas)
+  const scrollLeft = () => {
+    if (containerRef.current) {
+      const newPosition = Math.max(0, scrollPosition - 300)
+      containerRef.current.scrollTo({ left: newPosition, behavior: 'smooth' })
+      setScrollPosition(newPosition)
+    }
   }
 
-  const anterior = () => {
-    setPaginaActual(prev => (prev - 1 + totalPaginas) % totalPaginas)
+  const scrollRight = () => {
+    if (containerRef.current) {
+      const maxScroll = containerRef.current.scrollWidth - containerRef.current.clientWidth
+      const newPosition = Math.min(maxScroll, scrollPosition + 300)
+      containerRef.current.scrollTo({ left: newPosition, behavior: 'smooth' })
+      setScrollPosition(newPosition)
+    }
+  }
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      setScrollPosition(containerRef.current.scrollLeft)
+    }
   }
 
   if (cargando) {
@@ -115,6 +121,11 @@ function InicioCategorias() {
   }
 
   if (categorias.length === 0) return null
+
+  const canScrollLeft = scrollPosition > 0
+  const canScrollRight = containerRef.current
+    ? scrollPosition < containerRef.current.scrollWidth - containerRef.current.clientWidth - 10
+    : categorias.length > 4
 
   return (
     <section className="py-5" style={{ backgroundColor: '#FFFEF7' }}>
@@ -143,150 +154,158 @@ function InicioCategorias() {
           <p className="text-muted">Encuentra tu dulce favorito</p>
         </div>
 
-        {/* Grid de categorías con flechas */}
+        {/* Carrusel horizontal con flechas */}
         <div className="position-relative">
-          {/* Botón anterior - solo si hay más de 4 categorías */}
-          {categorias.length > 4 && (
-            <button
-              onClick={anterior}
-              className="btn position-absolute top-50 translate-middle-y d-flex align-items-center justify-content-center"
-              style={{
-                left: '-25px',
-                width: '50px',
-                height: '50px',
-                borderRadius: '50%',
-                border: '3px solid #F59E0B',
-                backgroundColor: '#fff',
-                color: '#F59E0B',
-                fontSize: '1.8rem',
-                fontWeight: 'bold',
-                zIndex: 10,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-              }}
-            >
-              ‹
-            </button>
-          )}
+          {/* Flecha izquierda - siempre visible */}
+          <button
+            onClick={scrollLeft}
+            className="btn position-absolute d-flex align-items-center justify-content-center"
+            style={{
+              left: '-25px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+              border: '3px solid #F59E0B',
+              backgroundColor: 'white',
+              color: '#F59E0B',
+              fontSize: '1.8rem',
+              fontWeight: 'bold',
+              zIndex: 10,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              opacity: canScrollLeft ? 1 : 0.4,
+              cursor: canScrollLeft ? 'pointer' : 'default'
+            }}
+            disabled={!canScrollLeft}
+          >
+            ‹
+          </button>
 
-          {/* Grid de 4 columnas */}
-          <div className="row g-4 justify-content-center px-4">
-            {categoriasVisibles.map((categoria, index) => {
-              const color = obtenerColor(paginaActual * itemsPorPagina + index)
+          {/* Contenedor de categorías con scroll */}
+          <div
+            ref={containerRef}
+            onScroll={handleScroll}
+            className="d-flex gap-4 px-3"
+            style={{
+              overflowX: 'auto',
+              scrollBehavior: 'smooth',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}
+          >
+            <style>
+              {`
+                .categoria-scroll::-webkit-scrollbar {
+                  display: none;
+                }
+              `}
+            </style>
+            {categorias.map((categoria, index) => {
+              const color = obtenerColor(index)
               const emoji = obtenerEmoji(categoria)
 
               return (
-                <div key={categoria.id} className="col-6 col-md-3">
-                  <Link
-                    to={`/productos?categoria=${categoria.id}`}
-                    className="text-decoration-none d-block h-100"
+                <Link
+                  key={categoria.id}
+                  to={`/productos?categoria=${categoria.id}`}
+                  className="text-decoration-none flex-shrink-0"
+                  style={{ width: '220px' }}
+                >
+                  <div
+                    className="card h-100 text-center"
+                    style={{
+                      backgroundColor: color.bg,
+                      border: `3px dashed ${color.border}`,
+                      borderRadius: '20px',
+                      padding: '24px 16px',
+                      transition: 'transform 0.2s, box-shadow 0.2s',
+                      cursor: 'pointer',
+                      minHeight: '200px'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)'
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)'
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)'
+                      e.currentTarget.style.boxShadow = 'none'
+                    }}
                   >
-                    <div
-                      className="card h-100 text-center"
-                      style={{
-                        backgroundColor: color.bg,
-                        border: `3px dashed ${color.border}`,
-                        borderRadius: '20px',
-                        padding: '20px 15px',
-                        transition: 'transform 0.2s, box-shadow 0.2s',
-                        cursor: 'pointer',
-                        minHeight: '200px'
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-5px)'
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)'
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)'
-                        e.currentTarget.style.boxShadow = 'none'
-                      }}
-                    >
-                      <div className="card-body d-flex flex-column align-items-center justify-content-center p-0">
-                        <span style={{ fontSize: '3.5rem', marginBottom: '0.75rem' }}>
-                          {emoji}
-                        </span>
-                        <h6
-                          className="mb-2"
+                    <div className="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                      <span style={{ fontSize: '3.5rem', marginBottom: '0.75rem' }}>
+                        {emoji}
+                      </span>
+                      <h6
+                        className="mb-2"
+                        style={{
+                          fontFamily: "'Playfair Display', Georgia, serif",
+                          fontStyle: 'italic',
+                          color: '#6B5B4F',
+                          fontWeight: '600',
+                          fontSize: '1.1rem'
+                        }}
+                      >
+                        {categoria.nombre}
+                      </h6>
+                      {categoria.descripcion && (
+                        <small
                           style={{
-                            fontFamily: "'Playfair Display', Georgia, serif",
-                            fontStyle: 'italic',
-                            color: '#6B5B4F',
-                            fontWeight: '600',
-                            fontSize: '1.1rem'
+                            color: '#9E8E7E',
+                            fontSize: '0.85rem',
+                            lineHeight: '1.3'
                           }}
                         >
-                          {categoria.nombre}
-                        </h6>
-                        {categoria.descripcion && (
-                          <small
-                            style={{
-                              color: '#9E8E7E',
-                              fontSize: '0.85rem',
-                              lineHeight: '1.3'
-                            }}
-                          >
-                            {categoria.descripcion.length > 40
-                              ? categoria.descripcion.substring(0, 40) + '...'
-                              : categoria.descripcion
-                            }
-                          </small>
-                        )}
-                      </div>
+                          {categoria.descripcion.length > 35
+                            ? categoria.descripcion.substring(0, 35) + '...'
+                            : categoria.descripcion
+                          }
+                        </small>
+                      )}
                     </div>
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               )
             })}
           </div>
 
-          {/* Botón siguiente - solo si hay más de 4 categorías */}
-          {categorias.length > 4 && (
-            <button
-              onClick={siguiente}
-              className="btn position-absolute top-50 translate-middle-y d-flex align-items-center justify-content-center"
-              style={{
-                right: '-25px',
-                width: '50px',
-                height: '50px',
-                borderRadius: '50%',
-                border: '3px solid #F59E0B',
-                backgroundColor: '#fff',
-                color: '#F59E0B',
-                fontSize: '1.8rem',
-                fontWeight: 'bold',
-                zIndex: 10,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-              }}
-            >
-              ›
-            </button>
-          )}
+          {/* Flecha derecha - siempre visible */}
+          <button
+            onClick={scrollRight}
+            className="btn position-absolute d-flex align-items-center justify-content-center"
+            style={{
+              right: '-25px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+              border: '3px solid #F59E0B',
+              backgroundColor: 'white',
+              color: '#F59E0B',
+              fontSize: '1.8rem',
+              fontWeight: 'bold',
+              zIndex: 10,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              opacity: canScrollRight ? 1 : 0.4,
+              cursor: canScrollRight ? 'pointer' : 'default'
+            }}
+            disabled={!canScrollRight}
+          >
+            ›
+          </button>
         </div>
 
-        {/* Indicadores de página - solo si hay más de 4 categorías */}
-        {categorias.length > 4 && (
-          <div className="text-center mt-4">
-            <div className="d-flex justify-content-center gap-2">
-              {Array.from({ length: totalPaginas }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setPaginaActual(i)}
-                  className="btn p-0"
-                  style={{
-                    width: paginaActual === i ? '24px' : '10px',
-                    height: '10px',
-                    borderRadius: '5px',
-                    backgroundColor: paginaActual === i ? '#F59E0B' : '#ddd',
-                    border: 'none',
-                    transition: 'all 0.3s ease'
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Indicador de scroll */}
+        <div className="text-center mt-4">
+          <small className="text-muted">
+            ← Desliza para ver más →
+          </small>
+        </div>
 
         {/* Decoración inferior */}
-        <div className="text-center mt-4">
+        <div className="text-center mt-3">
           <span style={{ color: '#ddd', fontSize: '1.2rem' }}>❧</span>
         </div>
       </div>

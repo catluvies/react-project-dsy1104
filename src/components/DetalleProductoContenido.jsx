@@ -5,17 +5,7 @@ import { CarritoContext } from '../context/CarritoContext'
 import { productosService } from '../api/productosService'
 import { variantesService } from '../api/variantesService'
 
-// Mapeo de enums a texto legible
-const UNIDAD_MEDIDA_LABELS = {
-  'G': 'g',
-  'KG': 'kg',
-  'ML': 'ml',
-  'L': 'l',
-  'UNIDAD': 'unidad(es)',
-  'DOCENA': 'docena(s)',
-  'PORCION': 'porción(es)'
-}
-
+// Mapeo de condiciones de conservación
 const CONSERVACION_LABELS = {
   'REFRIGERADO': 'Mantener refrigerado (0-4°C)',
   'CONGELADO': 'Mantener congelado (-18°C)',
@@ -99,8 +89,7 @@ function DetalleProductoContenido() {
       stock: stockDisponible,
       varianteId: varianteSeleccionada?.id || null,
       varianteNombre: varianteSeleccionada?.nombre || null,
-      // Crear ID único si tiene variante
-      id: varianteSeleccionada ? `${producto.id}-v${varianteSeleccionada.id}` : producto.id,
+      id: producto.id,
       productoId: producto.id
     }
     agregarAlCarrito(itemCarrito, cantidad)
@@ -121,185 +110,226 @@ function DetalleProductoContenido() {
   }
 
   return (
-    <section className="py-5">
+    <section className="producto-detalle-section py-5">
       <div className="container">
+        {/* Breadcrumb estilizado */}
         <nav aria-label="breadcrumb" className="mb-4">
-          <ol className="breadcrumb">
+          <ol className="breadcrumb producto-breadcrumb">
             <li className="breadcrumb-item"><Link to="/">Inicio</Link></li>
             <li className="breadcrumb-item"><Link to="/productos">Productos</Link></li>
             <li className="breadcrumb-item active" aria-current="page">{producto.nombre}</li>
           </ol>
         </nav>
 
+        {/* Mensaje de éxito estilizado */}
         {mensajeAgregado && (
-          <div className="alert alert-success alert-dismissible fade show" role="alert">
-            Producto agregado al carrito
-            {varianteSeleccionada && <span> - {varianteSeleccionada.nombre}</span>}
+          <div className="producto-alerta-exito mb-4">
+            <span className="alerta-icono">✓</span>
+            <span>Producto agregado al carrito</span>
+            {varianteSeleccionada && <span className="ms-1">- {varianteSeleccionada.nombre}</span>}
             <button
               type="button"
-              className="btn-close"
+              className="alerta-cerrar"
               onClick={() => setMensajeAgregado(false)}
               aria-label="Close"
-            ></button>
+            >×</button>
           </div>
         )}
 
-        <div className="row">
-          <div className="col-md-6 mb-4">
-            {imagenUrl ? (
-              <img
-                src={imagenUrl}
-                alt={producto.nombre}
-                className="img-fluid rounded shadow"
-                style={{objectFit: 'cover', width: '100%'}}
-              />
-            ) : (
-              <div className="bg-light rounded d-flex align-items-center justify-content-center" style={{height: '400px'}}>
-                <span className="text-muted">Sin imagen</span>
-              </div>
-            )}
-          </div>
-
-          <div className="col-md-6">
-            {producto.categoriaNombre && (
-              <span className="badge bg-primary mb-3">
-                {producto.categoriaNombre}
-              </span>
-            )}
-
-            <h1 className="mb-3">{producto.nombre}</h1>
-
-            <h2 className="text-primary mb-4">
-              ${formatearPrecio(precio)}
-              {varianteSeleccionada && (
-                <small className="text-muted fs-6 ms-2">
-                  ({varianteSeleccionada.nombre})
-                </small>
-              )}
-            </h2>
-
-            <p className="mb-4">{producto.descripcion}</p>
-
-            {/* Selector de Tamaños/Variantes */}
-            {tieneVariantes && (
-              <div className="mb-4">
-                <label className="form-label fw-bold">Seleccione tamaño:</label>
-                <div className="d-flex flex-wrap gap-2">
-                  {variantes.map(variante => (
-                    <button
-                      key={variante.id}
-                      type="button"
-                      className={`btn ${varianteSeleccionada?.id === variante.id ? 'btn-primary' : 'btn-outline-primary'}`}
-                      onClick={() => handleSeleccionarVariante(variante)}
-                      disabled={variante.stock === 0}
-                    >
-                      <div className="d-flex flex-column align-items-center">
-                        <span>{variante.nombre}</span>
-                        <small className="fw-bold">${formatearPrecio(variante.precio)}</small>
-                        {variante.porciones && (
-                          <small className="text-muted" style={{ fontSize: '0.7rem' }}>
-                            {variante.porciones} porciones
-                          </small>
-                        )}
-                      </div>
-                    </button>
-                  ))}
+        <div className="row g-4">
+          {/* Columna de imagen */}
+          <div className="col-lg-6 mb-4">
+            <div className="producto-imagen-card">
+              <div className="producto-imagen-header">
+                <div className="window-buttons">
+                  <span className="window-btn red"></span>
+                  <span className="window-btn yellow"></span>
+                  <span className="window-btn green"></span>
                 </div>
-                {!varianteSeleccionada && (
-                  <small className="text-danger">* Debe seleccionar un tamaño</small>
+                <span className="title-text">{producto.nombre}</span>
+              </div>
+              <div className="producto-imagen-container">
+                {imagenUrl ? (
+                  <img
+                    src={imagenUrl}
+                    alt={producto.nombre}
+                    className="producto-imagen-principal"
+                  />
+                ) : (
+                  <div className="producto-sin-imagen">
+                    <span>Sin imagen disponible</span>
+                  </div>
                 )}
               </div>
-            )}
-
-            <div className="mb-4">
-              {producto.ingredientes && (
-                <p><strong>Ingredientes:</strong> {producto.ingredientes}</p>
-              )}
-              {!tieneVariantes && producto.porciones && (
-                <p><strong>Porciones:</strong> {producto.porciones}</p>
-              )}
-              {producto.duracionDias && (
-                <p><strong>Duración:</strong> {producto.duracionDias} días</p>
-              )}
-              {producto.condicionConservacion && (
-                <p><strong>Conservación:</strong> {CONSERVACION_LABELS[producto.condicionConservacion] || producto.condicionConservacion}</p>
-              )}
-              <p>
-                <strong>Stock disponible:</strong>{' '}
-                <span className={stockDisponible === 0 ? 'text-danger' : stockDisponible <= 5 ? 'text-warning' : 'text-success'}>
-                  {stockDisponible} unidades
-                </span>
-              </p>
             </div>
+          </div>
 
-            {/* Información técnica - peso/medida */}
-            {(producto.cantidadMedida && producto.unidadMedida) && (
-              <div className="mb-4 p-3 bg-light rounded">
-                <small className="text-muted d-block mb-1">Contenido:</small>
-                <span className="fw-bold">
-                  {producto.cantidadMedida} {UNIDAD_MEDIDA_LABELS[producto.unidadMedida] || producto.unidadMedida}
-                </span>
+          {/* Columna de información */}
+          <div className="col-lg-6">
+            <div className="producto-info-card">
+              <div className="producto-info-header">
+                <div className="window-buttons">
+                  <span className="window-btn red"></span>
+                  <span className="window-btn yellow"></span>
+                  <span className="window-btn green"></span>
+                </div>
+                <span className="title-text">Información del Producto</span>
               </div>
-            )}
 
-            {producto.alergenos && (
-              <div className="alert alert-warning mb-4">
-                <strong>Alérgenos:</strong> {producto.alergenos}
-              </div>
-            )}
+              <div className="producto-info-content">
+                {/* Categoría */}
+                {producto.categoriaNombre && (
+                  <span className="producto-categoria-badge">
+                    {producto.categoriaNombre}
+                  </span>
+                )}
 
-            <div className="mb-3">
-              <label className="form-label"><strong>Cantidad:</strong></label>
-              <div className="input-group" style={{maxWidth: '200px'}}>
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={() => cantidad > 1 && setCantidad(cantidad - 1)}
-                  disabled={cantidad <= 1}
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  className="form-control text-center"
-                  value={cantidad}
-                  onChange={handleCantidadChange}
-                  min="1"
-                  max={stockDisponible}
-                />
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={() => cantidad < stockDisponible && setCantidad(cantidad + 1)}
-                  disabled={cantidad >= stockDisponible}
-                >
-                  +
-                </button>
+                {/* Nombre y precio */}
+                <h1 className="producto-titulo">{producto.nombre}</h1>
+
+                <div className="producto-precio-box">
+                  <span className="producto-precio">${formatearPrecio(precio)}</span>
+                  {varianteSeleccionada && (
+                    <span className="producto-variante-seleccionada">
+                      {varianteSeleccionada.nombre}
+                    </span>
+                  )}
+                </div>
+
+                {/* Descripción */}
+                <p className="producto-descripcion">{producto.descripcion}</p>
+
+                {/* Selector de Tamaños/Variantes */}
+                {tieneVariantes && (
+                  <div className="producto-variantes-section">
+                    <label className="producto-label">Seleccione tamaño:</label>
+                    <div className="producto-variantes-grid">
+                      {variantes.map(variante => (
+                        <button
+                          key={variante.id}
+                          type="button"
+                          className={`producto-variante-btn ${varianteSeleccionada?.id === variante.id ? 'selected' : ''} ${variante.stock === 0 ? 'agotado' : ''}`}
+                          onClick={() => handleSeleccionarVariante(variante)}
+                          disabled={variante.stock === 0}
+                        >
+                          <span className="variante-nombre">{variante.nombre}</span>
+                          <span className="variante-precio">${formatearPrecio(variante.precio)}</span>
+                          {variante.porciones && (
+                            <span className="variante-porciones">
+                              {variante.porciones} porciones
+                            </span>
+                          )}
+                          {variante.stock === 0 && <span className="variante-agotado">Agotado</span>}
+                        </button>
+                      ))}
+                    </div>
+                    {!varianteSeleccionada && (
+                      <small className="producto-variante-aviso">* Debe seleccionar un tamaño</small>
+                    )}
+                  </div>
+                )}
+
+                {/* Detalles del producto */}
+                <div className="producto-detalles-box">
+                  {producto.ingredientes && (
+                    <div className="producto-detalle-item">
+                      <span className="detalle-label">Ingredientes</span>
+                      <span className="detalle-valor">{producto.ingredientes}</span>
+                    </div>
+                  )}
+                  {!tieneVariantes && producto.porciones && (
+                    <div className="producto-detalle-item">
+                      <span className="detalle-label">Porciones</span>
+                      <span className="detalle-valor">{producto.porciones} personas</span>
+                    </div>
+                  )}
+                  {producto.duracionDias && (
+                    <div className="producto-detalle-item">
+                      <span className="detalle-label">Duración</span>
+                      <span className="detalle-valor">{producto.duracionDias} días</span>
+                    </div>
+                  )}
+                  {producto.condicionConservacion && (
+                    <div className="producto-detalle-item">
+                      <span className="detalle-label">Conservación</span>
+                      <span className="detalle-valor">{CONSERVACION_LABELS[producto.condicionConservacion] || producto.condicionConservacion}</span>
+                    </div>
+                  )}
+                  <div className="producto-detalle-item">
+                    <span className="detalle-label">Disponibilidad</span>
+                    <span className={`detalle-stock ${stockDisponible === 0 ? 'sin-stock' : stockDisponible <= 5 ? 'poco-stock' : 'en-stock'}`}>
+                      {stockDisponible === 0
+                        ? 'Sin stock'
+                        : `${stockDisponible} ${stockDisponible === 1 ? 'unidad disponible' : 'unidades disponibles'}`}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Alérgenos - solo si existen */}
+                {producto.alergenos && (
+                  <div className="producto-alergenos">
+                    <span className="alergenos-icono">⚠</span>
+                    <div>
+                      <strong>Alérgenos:</strong>
+                      <span>{producto.alergenos}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Selector de cantidad y total */}
+                <div className="producto-compra-section">
+                  <div className="producto-cantidad-row">
+                    <label className="producto-label">Cantidad:</label>
+                    <div className="producto-cantidad-control">
+                      <button
+                        className="cantidad-btn"
+                        type="button"
+                        onClick={() => cantidad > 1 && setCantidad(cantidad - 1)}
+                        disabled={cantidad <= 1}
+                      >−</button>
+                      <input
+                        type="number"
+                        className="cantidad-input"
+                        value={cantidad}
+                        onChange={handleCantidadChange}
+                        min="1"
+                        max={stockDisponible}
+                      />
+                      <button
+                        className="cantidad-btn"
+                        type="button"
+                        onClick={() => cantidad < stockDisponible && setCantidad(cantidad + 1)}
+                        disabled={cantidad >= stockDisponible}
+                      >+</button>
+                    </div>
+                  </div>
+
+                  <div className="producto-total-box">
+                    <span className="total-label">Total:</span>
+                    <span className="total-precio">${formatearPrecio(total)}</span>
+                  </div>
+
+                  <button
+                    className="producto-btn-agregar"
+                    onClick={handleAgregarCarrito}
+                    disabled={stockDisponible === 0 || (tieneVariantes && !varianteSeleccionada)}
+                  >
+                    {stockDisponible === 0
+                      ? 'Sin stock'
+                      : tieneVariantes && !varianteSeleccionada
+                        ? 'Seleccione un tamaño'
+                        : 'Agregar al Carrito'}
+                  </button>
+
+                  <button
+                    className="producto-btn-seguir"
+                    onClick={() => navigate('/productos')}
+                  >
+                    Seguir Comprando
+                  </button>
+                </div>
               </div>
             </div>
-
-            <p className="mb-3 fs-5">
-              <strong>Total:</strong> <span className="text-primary">${formatearPrecio(total)}</span>
-            </p>
-
-            <button
-              className="btn-aero btn-aero-cafe btn-aero-block mb-3"
-              onClick={handleAgregarCarrito}
-              disabled={stockDisponible === 0 || (tieneVariantes && !varianteSeleccionada)}
-            >
-              {stockDisponible === 0
-                ? 'Sin stock'
-                : tieneVariantes && !varianteSeleccionada
-                  ? 'Seleccione un tamaño'
-                  : 'Agregar al Carrito'}
-            </button>
-
-            <button
-              className="btn-aero btn-aero-outline btn-aero-block"
-              onClick={() => navigate('/productos')}
-            >
-              Seguir Comprando
-            </button>
           </div>
         </div>
       </div>

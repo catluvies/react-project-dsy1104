@@ -27,9 +27,7 @@ export const productosService = {
     if (imagen) {
       formData.append('imagen', imagen)
     }
-    const response = await api.post('/productos', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    const response = await api.post('/productos', formData)
     return response.data
   },
 
@@ -39,9 +37,7 @@ export const productosService = {
     if (imagen) {
       formData.append('imagen', imagen)
     }
-    const response = await api.put(`/productos/${id}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    const response = await api.put(`/productos/${id}`, formData)
     return response.data
   },
 

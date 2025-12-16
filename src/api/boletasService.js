@@ -22,9 +22,7 @@ export const boletasService = {
       const formData = new FormData()
       formData.append('boleta', new Blob([JSON.stringify(boleta)], { type: 'application/json' }))
       formData.append('comprobante', comprobanteFile)
-      const response = await api.post(`/boletas/usuario/${usuarioId}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      })
+      const response = await api.post(`/boletas/usuario/${usuarioId}`, formData)
       return response.data
     }
     // Sin comprobante, enviar JSON normal
@@ -35,9 +33,7 @@ export const boletasService = {
   async subirComprobante(boletaId, comprobanteFile) {
     const formData = new FormData()
     formData.append('comprobante', comprobanteFile)
-    const response = await api.post(`/boletas/${boletaId}/comprobante`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    const response = await api.post(`/boletas/${boletaId}/comprobante`, formData)
     return response.data
   },
 

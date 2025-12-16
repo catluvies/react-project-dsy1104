@@ -60,9 +60,9 @@ function AdminHeader() {
       <div className="container-fluid">
         <Link to="/admin" className="navbar-brand d-flex align-items-center gap-2">
           <img
-            src="/logo_sanic.jpg"
+            src="/images/logo/logo-pasteleria.png"
             alt="Logo"
-            style={{width: '40px', height: '40px', borderRadius: '50%'}}
+            style={{width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover'}}
           />
           <h1 className="h4 mb-0">{tituloHeader}</h1>
         </Link>

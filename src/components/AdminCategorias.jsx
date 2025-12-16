@@ -21,9 +21,10 @@ function AdminCategorias() {
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
-    imagenUrl: '',
     activa: true
   })
+  const [imagenArchivo, setImagenArchivo] = useState(null)
+  const [imagenPreview, setImagenPreview] = useState(null)
 
   useEffect(() => {
     if (!isAuthenticated() || !isAdmin()) {
@@ -59,9 +60,10 @@ function AdminCategorias() {
     setFormData({
       nombre: '',
       descripcion: '',
-      imagenUrl: '',
       activa: true
     })
+    setImagenArchivo(null)
+    setImagenPreview(null)
     setErroresForm({})
     setModalAbierto(true)
   }
@@ -71,9 +73,10 @@ function AdminCategorias() {
     setFormData({
       nombre: categoria.nombre || '',
       descripcion: categoria.descripcion || '',
-      imagenUrl: categoria.imagenUrl || '',
       activa: categoria.activa !== false
     })
+    setImagenArchivo(null)
+    setImagenPreview(categoria.imagenUrl ? categoriasService.obtenerUrlImagen(categoria.imagenUrl) : null)
     setErroresForm({})
     setModalAbierto(true)
   }
@@ -81,7 +84,21 @@ function AdminCategorias() {
   const cerrarModal = () => {
     setModalAbierto(false)
     setCategoriaEditando(null)
+    setImagenArchivo(null)
+    setImagenPreview(null)
     setErroresForm({})
+  }
+
+  const handleImagenChange = (e) => {
+    const archivo = e.target.files[0]
+    if (archivo) {
+      setImagenArchivo(archivo)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagenPreview(reader.result)
+      }
+      reader.readAsDataURL(archivo)
+    }
   }
 
   const handleFormChange = (e) => {
@@ -115,14 +132,13 @@ function AdminCategorias() {
       const categoriaData = {
         nombre: formData.nombre.trim(),
         descripcion: formData.descripcion?.trim() || null,
-        imagenUrl: formData.imagenUrl?.trim() || null,
         activa: formData.activa
       }
 
       if (categoriaEditando) {
-        await categoriasService.actualizar(categoriaEditando.id, categoriaData)
+        await categoriasService.actualizar(categoriaEditando.id, categoriaData, imagenArchivo)
       } else {
-        await categoriasService.crear(categoriaData)
+        await categoriasService.crear(categoriaData, imagenArchivo)
       }
 
       cerrarModal()
@@ -312,24 +328,25 @@ function AdminCategorias() {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">URL de Imagen (opcional)</label>
+                    <label className="form-label">Imagen (opcional)</label>
                     <input
-                      type="url"
-                      name="imagenUrl"
-                      value={formData.imagenUrl}
-                      onChange={handleFormChange}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImagenChange}
                       className="form-control"
-                      placeholder="https://ejemplo.com/imagen.jpg"
                       disabled={guardando}
                     />
-                    {formData.imagenUrl && (
+                    {imagenPreview && (
                       <div className="mt-2">
                         <img
-                          src={formData.imagenUrl}
+                          src={imagenPreview}
                           alt="Preview"
                           style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px' }}
                           onError={(e) => { e.target.style.display = 'none' }}
                         />
+                        {categoriaEditando && !imagenArchivo && (
+                          <small className="d-block text-muted mt-1">Imagen actual (selecciona otra para cambiarla)</small>
+                        )}
                       </div>
                     )}
                   </div>

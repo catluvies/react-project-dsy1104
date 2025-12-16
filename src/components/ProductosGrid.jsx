@@ -15,10 +15,11 @@ function ProductosGrid({ productos }) {
   return (
     <div className="row">
       {productos.map(producto => {
-        // Si tiene variantes, usar el precio de la primera variante o el mínimo
-        const tieneVariantes = producto.variantes && producto.variantes.length > 0
+        // Si tiene variantes activas, usar el precio mínimo de las variantes activas
+        const variantesActivas = producto.variantes?.filter(v => v.activo) || []
+        const tieneVariantes = variantesActivas.length > 0
         const precioBase = tieneVariantes
-          ? Math.min(...producto.variantes.map(v => v.precio))
+          ? Math.min(...variantesActivas.map(v => v.precio))
           : (producto.precio || 0)
         const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
 

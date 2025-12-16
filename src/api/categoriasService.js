@@ -1,4 +1,4 @@
-import api from './axios'
+import api, { API_BASE_URL } from './axios'
 
 export const categoriasService = {
   async obtenerTodas() {
@@ -16,17 +16,33 @@ export const categoriasService = {
     return response.data
   },
 
-  async crear(categoria) {
-    const response = await api.post('/categorias', categoria)
+  async crear(categoria, imagen) {
+    const formData = new FormData()
+    formData.append('categoria', new Blob([JSON.stringify(categoria)], { type: 'application/json' }))
+    if (imagen) {
+      formData.append('imagen', imagen)
+    }
+    const response = await api.post('/categorias', formData)
     return response.data
   },
 
-  async actualizar(id, categoria) {
-    const response = await api.put(`/categorias/${id}`, categoria)
+  async actualizar(id, categoria, imagen) {
+    const formData = new FormData()
+    formData.append('categoria', new Blob([JSON.stringify(categoria)], { type: 'application/json' }))
+    if (imagen) {
+      formData.append('imagen', imagen)
+    }
+    const response = await api.put(`/categorias/${id}`, formData)
     return response.data
   },
 
   async eliminar(id) {
     await api.delete(`/categorias/${id}`)
+  },
+
+  obtenerUrlImagen(imagenUrl) {
+    if (!imagenUrl) return null
+    if (imagenUrl.startsWith('http')) return imagenUrl
+    return `${API_BASE_URL}${imagenUrl}`
   }
 }

@@ -157,7 +157,7 @@ function CheckoutFormulario() {
         precioUnitario: item.precio
       }))
 
-      const fechaEntregaISO = new Date(fechaEntrega + 'T12:00:00').toISOString()
+      const fechaEntregaISO = new Date(fechaEntrega + 'T12:00:00Z').toISOString()
 
       const boletaData = {
         detalles,

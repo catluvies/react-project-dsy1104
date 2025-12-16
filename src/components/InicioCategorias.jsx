@@ -154,25 +154,35 @@ function InicioCategorias() {
             onClick={irAnterior}
             className="btn position-absolute d-none d-md-flex align-items-center justify-content-center"
             style={{
-              left: '-25px',
+              left: '-20px',
               top: '50%',
               transform: 'translateY(-50%)',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              border: '3px solid #F59E0B',
-              backgroundColor: 'white',
-              color: '#F59E0B',
-              fontSize: '1.8rem',
+              width: '44px',
+              height: '44px',
+              borderRadius: '12px',
+              border: '2px dashed #F59E0B',
+              backgroundColor: '#FEF3C7',
+              color: '#92400E',
+              fontSize: '1.4rem',
               fontWeight: 'bold',
               zIndex: 10,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
               opacity: canGoLeft ? 1 : 0.4,
-              cursor: canGoLeft ? 'pointer' : 'default'
+              cursor: canGoLeft ? 'pointer' : 'default',
+              transition: 'all 0.2s ease'
             }}
             disabled={!canGoLeft}
+            onMouseOver={(e) => {
+              if (canGoLeft) {
+                e.currentTarget.style.backgroundColor = '#FDE68A'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+              }
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#FEF3C7'
+              e.currentTarget.style.transform = 'translateY(-50%)'
+            }}
           >
-            ‹
+            ←
           </button>
 
           {/* Grid de 4 categorías */}
@@ -251,25 +261,35 @@ function InicioCategorias() {
             onClick={irSiguiente}
             className="btn position-absolute d-none d-md-flex align-items-center justify-content-center"
             style={{
-              right: '-25px',
+              right: '-20px',
               top: '50%',
               transform: 'translateY(-50%)',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              border: '3px solid #F59E0B',
-              backgroundColor: 'white',
-              color: '#F59E0B',
-              fontSize: '1.8rem',
+              width: '44px',
+              height: '44px',
+              borderRadius: '12px',
+              border: '2px dashed #F59E0B',
+              backgroundColor: '#FEF3C7',
+              color: '#92400E',
+              fontSize: '1.4rem',
               fontWeight: 'bold',
               zIndex: 10,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
               opacity: canGoRight ? 1 : 0.4,
-              cursor: canGoRight ? 'pointer' : 'default'
+              cursor: canGoRight ? 'pointer' : 'default',
+              transition: 'all 0.2s ease'
             }}
             disabled={!canGoRight}
+            onMouseOver={(e) => {
+              if (canGoRight) {
+                e.currentTarget.style.backgroundColor = '#FDE68A'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+              }
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#FEF3C7'
+              e.currentTarget.style.transform = 'translateY(-50%)'
+            }}
           >
-            ›
+            →
           </button>
         </div>
 
@@ -301,37 +321,37 @@ function InicioCategorias() {
               onClick={irAnterior}
               className="btn d-flex align-items-center justify-content-center"
               style={{
-                width: '45px',
-                height: '45px',
-                borderRadius: '50%',
-                border: '3px solid #F59E0B',
-                backgroundColor: 'white',
-                color: '#F59E0B',
-                fontSize: '1.5rem',
+                width: '40px',
+                height: '40px',
+                borderRadius: '12px',
+                border: '2px dashed #F59E0B',
+                backgroundColor: '#FEF3C7',
+                color: '#92400E',
+                fontSize: '1.2rem',
                 fontWeight: 'bold',
                 opacity: canGoLeft ? 1 : 0.4
               }}
               disabled={!canGoLeft}
             >
-              ‹
+              ←
             </button>
             <button
               onClick={irSiguiente}
               className="btn d-flex align-items-center justify-content-center"
               style={{
-                width: '45px',
-                height: '45px',
-                borderRadius: '50%',
-                border: '3px solid #F59E0B',
-                backgroundColor: 'white',
-                color: '#F59E0B',
-                fontSize: '1.5rem',
+                width: '40px',
+                height: '40px',
+                borderRadius: '12px',
+                border: '2px dashed #F59E0B',
+                backgroundColor: '#FEF3C7',
+                color: '#92400E',
+                fontSize: '1.2rem',
                 fontWeight: 'bold',
                 opacity: canGoRight ? 1 : 0.4
               }}
               disabled={!canGoRight}
             >
-              ›
+              →
             </button>
           </div>
         )}

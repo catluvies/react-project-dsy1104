@@ -51,27 +51,35 @@ function InicioProductosDestacados(props) {
             <div className="position-relative">
               {/* Flecha izquierda */}
               <button
-                className="btn position-absolute d-flex align-items-center justify-content-center"
+                className="btn position-absolute d-none d-md-flex align-items-center justify-content-center"
                 type="button"
                 data-bs-target="#productosCarousel"
                 data-bs-slide="prev"
                 style={{
-                  left: '-25px',
+                  left: '-20px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  border: '3px solid #F59E0B',
-                  backgroundColor: 'white',
-                  color: '#F59E0B',
-                  fontSize: '1.8rem',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '12px',
+                  border: '2px dashed #F59E0B',
+                  backgroundColor: '#FEF3C7',
+                  color: '#92400E',
+                  fontSize: '1.4rem',
                   fontWeight: 'bold',
                   zIndex: 10,
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = '#FDE68A'
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = '#FEF3C7'
+                  e.currentTarget.style.transform = 'translateY(-50%)'
                 }}
               >
-                ‹
+                ←
               </button>
 
               {/* Carrusel */}
@@ -125,23 +133,10 @@ function InicioProductosDestacados(props) {
                               </div>
 
                               {/* Contenido - lado derecho */}
-                              <div className="col-md-7 h-100">
+                              <div className="col-md-7 h-100" style={{ backgroundColor: '#FEF3C7' }}>
                                 <div className="d-flex flex-column justify-content-center h-100 p-4 p-md-5">
-                                  {/* Badge decorativo */}
-                                  <div className="mb-3">
-                                    <span
-                                      style={{
-                                        backgroundColor: '#FEF3C7',
-                                        color: '#92400E',
-                                        padding: '6px 16px',
-                                        borderRadius: '9999px',
-                                        fontSize: '0.8rem',
-                                        fontWeight: '600'
-                                      }}
-                                    >
-                                      ⭐ Destacado
-                                    </span>
-                                  </div>
+                                  {/* Emoji decorativo */}
+                                  <span style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🍰</span>
 
                                   {/* Nombre */}
                                   <h3
@@ -150,7 +145,7 @@ function InicioProductosDestacados(props) {
                                       fontFamily: "'Playfair Display', Georgia, serif",
                                       fontStyle: 'italic',
                                       color: '#6B5B4F',
-                                      fontSize: '1.6rem'
+                                      fontSize: '1.5rem'
                                     }}
                                   >
                                     {producto.nombre}
@@ -161,7 +156,7 @@ function InicioProductosDestacados(props) {
                                     className="mb-3"
                                     style={{
                                       color: '#8B7355',
-                                      fontSize: '0.95rem',
+                                      fontSize: '0.9rem',
                                       lineHeight: '1.5',
                                       display: '-webkit-box',
                                       WebkitLineClamp: 2,
@@ -172,32 +167,43 @@ function InicioProductosDestacados(props) {
                                     {producto.descripcion}
                                   </p>
 
-                                  {/* Precio y botón */}
-                                  <div className="d-flex align-items-center gap-3 flex-wrap">
+                                  {/* Precio */}
+                                  <div className="mb-3">
                                     <span
                                       style={{
-                                        color: '#F59E0B',
+                                        color: '#92400E',
                                         fontSize: '1.8rem',
                                         fontWeight: 'bold'
                                       }}
                                     >
                                       ${formatearPrecio(producto.precio)}
                                     </span>
-                                    <span
-                                      className="btn"
-                                      style={{
-                                        backgroundColor: '#F59E0B',
-                                        color: 'white',
-                                        borderRadius: '9999px',
-                                        padding: '10px 20px',
-                                        fontWeight: '500',
-                                        fontSize: '0.9rem',
-                                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
-                                      }}
-                                    >
-                                      Ver más →
-                                    </span>
                                   </div>
+
+                                  {/* Botón */}
+                                  <span
+                                    className="btn align-self-start"
+                                    style={{
+                                      backgroundColor: 'white',
+                                      color: '#92400E',
+                                      border: '2px dashed #F59E0B',
+                                      borderRadius: '20px',
+                                      padding: '10px 24px',
+                                      fontWeight: '500',
+                                      fontSize: '0.9rem',
+                                      transition: 'all 0.2s ease'
+                                    }}
+                                    onMouseOver={(e) => {
+                                      e.currentTarget.style.backgroundColor = '#FDE68A'
+                                      e.currentTarget.style.transform = 'translateY(-2px)'
+                                    }}
+                                    onMouseOut={(e) => {
+                                      e.currentTarget.style.backgroundColor = 'white'
+                                      e.currentTarget.style.transform = 'translateY(0)'
+                                    }}
+                                  >
+                                    Ver producto
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -211,27 +217,35 @@ function InicioProductosDestacados(props) {
 
               {/* Flecha derecha */}
               <button
-                className="btn position-absolute d-flex align-items-center justify-content-center"
+                className="btn position-absolute d-none d-md-flex align-items-center justify-content-center"
                 type="button"
                 data-bs-target="#productosCarousel"
                 data-bs-slide="next"
                 style={{
-                  right: '-25px',
+                  right: '-20px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  border: '3px solid #F59E0B',
-                  backgroundColor: 'white',
-                  color: '#F59E0B',
-                  fontSize: '1.8rem',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '12px',
+                  border: '2px dashed #F59E0B',
+                  backgroundColor: '#FEF3C7',
+                  color: '#92400E',
+                  fontSize: '1.4rem',
                   fontWeight: 'bold',
                   zIndex: 10,
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = '#FDE68A'
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = '#FEF3C7'
+                  e.currentTarget.style.transform = 'translateY(-50%)'
                 }}
               >
-                ›
+                →
               </button>
             </div>
 

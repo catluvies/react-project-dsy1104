@@ -16,7 +16,7 @@ function InicioHero() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: 'url("/images/hero/hero-pasteleria.png")',
+          backgroundImage: 'url("/images/hero/Gemini_Generated_Image_aelle0aelle0aell.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           filter: 'blur(3px)',

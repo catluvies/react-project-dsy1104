@@ -1,9 +1,9 @@
 function InicioCaracteristicas() {
   const caracteristicas = [
-    { titulo: '50 años', descripcion: 'de experiencia', emoji: '🎂', bg: '#FFFBEB', border: '#FCD34D' },
-    { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales', emoji: '💕', bg: '#FDF2F8', border: '#F9A8D4' },
-    { titulo: 'Ingredientes frescos', descripcion: 'Productos del día', emoji: '🌿', bg: '#ECFDF5', border: '#86EFAC' },
-    { titulo: 'Calidad artesanal', descripcion: 'Elaboración diaria', emoji: '✨', bg: '#F5F3FF', border: '#C4B5FD' }
+    { titulo: '50 años', descripcion: 'de experiencia', emoji: '🎂', bg: '#FEF3C7', border: '#F59E0B' },
+    { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales', emoji: '💕', bg: '#FCE7F3', border: '#EC4899' },
+    { titulo: 'Ingredientes frescos', descripcion: 'Productos del día', emoji: '🌿', bg: '#D1FAE5', border: '#10B981' },
+    { titulo: 'Calidad artesanal', descripcion: 'Elaboración diaria', emoji: '✨', bg: '#E9D5FF', border: '#A855F7' }
   ]
 
   return (

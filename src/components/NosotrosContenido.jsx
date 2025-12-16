@@ -28,7 +28,7 @@ function NosotrosContenido() {
             </div>
             <div className="col-md-6">
               <img
-                src="/images/nosotros/guiness_torta_gigante.jpg"
+                src="/images/nosotros/nuestra-historia.png"
                 alt="Historia de Mil Sabores - Pastelería familiar desde 1975"
                 className="img-fluid rounded shadow"
               />
@@ -54,7 +54,7 @@ function NosotrosContenido() {
             </div>
             <div className="col-md-6 order-md-1">
               <img
-                src="/images/nosotros/historia_pasteleria.jpg"
+                src="/images/nosotros/nuestra-mision.png"
                 alt="Nuestra misión - Calidad y tradición en repostería"
                 className="img-fluid rounded shadow"
               />

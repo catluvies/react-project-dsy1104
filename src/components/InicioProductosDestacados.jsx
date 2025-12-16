@@ -56,32 +56,32 @@ function InicioProductosDestacados(props) {
                 data-bs-target="#productosCarousel"
                 data-bs-slide="prev"
                 style={{
-                  left: '-20px',
+                  left: '-24px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '50%',
-                  border: 'none',
-                  backgroundColor: '#F59E0B',
-                  color: 'white',
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  border: '3px solid #F59E0B',
+                  backgroundColor: 'white',
+                  color: '#F59E0B',
                   zIndex: 10,
-                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                   transition: 'all 0.2s ease'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#D97706'
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
+                  e.currentTarget.style.backgroundColor = '#F59E0B'
+                  e.currentTarget.style.color = 'white'
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F59E0B'
+                  e.currentTarget.style.backgroundColor = 'white'
+                  e.currentTarget.style.color = '#F59E0B'
                   e.currentTarget.style.transform = 'translateY(-50%)'
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
                 }}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6"></polyline>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
                 </svg>
               </button>
 
@@ -226,32 +226,32 @@ function InicioProductosDestacados(props) {
                 data-bs-target="#productosCarousel"
                 data-bs-slide="next"
                 style={{
-                  right: '-20px',
+                  right: '-24px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '50%',
-                  border: 'none',
-                  backgroundColor: '#F59E0B',
-                  color: 'white',
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  border: '3px solid #F59E0B',
+                  backgroundColor: 'white',
+                  color: '#F59E0B',
                   zIndex: 10,
-                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                   transition: 'all 0.2s ease'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#D97706'
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
+                  e.currentTarget.style.backgroundColor = '#F59E0B'
+                  e.currentTarget.style.color = 'white'
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F59E0B'
+                  e.currentTarget.style.backgroundColor = 'white'
+                  e.currentTarget.style.color = '#F59E0B'
                   e.currentTarget.style.transform = 'translateY(-50%)'
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
                 }}
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
                 </svg>
               </button>
             </div>

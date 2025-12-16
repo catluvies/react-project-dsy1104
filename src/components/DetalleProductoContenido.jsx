@@ -76,7 +76,10 @@ function DetalleProductoContenido() {
 
   // Si hay variante seleccionada, usar su precio y stock
   const tieneVariantes = variantes.length > 0
-  const precio = varianteSeleccionada ? varianteSeleccionada.precio : producto.precio || 0
+  const precioMinimoVariantes = tieneVariantes ? Math.min(...variantes.map(v => v.precio)) : 0
+  const precio = varianteSeleccionada
+    ? varianteSeleccionada.precio
+    : (tieneVariantes ? precioMinimoVariantes : producto.precio || 0)
   const stockDisponible = varianteSeleccionada ? varianteSeleccionada.stock : producto.stock
   const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
   const total = precio * cantidad
@@ -88,7 +91,7 @@ function DetalleProductoContenido() {
       precio: precio,
       stock: stockDisponible,
       varianteId: varianteSeleccionada?.id || null,
-      varianteNombre: varianteSeleccionada?.nombre || null,
+      varianteNombre: varianteSeleccionada?.nombreDisplay || varianteSeleccionada?.nombre || null,
       id: producto.id,
       productoId: producto.id
     }
@@ -105,7 +108,12 @@ function DetalleProductoContenido() {
   }
 
   const handleSeleccionarVariante = (variante) => {
-    setVarianteSeleccionada(variante)
+    // Toggle: si hace clic en la misma variante, la deselecciona
+    if (varianteSeleccionada?.id === variante.id) {
+      setVarianteSeleccionada(null)
+    } else {
+      setVarianteSeleccionada(variante)
+    }
     setCantidad(1) // Resetear cantidad al cambiar variante
   }
 
@@ -188,10 +196,13 @@ function DetalleProductoContenido() {
                 <h1 className="producto-titulo">{producto.nombre}</h1>
 
                 <div className="producto-precio-box">
+                  {tieneVariantes && !varianteSeleccionada && (
+                    <span className="producto-precio-desde">Desde</span>
+                  )}
                   <span className="producto-precio">${formatearPrecio(precio)}</span>
                   {varianteSeleccionada && (
                     <span className="producto-variante-seleccionada">
-                      {varianteSeleccionada.nombre}
+                      {varianteSeleccionada.nombreDisplay || varianteSeleccionada.nombre}
                     </span>
                   )}
                 </div>
@@ -212,13 +223,8 @@ function DetalleProductoContenido() {
                           onClick={() => handleSeleccionarVariante(variante)}
                           disabled={variante.stock === 0}
                         >
-                          <span className="variante-nombre">{variante.nombre}</span>
+                          <span className="variante-nombre">{variante.nombreDisplay || variante.nombre}</span>
                           <span className="variante-precio">${formatearPrecio(variante.precio)}</span>
-                          {variante.porciones && (
-                            <span className="variante-porciones">
-                              {variante.porciones} porciones
-                            </span>
-                          )}
                           {variante.stock === 0 && <span className="variante-agotado">Agotado</span>}
                         </button>
                       ))}

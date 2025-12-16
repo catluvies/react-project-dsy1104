@@ -30,6 +30,7 @@ import AdminOrdersPage from './pages/admin/AdminOrdersPage'
 import AdminProductsPage from './pages/admin/AdminProductsPage'
 import AdminUsuariosPage from './pages/admin/AdminUsuariosPage'
 import AdminCategoriasPage from './pages/admin/AdminCategoriasPage'
+import AdminPerfilPage from './pages/admin/AdminPerfilPage'
 
 function App() {
   return (
@@ -95,6 +96,7 @@ function App() {
                       <AdminCategoriasPage />
                     </ProtectedRoute>
                   } />
+                  <Route path="/perfil" element={<AdminPerfilPage />} />
                 </Routes>
               </main>
             </div>

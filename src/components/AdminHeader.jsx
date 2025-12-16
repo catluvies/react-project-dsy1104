@@ -1,11 +1,37 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
+
+const AVATARES_MAP = {
+  'nekoo': '/images/iconos/nekoo-lol.jpeg',
+  'zoe': '/images/iconos/zoe-lol.jpeg',
+  'xayah': '/images/iconos/xayah.jpeg',
+  'jinx': '/images/iconos/jinx pixel.jpeg',
+  'ludo': '/images/iconos/ludo.jpeg',
+  'gato-alien': '/images/iconos/gato-alien.jpeg',
+  'nino-kawai': '/images/iconos/niño-kawai.jpeg',
+  'barbie': '/images/iconos/barbie.jpeg',
+  'tocanna': '/images/iconos/tocanna.jpg',
+  'jiafei': '/images/iconos/jiafei.jpeg',
+  'jovani': '/images/iconos/jovani-vazquez.jpg'
+}
 
 function AdminHeader() {
   const location = useLocation()
   const navigate = useNavigate()
   const { usuario, isAdmin, logout } = useContext(AuthContext)
+  const [avatarImagen, setAvatarImagen] = useState(null)
+
+  useEffect(() => {
+    if (usuario?.id) {
+      const avatarGuardado = localStorage.getItem(`avatar_${usuario.id}`)
+      if (avatarGuardado && AVATARES_MAP[avatarGuardado]) {
+        setAvatarImagen(AVATARES_MAP[avatarGuardado])
+      } else {
+        setAvatarImagen(null)
+      }
+    }
+  }, [usuario])
 
   const isActive = (path) => {
     if (path === '/admin') {
@@ -81,10 +107,57 @@ function AdminHeader() {
         </ul>
 
         <div className="d-flex align-items-center gap-3">
-          <span className="fw-medium">{usuario?.nombre}</span>
+          <Link
+            to="/admin/perfil"
+            className="d-flex align-items-center gap-2 text-decoration-none"
+            title="Ver mi perfil"
+          >
+            {avatarImagen ? (
+              <div
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  border: '2px solid #fff',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                }}
+              >
+                <img
+                  src={avatarImagen}
+                  alt="Avatar"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
+              </div>
+            ) : (
+              <div
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2px solid #fff',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem'
+                }}
+              >
+                {usuario?.nombre?.charAt(0)?.toUpperCase() || 'U'}
+              </div>
+            )}
+            <span className="fw-medium text-dark">{usuario?.nombre}</span>
+          </Link>
           <div className="vr opacity-50"></div>
-          <Link to="/" className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1">
-            <span>🏪 Ver Tienda</span>
+          <Link to="/" className="btn btn-outline-primary btn-sm">
+            Ver Tienda
           </Link>
           <button onClick={handleLogout} className="btn btn-outline-danger btn-sm">
             Cerrar Sesión

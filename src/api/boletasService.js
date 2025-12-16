@@ -20,7 +20,7 @@ export const boletasService = {
     if (comprobanteFile) {
       // Si hay comprobante, usar FormData
       const formData = new FormData()
-      formData.append('boleta', new Blob([JSON.stringify(boleta)], { type: 'application/json' }))
+      formData.append('boleta', JSON.stringify(boleta))
       formData.append('comprobante', comprobanteFile)
       const response = await api.post(`/boletas/usuario/${usuarioId}`, formData)
       return response.data

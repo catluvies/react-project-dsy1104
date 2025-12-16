@@ -18,7 +18,7 @@ export const categoriasService = {
 
   async crear(categoria, imagen) {
     const formData = new FormData()
-    formData.append('categoria', new Blob([JSON.stringify(categoria)], { type: 'application/json' }))
+    formData.append('categoria', JSON.stringify(categoria))
     if (imagen) {
       formData.append('imagen', imagen)
     }
@@ -28,7 +28,7 @@ export const categoriasService = {
 
   async actualizar(id, categoria, imagen) {
     const formData = new FormData()
-    formData.append('categoria', new Blob([JSON.stringify(categoria)], { type: 'application/json' }))
+    formData.append('categoria', JSON.stringify(categoria))
     if (imagen) {
       formData.append('imagen', imagen)
     }

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { boletasService, getEstadoColor } from '../api/boletasService'
@@ -7,11 +7,18 @@ import { formatearPrecio } from '../utils/formateo'
 function MisComprasContenido() {
   const { usuario, isAuthenticated } = useContext(AuthContext)
   const navigate = useNavigate()
+  const comprobanteInputRef = useRef(null)
 
   const [boletas, setBoletas] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
   const [boletaSeleccionada, setBoletaSeleccionada] = useState(null)
+
+  const [comprobanteFile, setComprobanteFile] = useState(null)
+  const [comprobantePreview, setComprobantePreview] = useState(null)
+  const [subiendoComprobante, setSubiendoComprobante] = useState(false)
+  const [errorComprobante, setErrorComprobante] = useState(null)
+  const [exitoComprobante, setExitoComprobante] = useState(false)
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -44,6 +51,58 @@ function MisComprasContenido() {
       hour: '2-digit',
       minute: '2-digit'
     })
+  }
+
+  const limpiarComprobante = () => {
+    setComprobanteFile(null)
+    setComprobantePreview(null)
+    setErrorComprobante(null)
+    setExitoComprobante(false)
+    if (comprobanteInputRef.current) {
+      comprobanteInputRef.current.value = ''
+    }
+  }
+
+  const handleComprobanteChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setErrorComprobante('Solo se permiten imágenes')
+        return
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setErrorComprobante('La imagen no puede superar 5MB')
+        return
+      }
+      setComprobanteFile(file)
+      setComprobantePreview(URL.createObjectURL(file))
+      setErrorComprobante(null)
+      setExitoComprobante(false)
+    }
+  }
+
+  const handleSubirComprobante = async () => {
+    if (!comprobanteFile || !boletaSeleccionada) return
+
+    setSubiendoComprobante(true)
+    setErrorComprobante(null)
+    try {
+      await boletasService.subirComprobante(boletaSeleccionada.id, comprobanteFile)
+      setExitoComprobante(true)
+      limpiarComprobante()
+      await cargarBoletas()
+      // Actualizar la boleta seleccionada con los nuevos datos
+      const boletasActualizadas = await boletasService.obtenerPorUsuario(usuario.id)
+      const boletaActualizada = boletasActualizadas.find(b => b.id === boletaSeleccionada.id)
+      if (boletaActualizada) {
+        setBoletaSeleccionada(boletaActualizada)
+      }
+    } catch (err) {
+      console.error('Error subiendo comprobante:', err)
+      setErrorComprobante(err.response?.data?.mensaje || 'Error al subir el comprobante')
+    } finally {
+      setSubiendoComprobante(false)
+    }
   }
 
   if (!isAuthenticated()) {
@@ -125,7 +184,10 @@ function MisComprasContenido() {
                     {boletas.map(boleta => (
                       <button
                         key={boleta.id}
-                        onClick={() => setBoletaSeleccionada(boleta)}
+                        onClick={() => {
+                          setBoletaSeleccionada(boleta)
+                          limpiarComprobante()
+                        }}
                         className={`list-group-item list-group-item-action ${boletaSeleccionada?.id === boleta.id ? 'active' : ''}`}
                       >
                         <div className="d-flex justify-content-between align-items-start">
@@ -227,10 +289,92 @@ function MisComprasContenido() {
                         </p>
                       )}
 
-                      {boletaSeleccionada.estado === 'PENDIENTE' && (
+                      {boletaSeleccionada.estado === 'PENDIENTE' && boletaSeleccionada.metodoPago === 'TRANSFERENCIA' && (
+                        <>
+                          {!boletaSeleccionada.comprobanteUrl ? (
+                            <div className="mt-3 p-3 border rounded bg-light">
+                              <h6 className="mb-2">Subir comprobante de transferencia</h6>
+                              <p className="small text-muted mb-2">
+                                Sube una captura de pantalla de tu transferencia para agilizar la confirmación.
+                              </p>
+
+                              <div className="alert alert-info py-2 small mb-2">
+                                <strong>Datos para transferencia:</strong><br />
+                                Banco: Banco Estado<br />
+                                Tipo de cuenta: Cuenta Corriente<br />
+                                Número: 123456789<br />
+                                RUT: 12.345.678-9<br />
+                                Email: pagos@milsabores.cl
+                              </div>
+
+                              <input
+                                type="file"
+                                ref={comprobanteInputRef}
+                                onChange={handleComprobanteChange}
+                                accept="image/*"
+                                className={`form-control form-control-sm ${errorComprobante ? 'is-invalid' : ''}`}
+                                disabled={subiendoComprobante}
+                              />
+                              {errorComprobante && <div className="invalid-feedback">{errorComprobante}</div>}
+                              <small className="text-muted">JPG, PNG. Máximo 5MB</small>
+
+                              {comprobantePreview && (
+                                <div className="mt-2 position-relative d-inline-block">
+                                  <img
+                                    src={comprobantePreview}
+                                    alt="Preview comprobante"
+                                    style={{ maxWidth: '150px', maxHeight: '150px', borderRadius: '8px' }}
+                                  />
+                                  <button
+                                    type="button"
+                                    className="btn btn-sm btn-danger position-absolute top-0 end-0"
+                                    style={{ transform: 'translate(30%, -30%)' }}
+                                    onClick={limpiarComprobante}
+                                    disabled={subiendoComprobante}
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                              )}
+
+                              {comprobanteFile && (
+                                <div className="mt-2">
+                                  <button
+                                    onClick={handleSubirComprobante}
+                                    className="btn btn-primary btn-sm w-100"
+                                    disabled={subiendoComprobante}
+                                  >
+                                    {subiendoComprobante ? (
+                                      <>
+                                        <span className="spinner-border spinner-border-sm me-2"></span>
+                                        Subiendo...
+                                      </>
+                                    ) : (
+                                      'Subir comprobante'
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+
+                              {exitoComprobante && (
+                                <div className="alert alert-success py-2 mt-2 mb-0 small">
+                                  ¡Comprobante subido exitosamente!
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="alert alert-success mt-3 mb-0 small">
+                              <strong>Comprobante enviado</strong><br />
+                              Tu comprobante está siendo revisado.
+                            </div>
+                          )}
+                        </>
+                      )}
+
+                      {boletaSeleccionada.estado === 'PENDIENTE' && boletaSeleccionada.metodoPago !== 'TRANSFERENCIA' && (
                         <div className="alert alert-warning mt-3 mb-0 small">
-                          <strong>Pendiente de pago</strong><br />
-                          Realiza la transferencia para confirmar tu pedido.
+                          <strong>Pendiente de confirmación</strong><br />
+                          Tu pedido está siendo procesado.
                         </div>
                       )}
                     </div>

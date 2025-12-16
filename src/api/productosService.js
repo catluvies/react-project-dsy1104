@@ -23,7 +23,7 @@ export const productosService = {
 
   async crear(producto, imagen) {
     const formData = new FormData()
-    formData.append('producto', new Blob([JSON.stringify(producto)], { type: 'application/json' }))
+    formData.append('producto', JSON.stringify(producto))
     if (imagen) {
       formData.append('imagen', imagen)
     }
@@ -33,7 +33,7 @@ export const productosService = {
 
   async actualizar(id, producto, imagen) {
     const formData = new FormData()
-    formData.append('producto', new Blob([JSON.stringify(producto)], { type: 'application/json' }))
+    formData.append('producto', JSON.stringify(producto))
     if (imagen) {
       formData.append('imagen', imagen)
     }

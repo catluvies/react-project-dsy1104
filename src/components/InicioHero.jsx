@@ -24,7 +24,7 @@ function InicioHero() {
           zIndex: 0
         }}
       />
-      {/* Overlay oscuro para mejor contraste */}
+      {/* Overlay con gradiente para mejor transición */}
       <div
         style={{
           position: 'absolute',
@@ -32,7 +32,7 @@ function InicioHero() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.35)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 60%, rgba(255,254,247,0.8) 90%, rgba(255,254,247,1) 100%)',
           zIndex: 1
         }}
       />

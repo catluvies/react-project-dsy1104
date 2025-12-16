@@ -157,15 +157,14 @@ function InicioCategorias() {
               left: '-20px',
               top: '50%',
               transform: 'translateY(-50%)',
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
-              border: '2px dashed #F59E0B',
-              backgroundColor: '#FEF3C7',
-              color: '#92400E',
-              fontSize: '1.4rem',
-              fontWeight: 'bold',
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%',
+              border: 'none',
+              backgroundColor: '#F59E0B',
+              color: 'white',
               zIndex: 10,
+              boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
               opacity: canGoLeft ? 1 : 0.4,
               cursor: canGoLeft ? 'pointer' : 'default',
               transition: 'all 0.2s ease'
@@ -173,16 +172,20 @@ function InicioCategorias() {
             disabled={!canGoLeft}
             onMouseOver={(e) => {
               if (canGoLeft) {
-                e.currentTarget.style.backgroundColor = '#FDE68A'
-                e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+                e.currentTarget.style.backgroundColor = '#D97706'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
               }
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#FEF3C7'
+              e.currentTarget.style.backgroundColor = '#F59E0B'
               e.currentTarget.style.transform = 'translateY(-50%)'
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
             }}
           >
-            ←
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
           </button>
 
           {/* Grid de 4 categorías */}
@@ -264,15 +267,14 @@ function InicioCategorias() {
               right: '-20px',
               top: '50%',
               transform: 'translateY(-50%)',
-              width: '44px',
-              height: '44px',
-              borderRadius: '12px',
-              border: '2px dashed #F59E0B',
-              backgroundColor: '#FEF3C7',
-              color: '#92400E',
-              fontSize: '1.4rem',
-              fontWeight: 'bold',
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%',
+              border: 'none',
+              backgroundColor: '#F59E0B',
+              color: 'white',
               zIndex: 10,
+              boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
               opacity: canGoRight ? 1 : 0.4,
               cursor: canGoRight ? 'pointer' : 'default',
               transition: 'all 0.2s ease'
@@ -280,16 +282,20 @@ function InicioCategorias() {
             disabled={!canGoRight}
             onMouseOver={(e) => {
               if (canGoRight) {
-                e.currentTarget.style.backgroundColor = '#FDE68A'
-                e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+                e.currentTarget.style.backgroundColor = '#D97706'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
               }
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#FEF3C7'
+              e.currentTarget.style.backgroundColor = '#F59E0B'
               e.currentTarget.style.transform = 'translateY(-50%)'
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
             }}
           >
-            →
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
           </button>
         </div>
 
@@ -321,37 +327,39 @@ function InicioCategorias() {
               onClick={irAnterior}
               className="btn d-flex align-items-center justify-content-center"
               style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '12px',
-                border: '2px dashed #F59E0B',
-                backgroundColor: '#FEF3C7',
-                color: '#92400E',
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                border: 'none',
+                backgroundColor: '#F59E0B',
+                color: 'white',
+                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
                 opacity: canGoLeft ? 1 : 0.4
               }}
               disabled={!canGoLeft}
             >
-              ←
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
             <button
               onClick={irSiguiente}
               className="btn d-flex align-items-center justify-content-center"
               style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '12px',
-                border: '2px dashed #F59E0B',
-                backgroundColor: '#FEF3C7',
-                color: '#92400E',
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                border: 'none',
+                backgroundColor: '#F59E0B',
+                color: 'white',
+                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
                 opacity: canGoRight ? 1 : 0.4
               }}
               disabled={!canGoRight}
             >
-              →
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </button>
           </div>
         )}

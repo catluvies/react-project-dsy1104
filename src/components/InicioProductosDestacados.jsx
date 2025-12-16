@@ -59,27 +59,30 @@ function InicioProductosDestacados(props) {
                   left: '-20px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  border: '2px dashed #F59E0B',
-                  backgroundColor: '#FEF3C7',
-                  color: '#92400E',
-                  fontSize: '1.4rem',
-                  fontWeight: 'bold',
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '50%',
+                  border: 'none',
+                  backgroundColor: '#F59E0B',
+                  color: 'white',
                   zIndex: 10,
+                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
                   transition: 'all 0.2s ease'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FDE68A'
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+                  e.currentTarget.style.backgroundColor = '#D97706'
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FEF3C7'
+                  e.currentTarget.style.backgroundColor = '#F59E0B'
                   e.currentTarget.style.transform = 'translateY(-50%)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
                 }}
               >
-                ←
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
               </button>
 
               {/* Carrusel */}
@@ -134,9 +137,19 @@ function InicioProductosDestacados(props) {
 
                               {/* Contenido - lado derecho */}
                               <div className="col-md-7 h-100" style={{ backgroundColor: '#FEF3C7' }}>
-                                <div className="d-flex flex-column justify-content-center h-100 p-4 p-md-5">
-                                  {/* Emoji decorativo */}
-                                  <span style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🍰</span>
+                                <div className="d-flex flex-column justify-content-center h-100 p-4">
+                                  {/* Categoría */}
+                                  <small
+                                    style={{
+                                      color: '#92400E',
+                                      fontSize: '0.8rem',
+                                      textTransform: 'uppercase',
+                                      letterSpacing: '1px',
+                                      marginBottom: '0.5rem'
+                                    }}
+                                  >
+                                    {producto.categoria?.nombre || 'Pastelería'}
+                                  </small>
 
                                   {/* Nombre */}
                                   <h3
@@ -145,7 +158,8 @@ function InicioProductosDestacados(props) {
                                       fontFamily: "'Playfair Display', Georgia, serif",
                                       fontStyle: 'italic',
                                       color: '#6B5B4F',
-                                      fontSize: '1.5rem'
+                                      fontSize: '1.6rem',
+                                      fontWeight: '600'
                                     }}
                                   >
                                     {producto.nombre}
@@ -156,10 +170,10 @@ function InicioProductosDestacados(props) {
                                     className="mb-3"
                                     style={{
                                       color: '#8B7355',
-                                      fontSize: '0.9rem',
-                                      lineHeight: '1.5',
+                                      fontSize: '0.95rem',
+                                      lineHeight: '1.6',
                                       display: '-webkit-box',
-                                      WebkitLineClamp: 2,
+                                      WebkitLineClamp: 3,
                                       WebkitBoxOrient: 'vertical',
                                       overflow: 'hidden'
                                     }}
@@ -167,8 +181,8 @@ function InicioProductosDestacados(props) {
                                     {producto.descripcion}
                                   </p>
 
-                                  {/* Precio */}
-                                  <div className="mb-3">
+                                  {/* Precio y botón */}
+                                  <div className="d-flex align-items-center gap-3 mt-auto">
                                     <span
                                       style={{
                                         color: '#92400E',
@@ -178,32 +192,22 @@ function InicioProductosDestacados(props) {
                                     >
                                       ${formatearPrecio(producto.precio)}
                                     </span>
+                                    <span
+                                      className="btn"
+                                      style={{
+                                        backgroundColor: 'white',
+                                        color: '#92400E',
+                                        border: '2px dashed #F59E0B',
+                                        borderRadius: '20px',
+                                        padding: '8px 20px',
+                                        fontWeight: '500',
+                                        fontSize: '0.85rem',
+                                        transition: 'all 0.2s ease'
+                                      }}
+                                    >
+                                      Ver producto
+                                    </span>
                                   </div>
-
-                                  {/* Botón */}
-                                  <span
-                                    className="btn align-self-start"
-                                    style={{
-                                      backgroundColor: 'white',
-                                      color: '#92400E',
-                                      border: '2px dashed #F59E0B',
-                                      borderRadius: '20px',
-                                      padding: '10px 24px',
-                                      fontWeight: '500',
-                                      fontSize: '0.9rem',
-                                      transition: 'all 0.2s ease'
-                                    }}
-                                    onMouseOver={(e) => {
-                                      e.currentTarget.style.backgroundColor = '#FDE68A'
-                                      e.currentTarget.style.transform = 'translateY(-2px)'
-                                    }}
-                                    onMouseOut={(e) => {
-                                      e.currentTarget.style.backgroundColor = 'white'
-                                      e.currentTarget.style.transform = 'translateY(0)'
-                                    }}
-                                  >
-                                    Ver producto
-                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -225,27 +229,30 @@ function InicioProductosDestacados(props) {
                   right: '-20px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  border: '2px dashed #F59E0B',
-                  backgroundColor: '#FEF3C7',
-                  color: '#92400E',
-                  fontSize: '1.4rem',
-                  fontWeight: 'bold',
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '50%',
+                  border: 'none',
+                  backgroundColor: '#F59E0B',
+                  color: 'white',
                   zIndex: 10,
+                  boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
                   transition: 'all 0.2s ease'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FDE68A'
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+                  e.currentTarget.style.backgroundColor = '#D97706'
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FEF3C7'
+                  e.currentTarget.style.backgroundColor = '#F59E0B'
                   e.currentTarget.style.transform = 'translateY(-50%)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
                 }}
               >
-                →
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
               </button>
             </div>
 

@@ -4,15 +4,15 @@ function InicioCTA() {
   return (
     <section
       className="py-5 my-5"
-      style={{ backgroundColor: 'rgba(253, 242, 248, 0.7)' }}
+      style={{ backgroundColor: 'transparent' }}
     >
       <div className="container py-4">
         <div
           className="mx-auto text-center"
           style={{
             maxWidth: '600px',
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            border: '3px dashed #F9A8D4',
+            backgroundColor: '#FCE7F3',
+            border: '3px dashed #EC4899',
             borderRadius: '28px',
             padding: '48px 32px'
           }}

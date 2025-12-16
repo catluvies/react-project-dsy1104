@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { formatearPrecio } from '../utils/formateo'
 import { CarritoContext } from '../context/CarritoContext'
 import { productosService } from '../api/productosService'
+import { variantesService } from '../api/variantesService'
 
 function DetalleProductoContenido() {
   const { id } = useParams()
@@ -10,6 +11,8 @@ function DetalleProductoContenido() {
   const { agregarAlCarrito } = useContext(CarritoContext)
 
   const [producto, setProducto] = useState(null)
+  const [variantes, setVariantes] = useState([])
+  const [varianteSeleccionada, setVarianteSeleccionada] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
   const [cantidad, setCantidad] = useState(1)
@@ -22,8 +25,12 @@ function DetalleProductoContenido() {
   const cargarProducto = async () => {
     try {
       setCargando(true)
-      const data = await productosService.obtenerPorId(id)
-      setProducto(data)
+      const [productoData, variantesData] = await Promise.all([
+        productosService.obtenerPorId(id),
+        variantesService.obtenerActivasPorProducto(id).catch(() => [])
+      ])
+      setProducto(productoData)
+      setVariantes(variantesData)
     } catch (err) {
       setError('Producto no encontrado')
       console.error(err)
@@ -60,21 +67,40 @@ function DetalleProductoContenido() {
     )
   }
 
-  const precio = producto.precio || 0
+  // Si hay variante seleccionada, usar su precio y stock
+  const tieneVariantes = variantes.length > 0
+  const precio = varianteSeleccionada ? varianteSeleccionada.precio : producto.precio || 0
+  const stockDisponible = varianteSeleccionada ? varianteSeleccionada.stock : producto.stock
   const imagenUrl = productosService.obtenerUrlImagen(producto.imagenUrl)
   const total = precio * cantidad
 
   const handleAgregarCarrito = () => {
-    agregarAlCarrito(producto, cantidad)
+    // Crear objeto con información del producto y variante
+    const itemCarrito = {
+      ...producto,
+      precio: precio,
+      stock: stockDisponible,
+      varianteId: varianteSeleccionada?.id || null,
+      varianteNombre: varianteSeleccionada?.nombre || null,
+      // Crear ID único si tiene variante
+      id: varianteSeleccionada ? `${producto.id}-v${varianteSeleccionada.id}` : producto.id,
+      productoId: producto.id
+    }
+    agregarAlCarrito(itemCarrito, cantidad)
     setMensajeAgregado(true)
     setTimeout(() => setMensajeAgregado(false), 3000)
   }
 
   const handleCantidadChange = (e) => {
     const valor = parseInt(e.target.value)
-    if (valor >= 1 && valor <= producto.stock) {
+    if (valor >= 1 && valor <= stockDisponible) {
       setCantidad(valor)
     }
+  }
+
+  const handleSeleccionarVariante = (variante) => {
+    setVarianteSeleccionada(variante)
+    setCantidad(1) // Resetear cantidad al cambiar variante
   }
 
   return (
@@ -91,6 +117,7 @@ function DetalleProductoContenido() {
         {mensajeAgregado && (
           <div className="alert alert-success alert-dismissible fade show" role="alert">
             Producto agregado al carrito
+            {varianteSeleccionada && <span> - {varianteSeleccionada.nombre}</span>}
             <button
               type="button"
               className="btn-close"
@@ -106,7 +133,7 @@ function DetalleProductoContenido() {
               <img
                 src={imagenUrl}
                 alt={producto.nombre}
-                className="img-fluid rounded"
+                className="img-fluid rounded shadow"
                 style={{objectFit: 'cover', width: '100%'}}
               />
             ) : (
@@ -127,18 +154,54 @@ function DetalleProductoContenido() {
 
             <h2 className="text-primary mb-4">
               ${formatearPrecio(precio)}
+              {varianteSeleccionada && (
+                <small className="text-muted fs-6 ms-2">
+                  ({varianteSeleccionada.nombre})
+                </small>
+              )}
             </h2>
 
             <p className="mb-4">{producto.descripcion}</p>
 
+            {/* Selector de Tamaños/Variantes */}
+            {tieneVariantes && (
+              <div className="mb-4">
+                <label className="form-label fw-bold">Seleccione tamaño:</label>
+                <div className="d-flex flex-wrap gap-2">
+                  {variantes.map(variante => (
+                    <button
+                      key={variante.id}
+                      type="button"
+                      className={`btn ${varianteSeleccionada?.id === variante.id ? 'btn-primary' : 'btn-outline-primary'}`}
+                      onClick={() => handleSeleccionarVariante(variante)}
+                      disabled={variante.stock === 0}
+                    >
+                      <div className="d-flex flex-column align-items-center">
+                        <span>{variante.nombre}</span>
+                        <small className="fw-bold">${formatearPrecio(variante.precio)}</small>
+                        {variante.porciones && (
+                          <small className="text-muted" style={{ fontSize: '0.7rem' }}>
+                            {variante.porciones} porciones
+                          </small>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                {!varianteSeleccionada && (
+                  <small className="text-danger">* Debe seleccionar un tamaño</small>
+                )}
+              </div>
+            )}
+
             <div className="mb-4">
-              {(producto.cantidadMedida || producto.unidadMedida) && (
+              {!tieneVariantes && (producto.cantidadMedida || producto.unidadMedida) && (
                 <p><strong>Tamaño:</strong> {producto.cantidadMedida} {producto.unidadMedida}</p>
               )}
               {producto.ingredientes && (
                 <p><strong>Ingredientes:</strong> {producto.ingredientes}</p>
               )}
-              {producto.porciones && (
+              {!tieneVariantes && producto.porciones && (
                 <p><strong>Porciones:</strong> {producto.porciones}</p>
               )}
               {producto.duracionDias && (
@@ -149,8 +212,8 @@ function DetalleProductoContenido() {
               )}
               <p>
                 <strong>Stock disponible:</strong>{' '}
-                <span className={producto.stock === 0 ? 'text-danger' : producto.stock <= 5 ? 'text-warning' : 'text-success'}>
-                  {producto.stock} unidades
+                <span className={stockDisponible === 0 ? 'text-danger' : stockDisponible <= 5 ? 'text-warning' : 'text-success'}>
+                  {stockDisponible} unidades
                 </span>
               </p>
             </div>
@@ -178,13 +241,13 @@ function DetalleProductoContenido() {
                   value={cantidad}
                   onChange={handleCantidadChange}
                   min="1"
-                  max={producto.stock}
+                  max={stockDisponible}
                 />
                 <button
                   className="btn btn-outline-secondary"
                   type="button"
-                  onClick={() => cantidad < producto.stock && setCantidad(cantidad + 1)}
-                  disabled={cantidad >= producto.stock}
+                  onClick={() => cantidad < stockDisponible && setCantidad(cantidad + 1)}
+                  disabled={cantidad >= stockDisponible}
                 >
                   +
                 </button>
@@ -198,9 +261,13 @@ function DetalleProductoContenido() {
             <button
               className="btn btn-primary w-100 mb-3"
               onClick={handleAgregarCarrito}
-              disabled={producto.stock === 0}
+              disabled={stockDisponible === 0 || (tieneVariantes && !varianteSeleccionada)}
             >
-              {producto.stock === 0 ? 'Sin stock' : 'Agregar al Carrito'}
+              {stockDisponible === 0
+                ? 'Sin stock'
+                : tieneVariantes && !varianteSeleccionada
+                  ? 'Seleccione un tamaño'
+                  : 'Agregar al Carrito'}
             </button>
 
             <button

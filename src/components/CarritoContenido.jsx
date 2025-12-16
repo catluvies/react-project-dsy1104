@@ -56,8 +56,13 @@ function CarritoContenido() {
                             )}
                             <div>
                               <h6 className="mb-0">{item.nombre}</h6>
+                              {item.varianteNombre && (
+                                <span className="badge bg-info me-2">
+                                  {item.varianteNombre}
+                                </span>
+                              )}
                               {item.categoriaNombre && (
-                                <small className="text-muted">
+                                <small className="text-muted d-block">
                                   {item.categoriaNombre}
                                 </small>
                               )}

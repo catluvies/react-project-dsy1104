@@ -617,27 +617,26 @@ function AdminUsuarios() {
         <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <div className="modal-dialog">
             <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Gestionar Usuario</h5>
+              <div className="modal-header border-0 pb-0">
+                <h5 className="modal-title fw-bold">Gestionar Usuario</h5>
                 <button type="button" className="btn-close" onClick={cerrarModalEditar} disabled={guardando}></button>
               </div>
-              <div className="modal-body">
-                <div className="mb-4">
-                  <h6 className="text-muted">Información del usuario</h6>
-                  <p className="mb-1"><strong>{usuarioEditando.nombre} {usuarioEditando.apellido}</strong></p>
-                  <p className="mb-1 text-muted">{usuarioEditando.email}</p>
-                  {usuarioEditando.rut && <p className="mb-1 text-muted">RUT: {usuarioEditando.rut}</p>}
+              <div className="modal-body pt-3">
+                {/* Información del usuario */}
+                <div className="bg-light rounded p-3 mb-4">
+                  <p className="mb-1 fw-semibold fs-5">{usuarioEditando.nombre} {usuarioEditando.apellido}</p>
+                  <p className="mb-1 text-muted small">{usuarioEditando.email}</p>
+                  {usuarioEditando.rut && <p className="mb-2 text-muted small">RUT: {usuarioEditando.rut}</p>}
                   <span className={`badge ${getRolBadge(usuarioEditando.rol)}`}>
                     {getRolLabel(usuarioEditando.rol)}
                   </span>
                 </div>
 
-                <hr />
-
+                {/* Estado de la cuenta */}
                 <div className="mb-4">
-                  <h6 className="text-muted">Estado de la cuenta</h6>
-                  <div className="d-flex align-items-center gap-3">
-                    <span className={`badge ${usuarioEditando.activo ? 'bg-success' : 'bg-secondary'} fs-6`}>
+                  <label className="form-label text-muted small fw-semibold text-uppercase">Estado de la cuenta</label>
+                  <div className="d-flex align-items-center gap-2">
+                    <span className={`badge ${usuarioEditando.activo ? 'bg-success' : 'bg-secondary'}`}>
                       {usuarioEditando.activo ? 'Activo' : 'Inactivo'}
                     </span>
                     <button
@@ -645,7 +644,7 @@ function AdminUsuarios() {
                         usuarioEditando.activo ? 'desactivar' : 'activar',
                         usuarioEditando
                       )}
-                      className={`btn btn-sm ${usuarioEditando.activo ? 'btn-outline-warning' : 'btn-outline-success'}`}
+                      className={`btn btn-sm ${usuarioEditando.activo ? 'btn-outline-secondary' : 'btn-outline-success'}`}
                       disabled={guardando}
                     >
                       {usuarioEditando.activo ? 'Desactivar cuenta' : 'Activar cuenta'}
@@ -653,21 +652,26 @@ function AdminUsuarios() {
                   </div>
                 </div>
 
-                <hr />
-
-                <div className="text-center">
-                  <button
-                    onClick={() => abrirModalConfirmacion('eliminar', usuarioEditando)}
-                    className="btn btn-outline-danger"
-                    disabled={guardando}
-                  >
-                    Eliminar Usuario Permanentemente
-                  </button>
-                  <p className="text-muted small mt-2">Esta acción no se puede deshacer</p>
+                {/* Zona de peligro */}
+                <div className="border border-danger rounded p-3 bg-danger bg-opacity-10">
+                  <label className="form-label text-danger small fw-semibold text-uppercase mb-2">Zona de peligro</label>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div>
+                      <p className="mb-0 small">Eliminar este usuario permanentemente</p>
+                      <p className="mb-0 text-muted small">Esta acción no se puede deshacer</p>
+                    </div>
+                    <button
+                      onClick={() => abrirModalConfirmacion('eliminar', usuarioEditando)}
+                      className="btn btn-danger btn-sm"
+                      disabled={guardando}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={cerrarModalEditar} disabled={guardando}>
+              <div className="modal-footer border-0 pt-0">
+                <button type="button" className="btn btn-outline-secondary" onClick={cerrarModalEditar} disabled={guardando}>
                   Cerrar
                 </button>
               </div>

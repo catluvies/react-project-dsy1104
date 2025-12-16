@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext'
 import { productosService } from '../api/productosService'
 import { categoriasService } from '../api/categoriasService'
 import { formatearPrecio } from '../utils/formateo'
+import AdminVariantes from './AdminVariantes'
 
 function AdminProducts() {
   const { isAdmin, isVendedor, isAuthenticated } = useContext(AuthContext)
@@ -42,6 +43,8 @@ function AdminProducts() {
     condicionConservacion: '',
     alergenos: ''
   })
+
+  const [productoVariantes, setProductoVariantes] = useState(null)
 
   useEffect(() => {
     if (!isAuthenticated() || (!isAdmin() && !isVendedor())) {
@@ -394,12 +397,21 @@ function AdminProducts() {
                       <button
                         onClick={() => abrirModalEditar(producto)}
                         className="btn btn-outline-primary btn-sm me-1"
+                        title="Editar producto"
                       >
                         Editar
                       </button>
                       <button
+                        onClick={() => setProductoVariantes(producto)}
+                        className="btn btn-outline-info btn-sm me-1"
+                        title="Gestionar tamaños/variantes"
+                      >
+                        Tamaños
+                      </button>
+                      <button
                         onClick={() => handleEliminar(producto)}
                         className="btn btn-outline-danger btn-sm"
+                        title="Eliminar producto"
                       >
                         Eliminar
                       </button>
@@ -416,6 +428,13 @@ function AdminProducts() {
         <div className="alert alert-info text-center">
           No hay productos con los filtros seleccionados
         </div>
+      )}
+
+      {productoVariantes && (
+        <AdminVariantes
+          producto={productoVariantes}
+          onClose={() => setProductoVariantes(null)}
+        />
       )}
 
       {modalAbierto && (

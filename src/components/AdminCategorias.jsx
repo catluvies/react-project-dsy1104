@@ -21,6 +21,7 @@ function AdminCategorias() {
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
+    imagenUrl: '',
     activa: true
   })
 
@@ -58,6 +59,7 @@ function AdminCategorias() {
     setFormData({
       nombre: '',
       descripcion: '',
+      imagenUrl: '',
       activa: true
     })
     setErroresForm({})
@@ -69,6 +71,7 @@ function AdminCategorias() {
     setFormData({
       nombre: categoria.nombre || '',
       descripcion: categoria.descripcion || '',
+      imagenUrl: categoria.imagenUrl || '',
       activa: categoria.activa !== false
     })
     setErroresForm({})
@@ -112,6 +115,7 @@ function AdminCategorias() {
       const categoriaData = {
         nombre: formData.nombre.trim(),
         descripcion: formData.descripcion?.trim() || null,
+        imagenUrl: formData.imagenUrl?.trim() || null,
         activa: formData.activa
       }
 
@@ -214,7 +218,7 @@ function AdminCategorias() {
         <table className="table table-hover">
           <thead className="table-light">
             <tr>
-              <th>ID</th>
+              <th>Imagen</th>
               <th>Nombre</th>
               <th>Descripción</th>
               <th>Productos</th>
@@ -228,7 +232,22 @@ function AdminCategorias() {
 
               return (
                 <tr key={categoria.id}>
-                  <td>{categoria.id}</td>
+                  <td>
+                    {categoria.imagenUrl ? (
+                      <img
+                        src={categoria.imagenUrl}
+                        alt={categoria.nombre}
+                        style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}
+                      />
+                    ) : (
+                      <div
+                        className="bg-light d-flex align-items-center justify-content-center"
+                        style={{ width: '50px', height: '50px', borderRadius: '4px' }}
+                      >
+                        <span className="text-muted small">N/A</span>
+                      </div>
+                    )}
+                  </td>
                   <td><strong>{categoria.nombre}</strong></td>
                   <td className="text-muted">{categoria.descripcion || '-'}</td>
                   <td>
@@ -307,6 +326,30 @@ function AdminCategorias() {
                       rows="3"
                       disabled={guardando}
                     />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label">URL de Imagen</label>
+                    <input
+                      type="url"
+                      name="imagenUrl"
+                      value={formData.imagenUrl}
+                      onChange={handleFormChange}
+                      className="form-control"
+                      placeholder="https://ejemplo.com/imagen.jpg"
+                      disabled={guardando}
+                    />
+                    <small className="text-muted">Ingresa la URL de una imagen para la categoría</small>
+                    {formData.imagenUrl && (
+                      <div className="mt-2">
+                        <img
+                          src={formData.imagenUrl}
+                          alt="Preview"
+                          style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px' }}
+                          onError={(e) => { e.target.style.display = 'none' }}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="form-check">

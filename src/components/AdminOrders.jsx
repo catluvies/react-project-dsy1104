@@ -363,24 +363,29 @@ function AdminOrders() {
                           </button>
                         )}
 
-                        <div className="d-flex gap-2">
-                          {estadoAnterior(boletaSeleccionada.estado) && (
-                            <button
-                              onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoAnterior(boletaSeleccionada.estado))}
-                              className="btn btn-outline-secondary flex-grow-1"
-                              disabled={cambiandoEstado}
-                            >
-                              Retroceder
-                            </button>
-                          )}
+                        {estadoAnterior(boletaSeleccionada.estado) && (
                           <button
-                            onClick={() => handleCambiarEstado(boletaSeleccionada.id, 'CANCELADA')}
-                            className="btn btn-outline-danger flex-grow-1"
+                            onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoAnterior(boletaSeleccionada.estado))}
+                            className="btn btn-outline-secondary w-100"
                             disabled={cambiandoEstado}
                           >
-                            Cancelar
+                            Retroceder a {estadoAnterior(boletaSeleccionada.estado)}
                           </button>
-                        </div>
+                        )}
+
+                        <hr className="my-3" />
+
+                        <button
+                          onClick={() => {
+                            if (window.confirm(`¿Está seguro que desea CANCELAR el pedido #${boletaSeleccionada.id}?\n\nEsta acción no se puede deshacer.`)) {
+                              handleCambiarEstado(boletaSeleccionada.id, 'CANCELADA')
+                            }
+                          }}
+                          className="btn btn-outline-danger btn-sm w-100"
+                          disabled={cambiandoEstado}
+                        >
+                          Cancelar Pedido
+                        </button>
                       </div>
                     )}
                   </>

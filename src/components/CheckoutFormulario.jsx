@@ -148,7 +148,8 @@ function CheckoutFormulario() {
 
     try {
       const detalles = carrito.map(item => ({
-        productoId: item.id,
+        productoId: item.productoId || item.id,
+        varianteId: item.varianteId || null,
         cantidad: item.cantidad,
         precioUnitario: item.precio
       }))
@@ -547,7 +548,13 @@ function CheckoutFormulario() {
                   const precio = item.precio || 0
                   return (
                     <div key={item.id} className="d-flex justify-content-between mb-2 small">
-                      <span>{item.nombre} x{item.cantidad}</span>
+                      <div>
+                        <span>{item.nombre}</span>
+                        {item.varianteNombre && (
+                          <span className="text-muted"> ({item.varianteNombre})</span>
+                        )}
+                        <span> x{item.cantidad}</span>
+                      </div>
                       <span>${formatearPrecio(precio * item.cantidad)}</span>
                     </div>
                   )

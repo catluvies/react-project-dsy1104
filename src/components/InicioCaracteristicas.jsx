@@ -2,10 +2,10 @@ import { motion } from 'framer-motion'
 
 function InicioCaracteristicas() {
   const caracteristicas = [
-    { titulo: '50 años', descripcion: 'de experiencia' },
-    { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales' },
-    { titulo: 'Ingredientes frescos', descripcion: 'Productos del día' },
-    { titulo: 'Calidad artesanal', descripcion: 'Elaboración diaria' }
+    { titulo: '50 años', descripcion: 'de experiencia', emoji: '🎂', bg: '#FFFBEB', border: '#FCD34D' },
+    { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales', emoji: '💕', bg: '#FDF2F8', border: '#F9A8D4' },
+    { titulo: 'Ingredientes frescos', descripcion: 'Productos del día', emoji: '🌿', bg: '#F0FDF4', border: '#86EFAC' },
+    { titulo: 'Calidad artesanal', descripcion: 'Elaboración diaria', emoji: '✨', bg: '#FAF5FF', border: '#C4B5FD' }
   ]
 
   return (
@@ -77,10 +77,35 @@ function InicioCaracteristicas() {
       <div className="row g-4">
         {caracteristicas.map((item, index) => (
           <div key={index} className="col-md-3 col-sm-6">
-            <div className="card h-100 text-center p-4 border-2">
-              <div className="card-body">
-                <h3 className="card-title h5 text-cafe">{item.titulo}</h3>
-                <p className="card-text text-muted">{item.descripcion}</p>
+            <div
+              className="card h-100 text-center"
+              style={{
+                backgroundColor: item.bg,
+                border: `2px dashed ${item.border}`,
+                borderRadius: '16px',
+                padding: '24px',
+                transition: 'transform 0.2s ease'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-4px)'}
+              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              <div className="card-body d-flex flex-column align-items-center justify-content-center">
+                <span style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>{item.emoji}</span>
+                <h3
+                  style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontStyle: 'italic',
+                    fontSize: '1.25rem',
+                    color: '#6B5B4F',
+                    fontWeight: '500',
+                    marginBottom: '0.5rem'
+                  }}
+                >
+                  {item.titulo}
+                </h3>
+                <p className="card-text text-muted mb-0" style={{ fontSize: '0.9rem' }}>
+                  {item.descripcion}
+                </p>
               </div>
             </div>
           </div>

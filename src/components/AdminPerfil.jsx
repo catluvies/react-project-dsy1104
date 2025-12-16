@@ -78,6 +78,8 @@ function AdminPerfil() {
   const seleccionarAvatar = (avatarId) => {
     setAvatarSeleccionado(avatarId)
     localStorage.setItem(`avatar_${usuario?.id}`, avatarId)
+    // Disparar evento para que AdminHeader se actualice
+    window.dispatchEvent(new Event('avatarChanged'))
     setMostrarAvatares(false)
     setMensaje({ tipo: 'success', texto: 'Avatar actualizado' })
     setTimeout(() => setMensaje({ tipo: '', texto: '' }), 3000)

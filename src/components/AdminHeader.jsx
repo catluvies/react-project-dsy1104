@@ -23,14 +23,22 @@ function AdminHeader() {
   const [avatarImagen, setAvatarImagen] = useState(null)
 
   useEffect(() => {
-    if (usuario?.id) {
-      const avatarGuardado = localStorage.getItem(`avatar_${usuario.id}`)
-      if (avatarGuardado && AVATARES_MAP[avatarGuardado]) {
-        setAvatarImagen(AVATARES_MAP[avatarGuardado])
-      } else {
-        setAvatarImagen(null)
+    const cargarAvatar = () => {
+      if (usuario?.id) {
+        const avatarGuardado = localStorage.getItem(`avatar_${usuario.id}`)
+        if (avatarGuardado && AVATARES_MAP[avatarGuardado]) {
+          setAvatarImagen(AVATARES_MAP[avatarGuardado])
+        } else {
+          setAvatarImagen(null)
+        }
       }
     }
+
+    cargarAvatar()
+
+    // Escuchar cambios de avatar
+    window.addEventListener('avatarChanged', cargarAvatar)
+    return () => window.removeEventListener('avatarChanged', cargarAvatar)
   }, [usuario])
 
   const isActive = (path) => {
@@ -104,6 +112,14 @@ function AdminHeader() {
               </li>
             </>
           )}
+          <li className="nav-item">
+            <Link
+              to="/admin/perfil"
+              className={`nav-link ${isActive('/admin/perfil') ? 'active' : ''}`}
+            >
+              Mi Perfil
+            </Link>
+          </li>
         </ul>
 
         <div className="d-flex align-items-center gap-3">

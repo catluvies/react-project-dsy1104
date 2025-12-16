@@ -798,7 +798,7 @@ textarea.glass-input {
   transform: translateY(1px);
 }
 
-/* ===== HERO - Botones Aero ===== */
+/* ===== BOTONES AERO (Windows Vista/7 Glass Style) ===== */
 
 /* Botón Aero base */
 .btn-aero {
@@ -838,6 +838,8 @@ textarea.glass-input {
 .btn-aero:focus {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   transform: translateY(-3px);
+  color: var(--aero-text);
+  text-decoration: none;
 }
 
 .btn-aero:hover::after {
@@ -849,18 +851,160 @@ textarea.glass-input {
   transform: translateY(1px);
 }
 
-/* Variante café */
+.btn-aero:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Variante café (marrón pastelería) */
 .btn-aero-cafe {
   --aero-bg: rgba(139, 115, 85, 0.9);
   --aero-dark: rgba(90, 70, 50, 0.85);
   --aero-text: #fff;
 }
 
-/* Variante rosa */
+/* Variante rosa pastel */
 .btn-aero-rosa {
   --aero-bg: rgba(248, 187, 217, 0.95);
   --aero-dark: rgba(245, 163, 199, 0.9);
   --aero-text: #5a4035;
+}
+
+/* Variante amarillo/naranja (para carrito y header) */
+.btn-aero-amarillo {
+  --aero-bg: rgba(254, 243, 199, 0.95);
+  --aero-dark: rgba(253, 230, 138, 0.9);
+  --aero-text: #92400E;
+}
+
+/* Variante naranja vibrante */
+.btn-aero-naranja {
+  --aero-bg: rgba(245, 158, 11, 0.9);
+  --aero-dark: rgba(217, 119, 6, 0.85);
+  --aero-text: #fff;
+}
+
+/* Variante verde (para WhatsApp y éxito) */
+.btn-aero-verde {
+  --aero-bg: rgba(37, 211, 102, 0.9);
+  --aero-dark: rgba(22, 163, 74, 0.85);
+  --aero-text: #fff;
+}
+
+/* Variante roja (para danger/eliminar) */
+.btn-aero-rojo {
+  --aero-bg: rgba(239, 68, 68, 0.9);
+  --aero-dark: rgba(185, 28, 28, 0.85);
+  --aero-text: #fff;
+}
+
+/* Variante azul (para info) */
+.btn-aero-azul {
+  --aero-bg: rgba(59, 130, 246, 0.9);
+  --aero-dark: rgba(37, 99, 235, 0.85);
+  --aero-text: #fff;
+}
+
+/* Variante outline (borde café, fondo transparente) */
+.btn-aero-outline {
+  --aero-bg: rgba(255, 255, 255, 0.7);
+  --aero-dark: rgba(255, 255, 255, 0.5);
+  --aero-text: var(--color-cafe-oscuro);
+  border: 2px solid var(--color-cafe-oscuro);
+}
+
+.btn-aero-outline:hover {
+  --aero-bg: rgba(139, 69, 19, 0.9);
+  --aero-dark: rgba(101, 67, 33, 0.85);
+  --aero-text: #fff;
+}
+
+/* Tamaños de botón aero */
+.btn-aero-sm {
+  padding: 8px 20px;
+  font-size: 0.875rem;
+}
+
+.btn-aero-lg {
+  padding: 18px 40px;
+  font-size: 1.125rem;
+}
+
+/* Botón aero full width */
+.btn-aero-block {
+  width: 100%;
+  text-align: center;
+}
+
+/* ===== Tarjetas características con estilo aero ===== */
+.card-aero {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(to bottom, var(--card-aero-light), var(--card-aero-bg));
+  border: 1px solid var(--card-aero-border);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 300ms ease;
+}
+
+.card-aero::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-aero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.card-aero:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Variantes de tarjetas aero */
+.card-aero-amarillo {
+  --card-aero-bg: rgba(254, 243, 199, 0.95);
+  --card-aero-light: rgba(255, 251, 235, 0.9);
+  --card-aero-border: rgba(245, 158, 11, 0.4);
+}
+
+.card-aero-rosa {
+  --card-aero-bg: rgba(252, 231, 243, 0.95);
+  --card-aero-light: rgba(253, 242, 248, 0.9);
+  --card-aero-border: rgba(236, 72, 153, 0.4);
+}
+
+.card-aero-verde {
+  --card-aero-bg: rgba(209, 250, 229, 0.95);
+  --card-aero-light: rgba(236, 253, 245, 0.9);
+  --card-aero-border: rgba(16, 185, 129, 0.4);
+}
+
+.card-aero-morado {
+  --card-aero-bg: rgba(233, 213, 255, 0.95);
+  --card-aero-light: rgba(245, 235, 255, 0.9);
+  --card-aero-border: rgba(168, 85, 247, 0.4);
+}
+
+/* Imagen icono en tarjetas */
+.card-aero-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: auto;
+  margin-bottom: 0.75rem;
 }
 
 /* Texto hero con estilo glass aero */

@@ -172,10 +172,10 @@ function AdminHeader() {
             <span className="fw-medium text-dark">{usuario?.nombre}</span>
           </Link>
           <div className="vr opacity-50"></div>
-          <Link to="/" className="btn btn-outline-primary btn-sm">
+          <Link to="/" className="btn-aero btn-aero-cafe btn-aero-sm">
             Ver Tienda
           </Link>
-          <button onClick={handleLogout} className="btn btn-outline-danger btn-sm">
+          <button onClick={handleLogout} className="btn-aero btn-aero-rojo btn-aero-sm">
             Cerrar Sesión
           </button>
         </div>

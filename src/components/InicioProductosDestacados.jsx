@@ -192,30 +192,7 @@ function InicioProductosDestacados(props) {
                                     >
                                       ${formatearPrecio(producto.precio)}
                                     </span>
-                                    <span
-                                      className="btn"
-                                      style={{
-                                        backgroundColor: '#F59E0B',
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '25px',
-                                        padding: '10px 24px',
-                                        fontWeight: '600',
-                                        fontSize: '0.9rem',
-                                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
-                                        transition: 'all 0.2s ease'
-                                      }}
-                                      onMouseOver={(e) => {
-                                        e.currentTarget.style.backgroundColor = '#D97706'
-                                        e.currentTarget.style.transform = 'translateY(-2px)'
-                                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
-                                      }}
-                                      onMouseOut={(e) => {
-                                        e.currentTarget.style.backgroundColor = '#F59E0B'
-                                        e.currentTarget.style.transform = 'translateY(0)'
-                                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
-                                      }}
-                                    >
+                                    <span className="btn-aero btn-aero-naranja btn-aero-sm">
                                       Ver producto
                                     </span>
                                   </div>
@@ -294,26 +271,9 @@ function InicioProductosDestacados(props) {
         <div className="text-center mt-5">
           <Link
             to="/productos"
-            className="btn btn-lg px-5 py-3"
-            style={{
-              backgroundColor: '#8B7355',
-              color: 'white',
-              borderRadius: '9999px',
-              fontWeight: '500',
-              fontSize: '1.1rem',
-              boxShadow: '0 4px 15px rgba(139, 115, 85, 0.3)',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#6B5B4F'
-              e.currentTarget.style.transform = 'translateY(-3px)'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#8B7355'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
+            className="btn-aero btn-aero-cafe btn-aero-lg"
           >
-            🍰 Ver Todos los Productos
+            Ver Todos los Productos
           </Link>
         </div>
       </div>

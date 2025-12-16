@@ -275,7 +275,7 @@ function RegistroFormulario() {
 
                   <button
                     type="submit"
-                    className="btn btn-primary w-100 mb-3"
+                    className="btn-aero btn-aero-cafe btn-aero-block mb-3"
                     disabled={cargando}
                   >
                     {cargando ? (

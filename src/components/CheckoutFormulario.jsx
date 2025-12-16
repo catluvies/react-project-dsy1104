@@ -129,7 +129,7 @@ function CheckoutFormulario() {
         <div className="text-center">
           <h2>No hay productos en tu carrito</h2>
           <p className="text-muted">Agrega productos antes de proceder al checkout</p>
-          <Link to="/productos" className="btn btn-primary">
+          <Link to="/productos" className="btn-aero btn-aero-cafe">
             Ver Productos
           </Link>
         </div>
@@ -196,8 +196,8 @@ function CheckoutFormulario() {
         <div className="alert alert-warning mb-4">
           <strong>Debes iniciar sesión para completar tu compra.</strong>
           <div className="mt-2">
-            <Link to="/login" className="btn btn-primary btn-sm me-2">Iniciar Sesión</Link>
-            <Link to="/registro" className="btn btn-outline-primary btn-sm">Registrarse</Link>
+            <Link to="/login" className="btn-aero btn-aero-cafe btn-aero-sm me-2">Iniciar Sesión</Link>
+            <Link to="/registro" className="btn-aero btn-aero-outline btn-aero-sm">Registrarse</Link>
           </div>
         </div>
       )}
@@ -657,7 +657,7 @@ function CheckoutFormulario() {
 
                 <button
                   type="submit"
-                  className="btn btn-primary w-100"
+                  className="btn-aero btn-aero-cafe btn-aero-block"
                   disabled={cargando || !isAuthenticated()}
                 >
                   {cargando ? (

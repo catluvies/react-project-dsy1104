@@ -14,7 +14,7 @@ function CarritoContenido() {
         <div className="text-center">
           <h2>Tu carrito está vacío</h2>
           <p className="text-muted">Agrega productos para comenzar tu compra</p>
-          <Link to="/productos" className="btn btn-primary">
+          <Link to="/productos" className="btn-aero btn-aero-cafe">
             Ver Productos
           </Link>
         </div>
@@ -97,7 +97,7 @@ function CarritoContenido() {
                         </td>
                         <td>
                           <button
-                            className="btn btn-outline-danger btn-sm"
+                            className="btn-aero btn-aero-rojo btn-aero-sm"
                             onClick={() => eliminarDelCarrito(item.id)}
                           >
                             Eliminar
@@ -138,13 +138,13 @@ function CarritoContenido() {
               </p>
 
               <button
-                className="btn btn-primary w-100 mb-2"
+                className="btn-aero btn-aero-cafe btn-aero-block mb-2"
                 onClick={() => navigate('/checkout')}
               >
                 Proceder al Pago
               </button>
 
-              <Link to="/productos" className="btn btn-outline-secondary w-100">
+              <Link to="/productos" className="btn-aero btn-aero-outline btn-aero-block">
                 Seguir Comprando
               </Link>
             </div>

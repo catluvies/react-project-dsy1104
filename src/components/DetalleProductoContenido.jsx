@@ -59,7 +59,7 @@ function DetalleProductoContenido() {
           <div className="alert alert-danger" role="alert">
             {error || 'Producto no encontrado'}
           </div>
-          <Link to="/productos" className="btn btn-primary">
+          <Link to="/productos" className="btn-aero btn-aero-cafe">
             Volver a Productos
           </Link>
         </div>
@@ -259,7 +259,7 @@ function DetalleProductoContenido() {
             </p>
 
             <button
-              className="btn btn-primary w-100 mb-3"
+              className="btn-aero btn-aero-cafe btn-aero-block mb-3"
               onClick={handleAgregarCarrito}
               disabled={stockDisponible === 0 || (tieneVariantes && !varianteSeleccionada)}
             >
@@ -271,7 +271,7 @@ function DetalleProductoContenido() {
             </button>
 
             <button
-              className="btn btn-secondary w-100"
+              className="btn-aero btn-aero-outline btn-aero-block"
               onClick={() => navigate('/productos')}
             >
               Seguir Comprando

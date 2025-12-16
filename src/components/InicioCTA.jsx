@@ -36,25 +36,9 @@ function InicioCTA() {
           </p>
           <Link
             to="/contacto"
-            className="btn btn-lg"
-            style={{
-              backgroundColor: '#F59E0B',
-              color: 'white',
-              borderRadius: '9999px',
-              padding: '12px 28px',
-              fontWeight: '500',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#D97706'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#F59E0B'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
+            className="btn-aero btn-aero-naranja"
           >
-            💌 Solicitar Cotización
+            Solicitar Cotización
           </Link>
         </div>
       </div>

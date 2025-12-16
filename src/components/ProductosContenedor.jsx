@@ -79,7 +79,7 @@ function ProductosContenedor() {
               {error}
             </div>
             <div className="text-center">
-              <button onClick={cargarDatos} className="btn btn-primary">
+              <button onClick={cargarDatos} className="btn-aero btn-aero-cafe">
                 Reintentar
               </button>
             </div>

@@ -80,25 +80,7 @@ function Header() {
           <div className="d-flex gap-3 align-items-center">
             <Link
               to="/carrito"
-              className="btn position-relative d-flex align-items-center gap-2"
-              style={{
-                padding: '10px 20px',
-                fontSize: '0.95rem',
-                backgroundColor: '#FEF3C7',
-                color: '#92400E',
-                border: '2px dashed #F59E0B',
-                borderRadius: '20px',
-                fontWeight: '500',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = '#FDE68A'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = '#FEF3C7'
-                e.currentTarget.style.transform = 'translateY(0)'
-              }}
+              className="btn-aero btn-aero-amarillo btn-aero-sm position-relative d-flex align-items-center gap-2"
             >
               🛒 Carrito
               {totalItems > 0 && (
@@ -121,28 +103,10 @@ function Header() {
             {usuario ? (
               <div className="dropdown" ref={dropdownRef}>
                 <button
-                  className="btn dropdown-toggle d-flex align-items-center gap-2"
+                  className="btn-aero btn-aero-amarillo btn-aero-sm dropdown-toggle d-flex align-items-center gap-2"
                   type="button"
                   onClick={() => setDropdownAbierto(!dropdownAbierto)}
                   aria-expanded={dropdownAbierto}
-                  style={{
-                    padding: '8px 16px',
-                    fontSize: '0.95rem',
-                    backgroundColor: '#FEF3C7',
-                    color: '#92400E',
-                    border: '2px dashed #F59E0B',
-                    borderRadius: '20px',
-                    fontWeight: '500',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = '#FDE68A'
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = '#FEF3C7'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
                 >
                   {avatarImagen ? (
                     <div
@@ -222,24 +186,7 @@ function Header() {
             ) : (
               <Link
                 to="/login"
-                className="btn"
-                style={{
-                  backgroundColor: '#FEF3C7',
-                  color: '#92400E',
-                  border: '2px dashed #F59E0B',
-                  borderRadius: '20px',
-                  padding: '10px 20px',
-                  fontWeight: '500',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FDE68A'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FEF3C7'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }}
+                className="btn-aero btn-aero-amarillo btn-aero-sm"
               >
                 🔑 Ingresar
               </Link>

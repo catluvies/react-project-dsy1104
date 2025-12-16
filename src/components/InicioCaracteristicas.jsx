@@ -1,9 +1,29 @@
 function InicioCaracteristicas() {
   const caracteristicas = [
-    { titulo: '50 años', descripcion: 'de experiencia', emoji: '🎂', bg: '#FEF3C7', border: '#F59E0B' },
-    { titulo: 'Hecho con amor', descripcion: 'Recetas tradicionales', emoji: '💕', bg: '#FCE7F3', border: '#EC4899' },
-    { titulo: 'Ingredientes frescos', descripcion: 'Productos del día', emoji: '🌿', bg: '#D1FAE5', border: '#10B981' },
-    { titulo: 'Calidad artesanal', descripcion: 'Elaboración diaria', emoji: '✨', bg: '#E9D5FF', border: '#A855F7' }
+    {
+      titulo: '50 años',
+      descripcion: 'de experiencia',
+      imagen: '/images/detalles/excelencia-index.png',
+      cardClass: 'card-aero card-aero-amarillo'
+    },
+    {
+      titulo: 'Hecho con amor',
+      descripcion: 'Recetas tradicionales',
+      imagen: '/images/detalles/hecho-amor-index.png',
+      cardClass: 'card-aero card-aero-rosa'
+    },
+    {
+      titulo: 'Ingredientes frescos',
+      descripcion: 'Productos del día',
+      imagen: '/images/detalles/ingredientes-index.png',
+      cardClass: 'card-aero card-aero-verde'
+    },
+    {
+      titulo: 'Calidad artesanal',
+      descripcion: 'Elaboración diaria',
+      imagen: '/images/detalles/artesanal-index.png',
+      cardClass: 'card-aero card-aero-morado'
+    }
   ]
 
   return (
@@ -13,25 +33,15 @@ function InicioCaracteristicas() {
         {caracteristicas.map((item, index) => (
           <div key={index} className="col-6 col-md-3">
             <div
-              className="card h-100 text-center"
-              style={{
-                backgroundColor: item.bg,
-                border: `3px dashed ${item.border}`,
-                borderRadius: '20px',
-                padding: '24px 16px',
-                transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)'
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)'
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
+              className={`${item.cardClass} h-100 text-center`}
+              style={{ padding: '24px 16px' }}
             >
-              <div className="card-body d-flex flex-column align-items-center justify-content-center p-0">
-                <span style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>{item.emoji}</span>
+              <div className="d-flex flex-column align-items-center justify-content-center p-0">
+                <img
+                  src={item.imagen}
+                  alt={item.titulo}
+                  className="card-aero-icon"
+                />
                 <h3
                   style={{
                     fontFamily: "'Playfair Display', Georgia, serif",
@@ -44,7 +54,7 @@ function InicioCaracteristicas() {
                 >
                   {item.titulo}
                 </h3>
-                <p className="card-text text-muted mb-0" style={{ fontSize: '0.9rem' }}>
+                <p className="text-muted mb-0" style={{ fontSize: '0.9rem' }}>
                   {item.descripcion}
                 </p>
               </div>

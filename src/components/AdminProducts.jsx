@@ -224,6 +224,10 @@ function AdminProducts() {
       }
 
       if (productoEditando) {
+        // Si no se seleccionó nueva imagen, mantener la existente
+        if (!imagenSeleccionada && productoEditando.imagenUrl) {
+          productoData.imagenUrl = productoEditando.imagenUrl
+        }
         await productosService.actualizar(productoEditando.id, productoData, imagenSeleccionada)
       } else {
         await productosService.crear(productoData, imagenSeleccionada)
@@ -513,6 +517,7 @@ function AdminProducts() {
                         min="0"
                         disabled={guardando}
                       />
+                      <small className="text-muted">Peso o volumen del producto</small>
                     </div>
 
                     <div className="col-md-3">
@@ -531,6 +536,7 @@ function AdminProducts() {
                         <option value="lt">Litros (lt)</option>
                         <option value="unidad">Unidad</option>
                       </select>
+                      <small className="text-muted">Ej: 500 gr para un pastel</small>
                     </div>
 
                     <div className="col-md-3">

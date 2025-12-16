@@ -143,11 +143,80 @@ main {
 }
 
 .admin-layout {
-  background-color: #F5F5F5;
+  background-color: var(--color-crema);
 }
 
 .admin-content {
   min-height: calc(100vh - 80px);
+  padding: 1.5rem;
+}
+
+/* Estilos del header admin con colores pastel */
+.admin-header {
+  background-color: var(--color-rosa-pastel) !important;
+  border-bottom: 3px solid var(--color-cafe-claro);
+}
+
+.admin-header .navbar-brand,
+.admin-header .nav-link {
+  color: var(--color-cafe-muy-oscuro) !important;
+  font-weight: 500;
+}
+
+.admin-header .nav-link:hover {
+  color: var(--color-cafe-oscuro) !important;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.admin-header .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+/* Cards en admin con estilo pastel */
+.admin-layout .card {
+  border-color: var(--color-cafe-claro);
+  background-color: #FFFFFF;
+}
+
+.admin-layout .card:hover {
+  transform: none;
+}
+
+/* Tablas en admin */
+.admin-layout .table {
+  background-color: #FFFFFF;
+}
+
+.admin-layout .table-light {
+  background-color: #FFF5EE !important;
+}
+
+/* Badges de estado con colores más suaves */
+.admin-layout .badge.bg-warning {
+  background-color: #FFE4B5 !important;
+  color: #8B4513 !important;
+}
+
+.admin-layout .badge.bg-info {
+  background-color: #E0FFFF !important;
+  color: #2F4F4F !important;
+}
+
+.admin-layout .badge.bg-primary {
+  background-color: var(--color-cafe-claro) !important;
+  color: var(--color-cafe-muy-oscuro) !important;
+}
+
+/* Títulos en admin */
+.admin-layout h1,
+.admin-layout h2,
+.admin-layout h3,
+.admin-layout h4,
+.admin-layout h5,
+.admin-layout h6 {
+  color: var(--color-cafe-oscuro);
 }
 
 img {

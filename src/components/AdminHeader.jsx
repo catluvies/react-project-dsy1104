@@ -20,20 +20,24 @@ function AdminHeader() {
   }
 
   const tituloHeader = isAdmin() ? 'Admin - Mil Sabores' : 'Vendedor - Mil Sabores'
-  const colorFondo = isAdmin() ? 'bg-dark' : 'bg-primary'
 
   return (
-    <nav className={`navbar navbar-dark ${colorFondo} border-bottom`}>
+    <nav className="navbar admin-header">
       <div className="container-fluid">
-        <Link to="/admin" className="navbar-brand">
+        <Link to="/admin" className="navbar-brand d-flex align-items-center gap-2">
+          <img
+            src="/logo_sanic.jpg"
+            alt="Logo"
+            style={{width: '40px', height: '40px', borderRadius: '50%'}}
+          />
           <h1 className="h4 mb-0">{tituloHeader}</h1>
         </Link>
 
-        <ul className="nav nav-pills">
+        <ul className="nav">
           <li className="nav-item">
             <Link
               to="/admin"
-              className={`nav-link ${isActive('/admin') ? 'active' : 'text-light'}`}
+              className={`nav-link ${isActive('/admin') ? 'active' : ''}`}
             >
               Dashboard
             </Link>
@@ -41,7 +45,7 @@ function AdminHeader() {
           <li className="nav-item">
             <Link
               to="/admin/ordenes"
-              className={`nav-link ${isActive('/admin/ordenes') ? 'active' : 'text-light'}`}
+              className={`nav-link ${isActive('/admin/ordenes') ? 'active' : ''}`}
             >
               Pedidos
             </Link>
@@ -49,7 +53,7 @@ function AdminHeader() {
           <li className="nav-item">
             <Link
               to="/admin/productos"
-              className={`nav-link ${isActive('/admin/productos') ? 'active' : 'text-light'}`}
+              className={`nav-link ${isActive('/admin/productos') ? 'active' : ''}`}
             >
               Productos
             </Link>
@@ -59,7 +63,7 @@ function AdminHeader() {
               <li className="nav-item">
                 <Link
                   to="/admin/categorias"
-                  className={`nav-link ${isActive('/admin/categorias') ? 'active' : 'text-light'}`}
+                  className={`nav-link ${isActive('/admin/categorias') ? 'active' : ''}`}
                 >
                   Categorías
                 </Link>
@@ -67,7 +71,7 @@ function AdminHeader() {
               <li className="nav-item">
                 <Link
                   to="/admin/usuarios"
-                  className={`nav-link ${isActive('/admin/usuarios') ? 'active' : 'text-light'}`}
+                  className={`nav-link ${isActive('/admin/usuarios') ? 'active' : ''}`}
                 >
                   Usuarios
                 </Link>
@@ -77,13 +81,13 @@ function AdminHeader() {
         </ul>
 
         <div className="d-flex align-items-center gap-3">
-          <span className="text-light">{usuario?.nombre}</span>
-          <div className="vr bg-light opacity-50"></div>
-          <Link to="/" className="btn btn-warning btn-sm d-flex align-items-center gap-1">
-            <span>Ver Tienda</span>
+          <span className="fw-medium">{usuario?.nombre}</span>
+          <div className="vr opacity-50"></div>
+          <Link to="/" className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1">
+            <span>🏪 Ver Tienda</span>
           </Link>
           <button onClick={handleLogout} className="btn btn-outline-danger btn-sm">
-            Cerrar Sesion
+            Cerrar Sesión
           </button>
         </div>
       </div>

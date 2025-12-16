@@ -6,6 +6,8 @@ import { validarNombre, validarEmail, validarTelefono } from '../utils/validacio
 import { CarritoContext } from '../context/CarritoContext'
 import { AuthContext } from '../context/AuthContext'
 import { boletasService } from '../api/boletasService'
+import { usuariosService } from '../api/usuariosService'
+import CalendarioEntrega from './CalendarioEntrega'
 
 function CheckoutFormulario() {
   const { carrito, subtotal, vaciarCarrito } = useContext(CarritoContext)
@@ -14,14 +16,32 @@ function CheckoutFormulario() {
   const navigate = useNavigate()
 
   const [comunas, setComunas] = useState([])
+  const [perfilCargado, setPerfilCargado] = useState(null)
+  const [usarDireccionPerfil, setUsarDireccionPerfil] = useState(false)
 
   useEffect(() => {
-    const cargarComunas = async () => {
-      const data = await obtenerComunas()
-      setComunas(data)
+    const cargarDatos = async () => {
+      const comunasData = await obtenerComunas()
+      setComunas(comunasData)
+
+      if (usuario?.id) {
+        try {
+          const perfil = await usuariosService.obtenerPorId(usuario.id)
+          setPerfilCargado(perfil)
+          setFormData({
+            nombre: perfil.nombre || '',
+            apellido: perfil.apellido || '',
+            email: perfil.email || '',
+            telefono: perfil.telefono || '',
+            direccion: ''
+          })
+        } catch (error) {
+          console.error('Error cargando perfil:', error)
+        }
+      }
     }
-    cargarComunas()
-  }, [])
+    cargarDatos()
+  }, [usuario])
 
   const HORARIOS_ENTREGA = [
     { valor: 'H_09_11', texto: '09:00 - 11:00' },
@@ -54,12 +74,6 @@ function CheckoutFormulario() {
       setErrores({ ...errores, [name]: '' })
     }
     setErrorGeneral('')
-  }
-
-  const obtenerFechaMinima = () => {
-    const manana = new Date()
-    manana.setDate(manana.getDate() + 1)
-    return manana.toISOString().split('T')[0]
   }
 
   const validarFormulario = () => {
@@ -153,9 +167,15 @@ function CheckoutFormulario() {
         horarioEntrega
       }
 
-      await boletasService.crear(usuario.id, boletaData)
+      const boletaCreada = await boletasService.crear(usuario.id, boletaData)
       vaciarCarrito()
-      navigate('/exito')
+      navigate('/exito', {
+        state: {
+          boleta: boletaCreada,
+          fechaEntrega: fechaEntrega,
+          horarioEntrega: HORARIOS_ENTREGA.find(h => h.valor === horarioEntrega)?.texto || horarioEntrega
+        }
+      })
     } catch (error) {
       const mensaje = error.response?.data?.mensaje || 'Error al procesar la compra. Intenta nuevamente.'
       setErrorGeneral(mensaje)
@@ -316,6 +336,37 @@ function CheckoutFormulario() {
 
                 {tipoEntrega === 'despacho' && (
                   <>
+                    {perfilCargado?.direccion && perfilCargado?.comuna && (
+                      <div className="alert alert-light border mb-3">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="usarDireccionPerfil"
+                            checked={usarDireccionPerfil}
+                            onChange={(e) => {
+                              setUsarDireccionPerfil(e.target.checked)
+                              if (e.target.checked) {
+                                setFormData({ ...formData, direccion: perfilCargado.direccion })
+                                setComunaSeleccionada(perfilCargado.comuna)
+                              } else {
+                                setFormData({ ...formData, direccion: '' })
+                                setComunaSeleccionada('')
+                              }
+                            }}
+                            disabled={cargando}
+                          />
+                          <label className="form-check-label" htmlFor="usarDireccionPerfil">
+                            <strong>Usar mi dirección guardada</strong>
+                            <br />
+                            <small className="text-muted">
+                              {perfilCargado.direccion}, {perfilCargado.comuna}
+                            </small>
+                          </label>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="mb-3">
                       <label className="form-label">Comuna *</label>
                       <select
@@ -326,6 +377,9 @@ function CheckoutFormulario() {
                           if (errores.comuna) {
                             setErrores({ ...errores, comuna: '' })
                           }
+                          if (usarDireccionPerfil) {
+                            setUsarDireccionPerfil(false)
+                          }
                         }}
                         className={`form-select ${errores.comuna ? 'is-invalid' : ''}`}
                         disabled={cargando}
@@ -333,7 +387,7 @@ function CheckoutFormulario() {
                         <option value="">Selecciona tu comuna</option>
                         {comunas.map(comuna => (
                           <option key={comuna.nombre} value={comuna.nombre}>
-                            {comuna.nombre} - Envio: ${formatearPrecio(comuna.costoEnvio)}
+                            {comuna.nombre} - Envío: ${formatearPrecio(comuna.costoEnvio)}
                           </option>
                         ))}
                       </select>
@@ -347,7 +401,12 @@ function CheckoutFormulario() {
                         type="text"
                         name="direccion"
                         value={formData.direccion}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          handleChange(e)
+                          if (usarDireccionPerfil) {
+                            setUsarDireccionPerfil(false)
+                          }
+                        }}
                         placeholder="Calle, número, departamento"
                         className={`form-control ${errores.direccion ? 'is-invalid' : ''}`}
                         disabled={cargando}
@@ -357,23 +416,27 @@ function CheckoutFormulario() {
                   </>
                 )}
 
+                <div className="alert alert-info mb-3">
+                  <small>
+                    <strong>¿Por qué 24 horas de anticipación?</strong><br />
+                    Nuestros productos son preparados frescos al momento de tu pedido.
+                    Esto nos permite garantizar la mejor calidad y frescura en cada entrega.
+                  </small>
+                </div>
+
                 <div className="mb-3">
                   <label className="form-label">Fecha de entrega *</label>
-                  <input
-                    type="date"
+                  <CalendarioEntrega
                     value={fechaEntrega}
-                    onChange={(e) => {
-                      setFechaEntrega(e.target.value)
+                    onChange={(fecha) => {
+                      setFechaEntrega(fecha)
                       if (errores.fechaEntrega) {
                         setErrores({ ...errores, fechaEntrega: '' })
                       }
                     }}
-                    min={obtenerFechaMinima()}
-                    className={`form-control ${errores.fechaEntrega ? 'is-invalid' : ''}`}
                     disabled={cargando}
+                    error={errores.fechaEntrega}
                   />
-                  {errores.fechaEntrega && <div className="invalid-feedback">{errores.fechaEntrega}</div>}
-                  <small className="text-muted">Los pedidos requieren al menos 24 horas de anticipación</small>
                 </div>
 
 
@@ -402,7 +465,7 @@ function CheckoutFormulario() {
                   <textarea
                     value={notas}
                     onChange={(e) => setNotas(e.target.value)}
-                    placeholder="Instrucciones especiales, horario de entrega, etc."
+                    placeholder="Instrucciones especiales para la entrega (timbre, portería, referencias, etc.)"
                     className="form-control"
                     rows="3"
                     disabled={cargando}

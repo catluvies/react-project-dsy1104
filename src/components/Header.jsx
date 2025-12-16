@@ -92,7 +92,7 @@ function Header() {
                   {usuario.nombre}
                 </button>
                 <ul className={`dropdown-menu dropdown-menu-end ${dropdownAbierto ? 'show' : ''}`}>
-                  {(isAdmin() || isVendedor()) && (
+                  {(isAdmin() || isVendedor()) ? (
                     <>
                       <li>
                         <Link to="/admin/dashboard" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
@@ -100,24 +100,27 @@ function Header() {
                         </Link>
                       </li>
                       <li><hr className="dropdown-divider" /></li>
+                      <li>
+                        <button onClick={handleLogout} className="dropdown-item text-danger">
+                          Cerrar Sesión
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link to="/perfil" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
+                          Mi Perfil
+                        </Link>
+                      </li>
+                      <li><hr className="dropdown-divider" /></li>
+                      <li>
+                        <button onClick={handleLogout} className="dropdown-item text-danger">
+                          Cerrar Sesión
+                        </button>
+                      </li>
                     </>
                   )}
-                  <li>
-                    <Link to="/perfil" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
-                      Mi Perfil
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/mis-compras" className="dropdown-item" onClick={() => setDropdownAbierto(false)}>
-                      Mis Compras
-                    </Link>
-                  </li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li>
-                    <button onClick={handleLogout} className="dropdown-item text-danger">
-                      Cerrar Sesión
-                    </button>
-                  </li>
                 </ul>
               </div>
             ) : (

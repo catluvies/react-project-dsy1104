@@ -1,6 +1,20 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { formatearPrecio } from '../utils/formateo'
 
 function ExitoMensaje() {
+  const location = useLocation()
+  const { boleta, fechaEntrega, horarioEntrega } = location.state || {}
+
+  const formatearFechaEntrega = (fecha) => {
+    if (!fecha) return 'Por confirmar'
+    return new Date(fecha + 'T00:00:00').toLocaleDateString('es-CL', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+  }
+
   return (
     <div className="container py-5">
       <div className="row justify-content-center">
@@ -14,23 +28,54 @@ function ExitoMensaje() {
               </div>
 
               <h2 className="mb-3">¡Compra Exitosa!</h2>
-              <p className="text-muted mb-4">Tu pedido ha sido procesado correctamente</p>
+              <p className="text-muted mb-4">Tu pedido ha sido registrado correctamente</p>
 
-              <div className="alert alert-light mb-4">
+              <div className="alert alert-light mb-4 text-start">
                 <p className="mb-2">
-                  <strong>Número de pedido:</strong> #ORD123456789
+                  <strong>Número de pedido:</strong> #{boleta?.id || 'Generando...'}
                 </p>
-                <p className="mb-0">
-                  <strong>Fecha estimada de entrega:</strong> 25/10/2025
+                <p className="mb-2">
+                  <strong>Fecha de entrega:</strong> {formatearFechaEntrega(fechaEntrega)}
                 </p>
+                {horarioEntrega && (
+                  <p className="mb-2">
+                    <strong>Horario:</strong> {horarioEntrega}
+                  </p>
+                )}
+                {boleta?.total && (
+                  <p className="mb-0">
+                    <strong>Total:</strong> ${formatearPrecio(boleta.total)}
+                  </p>
+                )}
               </div>
 
+              {boleta?.metodoPago === 'TRANSFERENCIA' && (
+                <div className="alert alert-warning mb-4 text-start">
+                  <strong>Importante - Pago por transferencia</strong>
+                  <p className="mb-2 mt-2">
+                    Tu pedido quedará confirmado una vez que realices la transferencia y nuestro equipo la verifique.
+                  </p>
+                  <hr />
+                  <small>
+                    <strong>Datos bancarios:</strong><br />
+                    Banco Estado - Cuenta Corriente<br />
+                    N°: 123456789<br />
+                    RUT: 12.345.678-9<br />
+                    Nombre: Pastelería Mil Sabores<br />
+                    Email: pagos@milsabores.cl
+                  </small>
+                </div>
+              )}
+
               <p className="text-muted mb-4">
-                Hemos enviado un correo de confirmación con los detalles de tu pedido
+                Puedes revisar el estado de tu pedido en la sección "Mi Perfil"
               </p>
 
               <div className="d-grid gap-2">
-                <Link to="/productos" className="btn btn-primary">
+                <Link to="/perfil" className="btn btn-primary">
+                  Ver Mi Perfil
+                </Link>
+                <Link to="/productos" className="btn btn-outline-primary">
                   Seguir Comprando
                 </Link>
                 <Link to="/" className="btn btn-outline-secondary">

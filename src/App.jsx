@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import AdminHeader from './components/AdminHeader'
@@ -23,7 +23,6 @@ import RegistroPage from './pages/RegistroPage'
 
 // Páginas de usuario autenticado
 import PerfilPage from './pages/PerfilPage'
-import MisComprasPage from './pages/MisComprasPage'
 
 // Páginas admin
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
@@ -66,7 +65,7 @@ function App() {
                 } />
                 <Route path="/mis-compras" element={
                   <ProtectedRoute>
-                    <MisComprasPage />
+                    <Navigate to="/perfil" state={{ tab: 'compras' }} replace />
                   </ProtectedRoute>
                 } />
               </Routes>

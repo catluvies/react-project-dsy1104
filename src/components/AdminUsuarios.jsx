@@ -5,7 +5,7 @@ import { usuariosService, ROLES, getRolLabel } from '../api/usuariosService'
 import { validarNombre, validarEmail, validarRut, validarTelefono } from '../utils/validaciones'
 
 function AdminUsuarios() {
-  const { isAdmin, isAuthenticated } = useContext(AuthContext)
+  const { isAdmin, isAuthenticated, usuario: usuarioActual } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const [usuarios, setUsuarios] = useState([])
@@ -20,6 +20,15 @@ function AdminUsuarios() {
   const [usuarioEditando, setUsuarioEditando] = useState(null)
   const [guardando, setGuardando] = useState(false)
   const [erroresForm, setErroresForm] = useState({})
+
+  // Estados para modal de confirmación
+  const [modalConfirmacion, setModalConfirmacion] = useState({
+    abierto: false,
+    tipo: '', // 'eliminar' | 'desactivar' | 'activar'
+    usuario: null,
+    password: '',
+    error: ''
+  })
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -71,6 +80,38 @@ function AdminUsuarios() {
     return badges[rol] || 'bg-secondary'
   }
 
+  // Función para formatear RUT automáticamente
+  const formatearRutInput = (valor) => {
+    // Remover todo excepto números y K/k
+    let rut = valor.replace(/[^0-9kK]/g, '').toUpperCase()
+
+    if (rut.length === 0) return ''
+
+    // Separar cuerpo y dígito verificador
+    let cuerpo = rut.slice(0, -1)
+    let dv = rut.slice(-1)
+
+    // Formatear con puntos
+    let rutFormateado = ''
+    let contador = 0
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+      rutFormateado = cuerpo[i] + rutFormateado
+      contador++
+      if (contador === 3 && i !== 0) {
+        rutFormateado = '.' + rutFormateado
+        contador = 0
+      }
+    }
+
+    if (rut.length > 1) {
+      rutFormateado = rutFormateado + '-' + dv
+    } else {
+      rutFormateado = rut
+    }
+
+    return rutFormateado
+  }
+
   const abrirModalNuevoVendedor = () => {
     setFormData({
       nombre: '',
@@ -91,7 +132,14 @@ function AdminUsuarios() {
 
   const handleFormChange = (e) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+
+    // Formatear RUT automáticamente
+    if (name === 'rut') {
+      setFormData({ ...formData, [name]: formatearRutInput(value) })
+    } else {
+      setFormData({ ...formData, [name]: value })
+    }
+
     if (erroresForm[name]) {
       setErroresForm({ ...erroresForm, [name]: '' })
     }
@@ -117,7 +165,7 @@ function AdminUsuarios() {
     }
 
     if (formData.rut && !validarRut(formData.rut)) {
-      nuevosErrores.rut = 'RUT inválido'
+      nuevosErrores.rut = 'RUT inválido (formato: 12.345.678-9)'
     }
 
     if (formData.telefono && !validarTelefono(formData.telefono)) {
@@ -173,64 +221,75 @@ function AdminUsuarios() {
     setUsuarioEditando(null)
   }
 
-  const handleToggleActivo = async (usuario) => {
-    const nuevoEstado = !usuario.activo
-    const accion = nuevoEstado ? 'activar' : 'desactivar'
+  // Funciones para modal de confirmación
+  const abrirModalConfirmacion = (tipo, usuario) => {
+    setModalConfirmacion({
+      abierto: true,
+      tipo,
+      usuario,
+      password: '',
+      error: ''
+    })
+  }
 
-    if (!confirm(`¿Estás seguro de ${accion} a "${usuario.nombre} ${usuario.apellido}"?`)) return
+  const cerrarModalConfirmacion = () => {
+    setModalConfirmacion({
+      abierto: false,
+      tipo: '',
+      usuario: null,
+      password: '',
+      error: ''
+    })
+  }
+
+  const handleConfirmacionPasswordChange = (e) => {
+    setModalConfirmacion({
+      ...modalConfirmacion,
+      password: e.target.value,
+      error: ''
+    })
+  }
+
+  const ejecutarAccion = async () => {
+    const { tipo, usuario, password } = modalConfirmacion
+
+    if (!password) {
+      setModalConfirmacion({ ...modalConfirmacion, error: 'Debes ingresar tu contraseña para confirmar' })
+      return
+    }
+
+    // Verificar contraseña (simulado - en producción debería verificarse en backend)
+    if (password.length < 6) {
+      setModalConfirmacion({ ...modalConfirmacion, error: 'Contraseña incorrecta' })
+      return
+    }
 
     setGuardando(true)
     try {
-      await usuariosService.actualizar(usuario.id, {
-        ...usuario,
-        activo: nuevoEstado
-      })
-      await cargarUsuarios()
+      if (tipo === 'eliminar') {
+        await usuariosService.eliminar(usuario.id)
+      } else if (tipo === 'activar' || tipo === 'desactivar') {
+        await usuariosService.actualizar(usuario.id, {
+          ...usuario,
+          activo: tipo === 'activar'
+        })
+      }
+
+      cerrarModalConfirmacion()
       cerrarModalEditar()
+      await cargarUsuarios()
     } catch (err) {
-      console.error('Error actualizando usuario:', err)
-      alert('Error al actualizar el usuario')
+      console.error('Error ejecutando acción:', err)
+      const msg = err.response?.data?.mensaje || 'Error al ejecutar la acción'
+      setModalConfirmacion({ ...modalConfirmacion, error: msg })
     } finally {
       setGuardando(false)
     }
   }
 
-  const handleCambiarRol = async (usuario, nuevoRol) => {
-    if (usuario.rol === nuevoRol) return
-
-    if (!confirm(`¿Cambiar rol de "${usuario.nombre}" a ${getRolLabel(nuevoRol)}?`)) return
-
-    setGuardando(true)
-    try {
-      await usuariosService.actualizar(usuario.id, {
-        ...usuario,
-        rol: nuevoRol
-      })
-      await cargarUsuarios()
-      cerrarModalEditar()
-    } catch (err) {
-      console.error('Error cambiando rol:', err)
-      alert('Error al cambiar el rol')
-    } finally {
-      setGuardando(false)
-    }
-  }
-
-  const handleEliminar = async (usuario) => {
-    if (!confirm(`¿Estás seguro de ELIMINAR permanentemente a "${usuario.nombre} ${usuario.apellido}"?\n\nEsta acción no se puede deshacer.`)) return
-
-    setGuardando(true)
-    try {
-      await usuariosService.eliminar(usuario.id)
-      await cargarUsuarios()
-      cerrarModalEditar()
-    } catch (err) {
-      console.error('Error eliminando usuario:', err)
-      const msg = err.response?.data?.mensaje || 'Error al eliminar el usuario'
-      alert(msg)
-    } finally {
-      setGuardando(false)
-    }
+  // Verificar si es el usuario actual
+  const esUsuarioActual = (usuario) => {
+    return usuario.id === usuarioActual?.id
   }
 
   if (cargando) {
@@ -257,6 +316,44 @@ function AdminUsuarios() {
   }
 
   const contarPorRol = (rol) => usuarios.filter(u => u.rol === rol).length
+
+  const getTituloConfirmacion = () => {
+    switch (modalConfirmacion.tipo) {
+      case 'eliminar': return 'Confirmar Eliminación'
+      case 'activar': return 'Confirmar Activación'
+      case 'desactivar': return 'Confirmar Desactivación'
+      default: return 'Confirmar Acción'
+    }
+  }
+
+  const getMensajeConfirmacion = () => {
+    const nombre = `${modalConfirmacion.usuario?.nombre} ${modalConfirmacion.usuario?.apellido}`
+    switch (modalConfirmacion.tipo) {
+      case 'eliminar':
+        return (
+          <div className="alert alert-danger">
+            <strong>¿Estás seguro de ELIMINAR permanentemente a "{nombre}"?</strong>
+            <p className="mb-0 mt-2">Esta acción no se puede deshacer. Todos los datos del usuario serán eliminados.</p>
+          </div>
+        )
+      case 'activar':
+        return (
+          <div className="alert alert-success">
+            <strong>¿Activar la cuenta de "{nombre}"?</strong>
+            <p className="mb-0 mt-2">El usuario podrá acceder nuevamente al sistema.</p>
+          </div>
+        )
+      case 'desactivar':
+        return (
+          <div className="alert alert-warning">
+            <strong>¿Desactivar la cuenta de "{nombre}"?</strong>
+            <p className="mb-0 mt-2">El usuario no podrá acceder al sistema hasta que sea reactivado.</p>
+          </div>
+        )
+      default:
+        return null
+    }
+  }
 
   return (
     <div className="container py-4">
@@ -349,10 +446,11 @@ function AdminUsuarios() {
           </thead>
           <tbody>
             {usuariosFiltrados.map(usuario => (
-              <tr key={usuario.id}>
+              <tr key={usuario.id} className={esUsuarioActual(usuario) ? 'table-info' : ''}>
                 <td>{usuario.id}</td>
                 <td>
                   <strong>{usuario.nombre} {usuario.apellido}</strong>
+                  {esUsuarioActual(usuario) && <span className="badge bg-info ms-2">Tú</span>}
                   {usuario.rut && <br />}
                   {usuario.rut && <small className="text-muted">{usuario.rut}</small>}
                 </td>
@@ -373,12 +471,16 @@ function AdminUsuarios() {
                 </td>
                 <td>{formatearFecha(usuario.fechaCreacion)}</td>
                 <td>
-                  <button
-                    onClick={() => abrirModalEditar(usuario)}
-                    className="btn btn-outline-primary btn-sm"
-                  >
-                    Gestionar
-                  </button>
+                  {!esUsuarioActual(usuario) ? (
+                    <button
+                      onClick={() => abrirModalEditar(usuario)}
+                      className="btn btn-outline-primary btn-sm"
+                    >
+                      Gestionar
+                    </button>
+                  ) : (
+                    <span className="text-muted small">-</span>
+                  )}
                 </td>
               </tr>
             ))}
@@ -392,6 +494,7 @@ function AdminUsuarios() {
         </div>
       )}
 
+      {/* Modal Crear Vendedor */}
       {modalAbierto && (
         <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <div className="modal-dialog">
@@ -468,8 +571,10 @@ function AdminUsuarios() {
                       placeholder="12.345.678-9"
                       className={`form-control ${erroresForm.rut ? 'is-invalid' : ''}`}
                       disabled={guardando}
+                      maxLength={12}
                     />
                     {erroresForm.rut && <div className="invalid-feedback">{erroresForm.rut}</div>}
+                    <small className="text-muted">Se formatea automáticamente</small>
                   </div>
 
                   <div className="mb-3">
@@ -507,6 +612,7 @@ function AdminUsuarios() {
         </div>
       )}
 
+      {/* Modal Editar Usuario */}
       {modalEditarAbierto && usuarioEditando && (
         <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <div className="modal-dialog">
@@ -521,42 +627,29 @@ function AdminUsuarios() {
                   <p className="mb-1"><strong>{usuarioEditando.nombre} {usuarioEditando.apellido}</strong></p>
                   <p className="mb-1 text-muted">{usuarioEditando.email}</p>
                   {usuarioEditando.rut && <p className="mb-1 text-muted">RUT: {usuarioEditando.rut}</p>}
+                  <span className={`badge ${getRolBadge(usuarioEditando.rol)}`}>
+                    {getRolLabel(usuarioEditando.rol)}
+                  </span>
                 </div>
 
+                <hr />
+
                 <div className="mb-4">
-                  <h6 className="text-muted">Estado actual</h6>
+                  <h6 className="text-muted">Estado de la cuenta</h6>
                   <div className="d-flex align-items-center gap-3">
                     <span className={`badge ${usuarioEditando.activo ? 'bg-success' : 'bg-secondary'} fs-6`}>
                       {usuarioEditando.activo ? 'Activo' : 'Inactivo'}
                     </span>
                     <button
-                      onClick={() => handleToggleActivo(usuarioEditando)}
+                      onClick={() => abrirModalConfirmacion(
+                        usuarioEditando.activo ? 'desactivar' : 'activar',
+                        usuarioEditando
+                      )}
                       className={`btn btn-sm ${usuarioEditando.activo ? 'btn-outline-warning' : 'btn-outline-success'}`}
                       disabled={guardando}
                     >
-                      {guardando ? 'Procesando...' : usuarioEditando.activo ? 'Desactivar' : 'Activar'}
+                      {usuarioEditando.activo ? 'Desactivar cuenta' : 'Activar cuenta'}
                     </button>
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <h6 className="text-muted">Rol actual</h6>
-                  <div className="d-flex align-items-center gap-2 mb-2">
-                    <span className={`badge ${getRolBadge(usuarioEditando.rol)} fs-6`}>
-                      {getRolLabel(usuarioEditando.rol)}
-                    </span>
-                  </div>
-                  <div className="d-flex flex-wrap gap-2">
-                    {Object.entries(ROLES).map(([key, value]) => (
-                      <button
-                        key={key}
-                        onClick={() => handleCambiarRol(usuarioEditando, value)}
-                        className={`btn btn-sm ${usuarioEditando.rol === value ? 'btn-secondary' : 'btn-outline-secondary'}`}
-                        disabled={guardando || usuarioEditando.rol === value}
-                      >
-                        Cambiar a {getRolLabel(value)}
-                      </button>
-                    ))}
                   </div>
                 </div>
 
@@ -564,8 +657,8 @@ function AdminUsuarios() {
 
                 <div className="text-center">
                   <button
-                    onClick={() => handleEliminar(usuarioEditando)}
-                    className="btn btn-danger"
+                    onClick={() => abrirModalConfirmacion('eliminar', usuarioEditando)}
+                    className="btn btn-outline-danger"
                     disabled={guardando}
                   >
                     Eliminar Usuario Permanentemente
@@ -576,6 +669,75 @@ function AdminUsuarios() {
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={cerrarModalEditar} disabled={guardando}>
                   Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Confirmación con Contraseña */}
+      {modalConfirmacion.abierto && (
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1060 }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{getTituloConfirmacion()}</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={cerrarModalConfirmacion}
+                  disabled={guardando}
+                ></button>
+              </div>
+              <div className="modal-body">
+                {getMensajeConfirmacion()}
+
+                {modalConfirmacion.error && (
+                  <div className="alert alert-danger">{modalConfirmacion.error}</div>
+                )}
+
+                <div className="mt-4">
+                  <label className="form-label">
+                    <strong>Ingresa tu contraseña para confirmar:</strong>
+                  </label>
+                  <input
+                    type="password"
+                    value={modalConfirmacion.password}
+                    onChange={handleConfirmacionPasswordChange}
+                    className="form-control"
+                    placeholder="Tu contraseña"
+                    disabled={guardando}
+                    autoFocus
+                  />
+                  <small className="text-muted">
+                    Por seguridad, debes ingresar tu contraseña para realizar esta acción.
+                  </small>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={cerrarModalConfirmacion}
+                  disabled={guardando}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  className={`btn ${modalConfirmacion.tipo === 'eliminar' ? 'btn-danger' : modalConfirmacion.tipo === 'activar' ? 'btn-success' : 'btn-warning'}`}
+                  onClick={ejecutarAccion}
+                  disabled={guardando || !modalConfirmacion.password}
+                >
+                  {guardando ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2"></span>
+                      Procesando...
+                    </>
+                  ) : (
+                    'Confirmar'
+                  )}
                 </button>
               </div>
             </div>

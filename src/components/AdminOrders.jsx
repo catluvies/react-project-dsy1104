@@ -301,41 +301,88 @@ function AdminOrders() {
                   <p className="mb-0">{boletaSeleccionada.metodoPago}</p>
                 </div>
 
-                {(isAdmin() || isVendedor()) && boletaSeleccionada.estado !== 'ENTREGADA' && boletaSeleccionada.estado !== 'CANCELADA' && (
+                {(isAdmin() || isVendedor()) && (
                   <>
                     <hr />
-                    <h6>Cambiar estado</h6>
-                    <div className="d-flex flex-wrap gap-2 mb-2">
-                      {estadoAnterior(boletaSeleccionada.estado) && (
-                        <button
-                          onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoAnterior(boletaSeleccionada.estado))}
-                          className="btn btn-outline-secondary btn-sm"
-                          disabled={cambiandoEstado}
-                        >
-                          {cambiandoEstado ? 'Cambiando...' : `Volver a ${estadoAnterior(boletaSeleccionada.estado)}`}
-                        </button>
-                      )}
-                      {estadoSiguiente(boletaSeleccionada.estado) && (
-                        <button
-                          onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoSiguiente(boletaSeleccionada.estado))}
-                          className="btn btn-primary btn-sm"
-                          disabled={cambiandoEstado}
-                        >
-                          {cambiandoEstado ? 'Cambiando...' : `Pasar a ${estadoSiguiente(boletaSeleccionada.estado)}`}
-                        </button>
+                    <h6 className="mb-3">Progreso del pedido</h6>
+
+                    {/* Timeline visual de estados */}
+                    <div className="mb-4">
+                      <div className="d-flex justify-content-between position-relative" style={{ marginBottom: '8px' }}>
+                        {['PENDIENTE', 'CONFIRMADA', 'PREPARANDO', 'LISTA', 'ENTREGADA'].map((estado, index) => {
+                          const estadosOrden = ['PENDIENTE', 'CONFIRMADA', 'PREPARANDO', 'LISTA', 'ENTREGADA']
+                          const estadoActualIndex = estadosOrden.indexOf(boletaSeleccionada.estado)
+                          const esCancelada = boletaSeleccionada.estado === 'CANCELADA'
+                          const esPasado = !esCancelada && estadosOrden.indexOf(estado) <= estadoActualIndex
+                          const esActual = boletaSeleccionada.estado === estado
+
+                          return (
+                            <div key={estado} className="text-center" style={{ flex: 1 }}>
+                              <div
+                                className={`rounded-circle mx-auto d-flex align-items-center justify-content-center ${esCancelada ? 'bg-secondary' : esPasado ? 'bg-success' : 'bg-light border'}`}
+                                style={{ width: '32px', height: '32px' }}
+                              >
+                                {esPasado && !esCancelada ? (
+                                  <span className="text-white" style={{ fontSize: '14px' }}>✓</span>
+                                ) : (
+                                  <span className={esCancelada ? 'text-white' : 'text-muted'} style={{ fontSize: '12px' }}>{index + 1}</span>
+                                )}
+                              </div>
+                              <small className={`d-block mt-1 ${esActual ? 'fw-bold' : 'text-muted'}`} style={{ fontSize: '10px' }}>
+                                {estado}
+                              </small>
+                            </div>
+                          )
+                        })}
+                      </div>
+
+                      {boletaSeleccionada.estado === 'CANCELADA' && (
+                        <div className="alert alert-danger py-2 mb-0 text-center">
+                          <small><strong>Pedido Cancelado</strong></small>
+                        </div>
                       )}
                     </div>
-                    <div>
-                      {boletaSeleccionada.estado !== 'CANCELADA' && (
-                        <button
-                          onClick={() => handleCambiarEstado(boletaSeleccionada.id, 'CANCELADA')}
-                          className="btn btn-outline-danger btn-sm"
-                          disabled={cambiandoEstado}
-                        >
-                          Cancelar pedido
-                        </button>
-                      )}
-                    </div>
+
+                    {/* Botones de acción */}
+                    {boletaSeleccionada.estado !== 'ENTREGADA' && boletaSeleccionada.estado !== 'CANCELADA' && (
+                      <div className="d-grid gap-2">
+                        {estadoSiguiente(boletaSeleccionada.estado) && (
+                          <button
+                            onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoSiguiente(boletaSeleccionada.estado))}
+                            className="btn btn-success"
+                            disabled={cambiandoEstado}
+                          >
+                            {cambiandoEstado ? (
+                              <>
+                                <span className="spinner-border spinner-border-sm me-2"></span>
+                                Procesando...
+                              </>
+                            ) : (
+                              <>Avanzar a {estadoSiguiente(boletaSeleccionada.estado)}</>
+                            )}
+                          </button>
+                        )}
+
+                        <div className="d-flex gap-2">
+                          {estadoAnterior(boletaSeleccionada.estado) && (
+                            <button
+                              onClick={() => handleCambiarEstado(boletaSeleccionada.id, estadoAnterior(boletaSeleccionada.estado))}
+                              className="btn btn-outline-secondary flex-grow-1"
+                              disabled={cambiandoEstado}
+                            >
+                              Retroceder
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleCambiarEstado(boletaSeleccionada.id, 'CANCELADA')}
+                            className="btn btn-outline-danger flex-grow-1"
+                            disabled={cambiandoEstado}
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </>
                 )}
               </div>

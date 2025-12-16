@@ -62,7 +62,7 @@ function AdminHeader() {
           <img
             src="/images/logo/logo-pasteleria.png"
             alt="Logo"
-            style={{width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover'}}
+            style={{height: '40px', width: 'auto'}}
           />
           <h1 className="h4 mb-0">{tituloHeader}</h1>
         </Link>

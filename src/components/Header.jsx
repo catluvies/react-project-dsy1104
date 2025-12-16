@@ -54,13 +54,12 @@ function Header() {
   return (
     <nav className="navbar navbar-expand-lg bg-pastel-cream border-bottom border-3" style={{ minHeight: '80px', padding: '12px 0' }}>
       <div className="container">
-        <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
+        <Link to="/" className="navbar-brand d-flex align-items-center">
           <img
-            src="/logo_sanic.jpg"
+            src="/images/logo/logo-pasteleria.png"
             alt="Logo Mil Sabores"
-            style={{width: '60px', height: '60px', borderRadius: '50%'}}
+            style={{height: '60px', width: 'auto'}}
           />
-          <h1 className="h2 mb-0">Mil Sabores</h1>
         </Link>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

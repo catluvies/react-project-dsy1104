@@ -239,3 +239,676 @@ img {
 .carousel-control-next {
   right: 15%;
 }
+
+/* ===== CONTACTO - Glass Morphism Design ===== */
+
+/* Glass Card - Efecto ventana de cristal */
+.glass-card {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(to bottom, var(--color-rosa-claro), #FFFFFF);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 69, 19, 0.15);
+  box-shadow:
+    0 8px 32px rgba(139, 69, 19, 0.12),
+    0 0 40px rgba(255, 182, 193, 0.2);
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Barra de título estilo ventana */
+.glass-title-bar {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(to bottom, var(--color-rosa-pastel), var(--color-cafe-oscuro));
+  border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+  position: relative;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.glass-title-bar::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.glass-title-bar .title-text {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-family: 'Pacifico', cursive;
+  letter-spacing: 1px;
+}
+
+/* Botones de ventana */
+.window-buttons {
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.window-btn {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.window-btn:hover {
+  transform: scale(1.15);
+}
+
+.window-btn-close {
+  background: linear-gradient(180deg, #ff6b6b 0%, #ee5a5a 100%);
+}
+
+.window-btn-minimize {
+  background: linear-gradient(180deg, #ffd93d 0%, #f0c000 100%);
+}
+
+.window-btn-maximize {
+  background: linear-gradient(180deg, #6bcb77 0%, #4caf50 100%);
+}
+
+/* Inputs con efecto glass */
+.glass-input {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(to bottom, rgba(255, 182, 193, 0.2), rgba(255, 255, 255, 0.95));
+  border: 1px solid var(--color-cafe-claro);
+  border-radius: 25px;
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 300ms ease;
+  width: 100%;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--color-cafe-oscuro);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+    0 0 0 3px rgba(139, 69, 19, 0.15),
+    0 0 15px rgba(255, 182, 193, 0.3);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.glass-input::placeholder {
+  color: #999;
+}
+
+.glass-input.is-invalid {
+  border-color: #dc3545;
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+    0 0 0 3px rgba(220, 53, 69, 0.15);
+}
+
+textarea.glass-input {
+  border-radius: 16px;
+  resize: none;
+}
+
+/* Botón con efecto glass */
+.glass-btn {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(to bottom, var(--color-rosa-pastel), var(--color-cafe-oscuro));
+  border: 1px solid rgba(139, 69, 19, 0.5);
+  border-radius: 25px;
+  padding: 14px 28px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+  position: relative;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 300ms ease;
+  overflow: hidden;
+}
+
+.glass-btn::after {
+  content: "";
+  position: absolute;
+  top: 4%;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 40%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  pointer-events: none;
+  transition: background 300ms;
+}
+
+.glass-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+  color: white;
+}
+
+.glass-btn:hover::after {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.15));
+}
+
+.glass-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.3);
+}
+
+.glass-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Labels estilo glass */
+.glass-label {
+  font-size: 0.8rem;
+  color: var(--color-cafe-oscuro);
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Decoraciones animadas */
+.floating-decoration {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.floating-heart {
+  color: var(--color-rosa-pastel);
+  opacity: 0.7;
+  animation: float-bounce 2s ease-in-out infinite;
+}
+
+.floating-star {
+  color: var(--color-cafe-claro);
+  opacity: 0.6;
+  animation: float-pulse 2s ease-in-out infinite;
+}
+
+.floating-sparkle {
+  color: var(--color-rosa-claro);
+  opacity: 0.5;
+  animation: float-pulse 2s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes float-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Contenedor principal del formulario glass */
+.glass-form-container {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Fondo decorativo para la sección de contacto */
+.contacto-bg-decorativo {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(255, 192, 203, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 253, 208, 0.2) 0%, transparent 60%),
+    linear-gradient(to bottom, #FFF5F5, #FFFFFF);
+  min-height: 100vh;
+}
+
+/* Imagen decorativa del formulario */
+.glass-form-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+/* Mensaje de éxito estilo glass */
+.glass-success-card {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(to bottom, rgba(107, 203, 119, 0.2), #FFFFFF);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(107, 203, 119, 0.3);
+  box-shadow:
+    0 8px 32px rgba(107, 203, 119, 0.15),
+    0 0 40px rgba(107, 203, 119, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.glass-success-card .glass-title-bar {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(to bottom, #6bcb77, #4caf50);
+}
+
+/* ===== Tarjetas de contacto estilo glass ===== */
+.glass-contact-card {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(to bottom, rgba(255, 240, 245, 0.9), rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(139, 69, 19, 0.1);
+  box-shadow:
+    0 8px 32px rgba(139, 69, 19, 0.08),
+    0 0 30px rgba(255, 182, 193, 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.glass-contact-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.1));
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-contact-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.glass-contact-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 12px 40px rgba(139, 69, 19, 0.15),
+    0 0 40px rgba(255, 182, 193, 0.25);
+}
+
+/* Barra de título para tarjetas de contacto */
+.glass-contact-title-bar {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(to bottom, var(--color-rosa-claro), var(--color-rosa-pastel));
+  border-bottom: 1px solid rgba(139, 69, 19, 0.15);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.glass-contact-title-bar::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 40%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.glass-contact-title-bar .title-text {
+  color: var(--color-cafe-oscuro);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'Pacifico', cursive;
+  z-index: 2;
+  position: relative;
+}
+
+/* Botones de ventana en tarjetas de contacto */
+.glass-contact-title-bar .window-buttons {
+  z-index: 2;
+  position: relative;
+}
+
+.glass-contact-title-bar .window-btn {
+  width: 12px;
+  height: 12px;
+}
+
+/* Icono pixel art en tarjetas */
+.contact-icon-pixel {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  margin-bottom: 15px;
+}
+
+/* Contenido de tarjeta de contacto */
+.glass-contact-content {
+  padding: 25px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 260px;
+}
+
+.glass-contact-content h5 {
+  color: var(--color-cafe-oscuro);
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+.glass-contact-content p {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  min-height: 48px;
+}
+
+/* Botones al fondo de la tarjeta */
+.glass-contact-content a {
+  margin-top: auto;
+}
+
+/* Botón pequeño estilo glass completo */
+.glass-btn-sm {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(to bottom, var(--color-rosa-claro), var(--color-rosa-pastel));
+  border: 1px solid rgba(139, 69, 19, 0.25);
+  border-radius: 25px;
+  padding: 12px 24px;
+  color: var(--color-cafe-oscuro);
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow:
+    0 4px 12px rgba(139, 69, 19, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  position: relative;
+  transition: all 250ms ease;
+  text-decoration: none;
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Efecto brillo glass en botón */
+.glass-btn-sm::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-btn-sm:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 6px 18px rgba(139, 69, 19, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  color: var(--color-cafe-oscuro);
+}
+
+.glass-btn-sm:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(139, 69, 19, 0.2);
+}
+
+/* Botón WhatsApp glass */
+.glass-btn-whatsapp {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(to bottom, #6bcb77, #25D366);
+  border: 1px solid rgba(37, 211, 102, 0.4);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 4px 12px rgba(37, 211, 102, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.glass-btn-whatsapp:hover {
+  color: white;
+  box-shadow:
+    0 6px 20px rgba(37, 211, 102, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Botón Google Maps glass - Estilo café */
+.glass-btn-maps {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.5), transparent),
+    linear-gradient(to bottom, var(--color-rosa-pastel), var(--color-cafe-oscuro));
+  border: 1px solid rgba(139, 69, 19, 0.4);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 4px 12px rgba(139, 69, 19, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+
+.glass-btn-maps:hover {
+  color: white;
+  box-shadow:
+    0 6px 20px rgba(139, 69, 19, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Link email estilo glass completo */
+.glass-email-link {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(to bottom, rgba(255, 220, 230, 0.9), rgba(255, 182, 193, 0.7));
+  border: 1px solid rgba(139, 69, 19, 0.2);
+  color: var(--color-cafe-oscuro);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  box-shadow:
+    0 4px 12px rgba(139, 69, 19, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 250ms ease;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto brillo glass en link email */
+.glass-email-link::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-email-link:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 6px 18px rgba(139, 69, 19, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  color: var(--color-cafe-muy-oscuro);
+}
+
+.glass-email-link:active {
+  transform: translateY(1px);
+}
+
+/* ===== HERO - Botones Aero ===== */
+
+/* Botón Aero base */
+.btn-aero {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.7), transparent),
+    linear-gradient(to bottom, var(--aero-dark), var(--aero-bg));
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--aero-bg);
+  border-radius: 9999px;
+  cursor: pointer;
+  padding: 14px 32px;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  transition: all 300ms ease;
+  color: var(--aero-text);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.btn-aero::after {
+  content: "";
+  position: absolute;
+  top: 4%;
+  left: 0.8em;
+  width: calc(100% - 1.6em);
+  height: 40%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.1));
+  border-radius: 9999px;
+  transition: background 400ms;
+  pointer-events: none;
+}
+
+.btn-aero:hover,
+.btn-aero:focus {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+
+.btn-aero:hover::after {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.2));
+}
+
+.btn-aero:active {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transform: translateY(1px);
+}
+
+/* Variante café */
+.btn-aero-cafe {
+  --aero-bg: rgba(139, 115, 85, 0.9);
+  --aero-dark: rgba(90, 70, 50, 0.85);
+  --aero-text: #fff;
+}
+
+/* Variante rosa */
+.btn-aero-rosa {
+  --aero-bg: rgba(248, 187, 217, 0.95);
+  --aero-dark: rgba(245, 163, 199, 0.9);
+  --aero-text: #5a4035;
+}
+
+/* Texto hero con estilo glass aero */
+.hero-text-glass {
+  background:
+    radial-gradient(farthest-corner at bottom center, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(to bottom, rgba(255, 220, 235, 0.85), rgba(255, 245, 248, 0.9));
+  border: 1px solid rgba(255, 182, 193, 0.5);
+  border-radius: 30px;
+  padding: 16px 32px;
+  box-shadow: 0 4px 16px rgba(139, 69, 19, 0.12);
+  position: relative;
+  overflow: visible;
+}
+
+.hero-text-glass::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 16px;
+  width: calc(100% - 32px);
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.1));
+  border-radius: 30px;
+  pointer-events: none;
+}
+
+.hero-text-glass::after {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  background-image: url('/images/detalles/moño-decorativo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.hero-text-glass p {
+  position: relative;
+  z-index: 1;
+  color: var(--color-cafe-oscuro);
+  text-shadow: none;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}

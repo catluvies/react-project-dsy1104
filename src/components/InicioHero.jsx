@@ -16,11 +16,12 @@ function InicioHero() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: 'url("/images/hero/navidad-pasteleria.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          filter: 'blur(3px)',
-          transform: 'scale(1.05)',
+          backgroundImage: 'url("/images/hero/gif-pasteleria.gif")',
+          backgroundSize: '100% auto',
+          backgroundPosition: 'center 30%',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(2px)',
+          transform: 'scale(1.02)',
           zIndex: 0
         }}
       />
@@ -42,79 +43,30 @@ function InicioHero() {
         className="container text-center py-5 d-flex flex-column justify-content-center position-relative"
         style={{ minHeight: '400px', zIndex: 2 }}
       >
-        {/* Logo - puedes reemplazar esto con una imagen de logo */}
-        <div className="mb-3">
+        {/* Logo */}
+        <div className="mb-4">
           <img
-            src="/logo_sanic.jpg"
+            src="/images/logo/logo-pasteleria.png"
             alt="Logo Mil Sabores"
             style={{
-              width: '120px',
-              height: '120px',
-              borderRadius: '50%',
-              border: '4px solid white',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+              maxWidth: '320px',
+              width: '100%',
+              height: 'auto',
+              filter: 'drop-shadow(0 4px 20px rgba(0,0,0,0.4))'
             }}
           />
         </div>
-        <h1
-          className="display-1 fw-bold mb-3"
-          style={{
-            textShadow: '3px 3px 6px rgba(0,0,0,0.7)',
-            fontFamily: "'Playfair Display', Georgia, serif"
-          }}
-        >
-          Mil Sabores
-        </h1>
-        <p
-          className="lead fs-4 mb-4"
-          style={{
-            textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-            maxWidth: '600px',
-            margin: '0 auto'
-          }}
-        >
-          50 años endulzando a Chile con las mejores tortas y postres tradicionales
-        </p>
+        <div className="hero-text-glass mb-4" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <p className="lead fs-4">
+            50 años endulzando a Chile con las mejores tortas y postres tradicionales
+          </p>
+        </div>
         <div className="d-flex gap-3 justify-content-center flex-wrap">
-          <Link
-            to="/productos"
-            className="btn btn-lg px-4 py-2"
-            style={{
-              backgroundColor: '#8B7355',
-              color: 'white',
-              border: 'none',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#6B5B4F'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#8B7355'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
-          >
+          <Link to="/productos" className="btn-aero btn-aero-rosa">
             Ver Productos
           </Link>
-          <Link
-            to="/categorias"
-            className="btn btn-lg px-4 py-2"
-            style={{
-              backgroundColor: '#F8BBD9',
-              color: '#6B5B4F',
-              border: 'none',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#F5A3C7'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#F8BBD9'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
-          >
-            Explorar Categorías
+          <Link to="/categorias" className="btn-aero btn-aero-rosa">
+            Ver Categorías
           </Link>
         </div>
       </div>

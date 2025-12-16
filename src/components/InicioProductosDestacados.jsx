@@ -148,7 +148,7 @@ function InicioProductosDestacados(props) {
                                       marginBottom: '0.5rem'
                                     }}
                                   >
-                                    {producto.categoria?.nombre || 'Pastelería'}
+                                    {producto.categoriaNombre || 'Pastelería'}
                                   </small>
 
                                   {/* Nombre */}
@@ -195,14 +195,25 @@ function InicioProductosDestacados(props) {
                                     <span
                                       className="btn"
                                       style={{
-                                        backgroundColor: 'white',
-                                        color: '#92400E',
-                                        border: '2px dashed #F59E0B',
-                                        borderRadius: '20px',
-                                        padding: '8px 20px',
-                                        fontWeight: '500',
-                                        fontSize: '0.85rem',
+                                        backgroundColor: '#F59E0B',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '25px',
+                                        padding: '10px 24px',
+                                        fontWeight: '600',
+                                        fontSize: '0.9rem',
+                                        boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)',
                                         transition: 'all 0.2s ease'
+                                      }}
+                                      onMouseOver={(e) => {
+                                        e.currentTarget.style.backgroundColor = '#D97706'
+                                        e.currentTarget.style.transform = 'translateY(-2px)'
+                                        e.currentTarget.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.5)'
+                                      }}
+                                      onMouseOut={(e) => {
+                                        e.currentTarget.style.backgroundColor = '#F59E0B'
+                                        e.currentTarget.style.transform = 'translateY(0)'
+                                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.4)'
                                       }}
                                     >
                                       Ver producto

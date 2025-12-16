@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { categoriasService } from '../api/categoriasService'
 
@@ -52,8 +52,7 @@ const EMOJIS_DEFAULT = {
 function InicioCategorias() {
   const [categorias, setCategorias] = useState([])
   const [cargando, setCargando] = useState(true)
-  const [indiceActual, setIndiceActual] = useState(0)
-  const carruselRef = useRef(null)
+  const [paginaActual, setPaginaActual] = useState(0)
 
   useEffect(() => {
     cargarDatos()
@@ -72,16 +71,14 @@ function InicioCategorias() {
 
   // Obtener emoji para la categoría
   const obtenerEmoji = (categoria) => {
-    // Si imagenUrl empieza con "emoji:", extraer el emoji
     if (categoria.imagenUrl?.startsWith('emoji:')) {
       return categoria.imagenUrl.replace('emoji:', '')
     }
-    // Buscar emoji por nombre
     const nombreLower = categoria.nombre.toLowerCase()
     for (const [key, emoji] of Object.entries(EMOJIS_DEFAULT)) {
       if (nombreLower.includes(key)) return emoji
     }
-    return '🍰' // Emoji por defecto
+    return '🍰'
   }
 
   // Obtener color para la categoría
@@ -89,16 +86,20 @@ function InicioCategorias() {
     return COLORES_PASTEL[index % COLORES_PASTEL.length]
   }
 
-  // Navegación del carrusel
-  const itemsVisibles = 5
-  const maxIndice = Math.max(0, categorias.length - itemsVisibles)
+  // Siempre mostrar 4 por página
+  const itemsPorPagina = 4
+  const totalPaginas = Math.ceil(categorias.length / itemsPorPagina)
+  const categoriasVisibles = categorias.slice(
+    paginaActual * itemsPorPagina,
+    (paginaActual + 1) * itemsPorPagina
+  )
 
   const siguiente = () => {
-    setIndiceActual(prev => Math.min(prev + 1, maxIndice))
+    setPaginaActual(prev => (prev + 1) % totalPaginas)
   }
 
   const anterior = () => {
-    setIndiceActual(prev => Math.max(prev - 1, 0))
+    setPaginaActual(prev => (prev - 1 + totalPaginas) % totalPaginas)
   }
 
   if (cargando) {
@@ -142,81 +143,75 @@ function InicioCategorias() {
           <p className="text-muted">Encuentra tu dulce favorito</p>
         </div>
 
-        {/* Carrusel */}
-        <div className="position-relative px-5">
-          {/* Botón anterior */}
-          <button
-            onClick={anterior}
-            disabled={indiceActual === 0}
-            className="btn position-absolute top-50 translate-middle-y d-none d-md-flex align-items-center justify-content-center"
-            style={{
-              left: '-20px',
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              border: '2px solid #F59E0B',
-              backgroundColor: '#fff',
-              color: '#F59E0B',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              zIndex: 10,
-              opacity: indiceActual === 0 ? 0.4 : 1,
-              cursor: indiceActual === 0 ? 'default' : 'pointer',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-            }}
-          >
-            ‹
-          </button>
-
-          {/* Cards */}
-          <div className="overflow-hidden" ref={carruselRef}>
-            <div
-              className="d-flex gap-3 transition-transform"
+        {/* Grid de categorías con flechas */}
+        <div className="position-relative">
+          {/* Botón anterior - solo si hay más de 4 categorías */}
+          {categorias.length > 4 && (
+            <button
+              onClick={anterior}
+              className="btn position-absolute top-50 translate-middle-y d-flex align-items-center justify-content-center"
               style={{
-                transform: `translateX(-${indiceActual * (100 / itemsVisibles)}%)`,
-                transition: 'transform 0.3s ease-in-out'
+                left: '-25px',
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                border: '3px solid #F59E0B',
+                backgroundColor: '#fff',
+                color: '#F59E0B',
+                fontSize: '1.8rem',
+                fontWeight: 'bold',
+                zIndex: 10,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
               }}
             >
-              {categorias.map((categoria, index) => {
-                const color = obtenerColor(index)
-                const emoji = obtenerEmoji(categoria)
+              ‹
+            </button>
+          )}
 
-                return (
+          {/* Grid de 4 columnas */}
+          <div className="row g-4 justify-content-center px-4">
+            {categoriasVisibles.map((categoria, index) => {
+              const color = obtenerColor(paginaActual * itemsPorPagina + index)
+              const emoji = obtenerEmoji(categoria)
+
+              return (
+                <div key={categoria.id} className="col-6 col-md-3">
                   <Link
-                    key={categoria.id}
                     to={`/productos?categoria=${categoria.id}`}
-                    className="text-decoration-none flex-shrink-0"
-                    style={{ width: `calc(${100 / itemsVisibles}% - 12px)` }}
+                    className="text-decoration-none d-block h-100"
                   >
                     <div
-                      className="card h-100 text-center p-3"
+                      className="card h-100 text-center"
                       style={{
                         backgroundColor: color.bg,
                         border: `3px dashed ${color.border}`,
                         borderRadius: '20px',
+                        padding: '20px 15px',
                         transition: 'transform 0.2s, box-shadow 0.2s',
                         cursor: 'pointer',
-                        minHeight: '180px'
+                        minHeight: '200px'
                       }}
                       onMouseOver={(e) => {
                         e.currentTarget.style.transform = 'translateY(-5px)'
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)'
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)'
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)'
                         e.currentTarget.style.boxShadow = 'none'
                       }}
                     >
-                      <div className="card-body d-flex flex-column align-items-center justify-content-center">
-                        <span style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
+                      <div className="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                        <span style={{ fontSize: '3.5rem', marginBottom: '0.75rem' }}>
                           {emoji}
                         </span>
                         <h6
-                          className="mb-1"
+                          className="mb-2"
                           style={{
+                            fontFamily: "'Playfair Display', Georgia, serif",
+                            fontStyle: 'italic',
                             color: '#6B5B4F',
                             fontWeight: '600',
-                            fontSize: '1rem'
+                            fontSize: '1.1rem'
                           }}
                         >
                           {categoria.nombre}
@@ -225,11 +220,12 @@ function InicioCategorias() {
                           <small
                             style={{
                               color: '#9E8E7E',
-                              fontSize: '0.8rem'
+                              fontSize: '0.85rem',
+                              lineHeight: '1.3'
                             }}
                           >
-                            {categoria.descripcion.length > 30
-                              ? categoria.descripcion.substring(0, 30) + '...'
+                            {categoria.descripcion.length > 40
+                              ? categoria.descripcion.substring(0, 40) + '...'
                               : categoria.descripcion
                             }
                           </small>
@@ -237,59 +233,60 @@ function InicioCategorias() {
                       </div>
                     </div>
                   </Link>
-                )
-              })}
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Botón siguiente - solo si hay más de 4 categorías */}
+          {categorias.length > 4 && (
+            <button
+              onClick={siguiente}
+              className="btn position-absolute top-50 translate-middle-y d-flex align-items-center justify-content-center"
+              style={{
+                right: '-25px',
+                width: '50px',
+                height: '50px',
+                borderRadius: '50%',
+                border: '3px solid #F59E0B',
+                backgroundColor: '#fff',
+                color: '#F59E0B',
+                fontSize: '1.8rem',
+                fontWeight: 'bold',
+                zIndex: 10,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+              }}
+            >
+              ›
+            </button>
+          )}
+        </div>
+
+        {/* Indicadores de página - solo si hay más de 4 categorías */}
+        {categorias.length > 4 && (
+          <div className="text-center mt-4">
+            <div className="d-flex justify-content-center gap-2">
+              {Array.from({ length: totalPaginas }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPaginaActual(i)}
+                  className="btn p-0"
+                  style={{
+                    width: paginaActual === i ? '24px' : '10px',
+                    height: '10px',
+                    borderRadius: '5px',
+                    backgroundColor: paginaActual === i ? '#F59E0B' : '#ddd',
+                    border: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                />
+              ))}
             </div>
           </div>
-
-          {/* Botón siguiente */}
-          <button
-            onClick={siguiente}
-            disabled={indiceActual >= maxIndice}
-            className="btn position-absolute top-50 translate-middle-y d-none d-md-flex align-items-center justify-content-center"
-            style={{
-              right: '-20px',
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              border: '2px solid #F59E0B',
-              backgroundColor: '#fff',
-              color: '#F59E0B',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              zIndex: 10,
-              opacity: indiceActual >= maxIndice ? 0.4 : 1,
-              cursor: indiceActual >= maxIndice ? 'default' : 'pointer',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-            }}
-          >
-            ›
-          </button>
-        </div>
-
-        {/* Indicadores */}
-        <div className="text-center mt-4">
-          <div className="d-flex justify-content-center gap-2">
-            {Array.from({ length: Math.ceil(categorias.length / itemsVisibles) }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndiceActual(i * itemsVisibles > maxIndice ? maxIndice : i * itemsVisibles)}
-                className="btn p-0"
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: Math.floor(indiceActual / itemsVisibles) === i ? '#8B7355' : '#ddd',
-                  border: 'none',
-                  transition: 'background-color 0.2s'
-                }}
-              />
-            ))}
-          </div>
-        </div>
+        )}
 
         {/* Decoración inferior */}
-        <div className="text-center mt-3">
+        <div className="text-center mt-4">
           <span style={{ color: '#ddd', fontSize: '1.2rem' }}>❧</span>
         </div>
       </div>

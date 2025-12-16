@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion'
-
 function InicioCaracteristicas() {
   const caracteristicas = [
     { titulo: '50 años', descripcion: 'de experiencia', emoji: '🎂', bg: '#FFFBEB', border: '#FCD34D' },
@@ -9,93 +7,35 @@ function InicioCaracteristicas() {
   ]
 
   return (
-    <section className="container my-5 position-relative" style={{ minHeight: '200px' }}>
-      {/* Emojis kawaii flotantes - distribuidos por porcentajes */}
-      <motion.span
-        className="position-absolute d-none d-md-block"
-        style={{ top: '10%', left: '5%', fontSize: '1.5rem', opacity: 0.5, zIndex: 0 }}
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      >
-        🍰
-      </motion.span>
-
-      <motion.span
-        className="position-absolute d-none d-md-block"
-        style={{ top: '15%', right: '8%', fontSize: '1.3rem', opacity: 0.45, zIndex: 0 }}
-        animate={{ y: [0, -8, 0], rotate: [0, 8, 0] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-      >
-        🍓
-      </motion.span>
-
-      <motion.span
-        className="position-absolute d-none d-md-block"
-        style={{ bottom: '15%', left: '12%', fontSize: '1.4rem', opacity: 0.4, zIndex: 0 }}
-        animate={{ y: [0, -6, 0], rotate: [0, -6, 0] }}
-        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-      >
-        🧁
-      </motion.span>
-
-      <motion.span
-        className="position-absolute d-none d-lg-block"
-        style={{ top: '40%', left: '2%', fontSize: '1.2rem', opacity: 0.35, zIndex: 0 }}
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-      >
-        🍩
-      </motion.span>
-
-      <motion.span
-        className="position-absolute d-none d-md-block"
-        style={{ bottom: '20%', right: '5%', fontSize: '1.5rem', opacity: 0.5, zIndex: 0 }}
-        animate={{ y: [0, -7, 0], rotate: [0, 5, 0] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      >
-        🍪
-      </motion.span>
-
-      <motion.span
-        className="position-absolute d-none d-lg-block"
-        style={{ top: '5%', left: '45%', fontSize: '1.3rem', opacity: 0.4, zIndex: 0 }}
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 2.9, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-      >
-        🎀
-      </motion.span>
-
-      <motion.span
-        className="position-absolute d-none d-lg-block"
-        style={{ bottom: '10%', right: '40%', fontSize: '1.2rem', opacity: 0.45, zIndex: 0 }}
-        animate={{ y: [0, -9, 0], rotate: [0, -8, 0] }}
-        transition={{ duration: 3.3, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-      >
-        🥧
-      </motion.span>
-
-      <div className="row g-4 position-relative" style={{ zIndex: 1 }}>
+    <section className="container my-5">
+      <div className="row g-4">
         {caracteristicas.map((item, index) => (
-          <div key={index} className="col-md-3 col-sm-6">
+          <div key={index} className="col-6 col-md-3">
             <div
               className="card h-100 text-center"
               style={{
                 backgroundColor: item.bg,
                 border: `3px dashed ${item.border}`,
                 borderRadius: '20px',
-                padding: '24px',
-                transition: 'transform 0.2s ease'
+                padding: '24px 16px',
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease'
               }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-4px)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)'
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
             >
-              <div className="card-body d-flex flex-column align-items-center justify-content-center">
-                <span style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>{item.emoji}</span>
+              <div className="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                <span style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>{item.emoji}</span>
                 <h3
                   style={{
                     fontFamily: "'Playfair Display', Georgia, serif",
                     fontStyle: 'italic',
-                    fontSize: '1.25rem',
+                    fontSize: '1.2rem',
                     color: '#6B5B4F',
                     fontWeight: '500',
                     marginBottom: '0.5rem'

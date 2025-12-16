@@ -16,8 +16,28 @@ export const boletasService = {
     return response.data
   },
 
-  async crear(usuarioId, boleta) {
+  async crear(usuarioId, boleta, comprobanteFile = null) {
+    if (comprobanteFile) {
+      // Si hay comprobante, usar FormData
+      const formData = new FormData()
+      formData.append('boleta', new Blob([JSON.stringify(boleta)], { type: 'application/json' }))
+      formData.append('comprobante', comprobanteFile)
+      const response = await api.post(`/boletas/usuario/${usuarioId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      return response.data
+    }
+    // Sin comprobante, enviar JSON normal
     const response = await api.post(`/boletas/usuario/${usuarioId}`, boleta)
+    return response.data
+  },
+
+  async subirComprobante(boletaId, comprobanteFile) {
+    const formData = new FormData()
+    formData.append('comprobante', comprobanteFile)
+    const response = await api.post(`/boletas/${boletaId}/comprobante`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
     return response.data
   },
 
@@ -28,6 +48,12 @@ export const boletasService = {
 
   async eliminar(id) {
     await api.delete(`/boletas/${id}`)
+  },
+
+  obtenerUrlComprobante(comprobanteUrl) {
+    if (!comprobanteUrl) return null
+    if (comprobanteUrl.startsWith('http')) return comprobanteUrl
+    return `https://api.anyararosso.com${comprobanteUrl}`
   }
 }
 

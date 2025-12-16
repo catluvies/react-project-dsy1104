@@ -592,7 +592,7 @@ function AdminUsuarios() {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={cerrarModal} disabled={guardando}>
+                  <button type="button" className="btn btn-dark" onClick={cerrarModal} disabled={guardando}>
                     Cancelar
                   </button>
                   <button type="submit" className="btn btn-primary" disabled={guardando}>
@@ -644,7 +644,7 @@ function AdminUsuarios() {
                         usuarioEditando.activo ? 'desactivar' : 'activar',
                         usuarioEditando
                       )}
-                      className={`btn btn-sm ${usuarioEditando.activo ? 'btn-outline-secondary' : 'btn-outline-success'}`}
+                      className={`btn btn-sm ${usuarioEditando.activo ? 'btn-dark' : 'btn-success'}`}
                       disabled={guardando}
                     >
                       {usuarioEditando.activo ? 'Desactivar cuenta' : 'Activar cuenta'}
@@ -671,7 +671,7 @@ function AdminUsuarios() {
                 </div>
               </div>
               <div className="modal-footer border-0 pt-0">
-                <button type="button" className="btn btn-outline-secondary" onClick={cerrarModalEditar} disabled={guardando}>
+                <button type="button" className="btn btn-dark" onClick={cerrarModalEditar} disabled={guardando}>
                   Cerrar
                 </button>
               </div>
@@ -722,7 +722,7 @@ function AdminUsuarios() {
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-dark"
                   onClick={cerrarModalConfirmacion}
                   disabled={guardando}
                 >
@@ -730,7 +730,7 @@ function AdminUsuarios() {
                 </button>
                 <button
                   type="button"
-                  className={`btn ${modalConfirmacion.tipo === 'eliminar' ? 'btn-danger' : modalConfirmacion.tipo === 'activar' ? 'btn-success' : 'btn-warning'}`}
+                  className={`btn ${modalConfirmacion.tipo === 'eliminar' ? 'btn-danger' : 'btn-success'}`}
                   onClick={ejecutarAccion}
                   disabled={guardando || !modalConfirmacion.password}
                 >

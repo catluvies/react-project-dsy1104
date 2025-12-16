@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { obtenerComunas, RETIRO_TIENDA, obtenerCostoEnvio } from '../data/comunas'
 import { formatearPrecio } from '../utils/formateo'
@@ -14,10 +14,13 @@ function CheckoutFormulario() {
   const { usuario, isAuthenticated } = useContext(AuthContext)
 
   const navigate = useNavigate()
+  const comprobanteInputRef = useRef(null)
 
   const [comunas, setComunas] = useState([])
   const [perfilCargado, setPerfilCargado] = useState(null)
   const [usarDireccionPerfil, setUsarDireccionPerfil] = useState(false)
+  const [comprobanteFile, setComprobanteFile] = useState(null)
+  const [comprobantePreview, setComprobantePreview] = useState(null)
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -168,7 +171,7 @@ function CheckoutFormulario() {
         horarioEntrega
       }
 
-      const boletaCreada = await boletasService.crear(usuario.id, boletaData)
+      const boletaCreada = await boletasService.crear(usuario.id, boletaData, comprobanteFile)
       vaciarCarrito()
       navigate('/exito', {
         state: {
@@ -512,18 +515,77 @@ function CheckoutFormulario() {
                 </div>
 
                 {metodoPago === 'TRANSFERENCIA' && (
-                  <div className="alert alert-info mb-0">
-                    <small>
-                      <strong>Datos para transferencia:</strong><br />
-                      Banco: Banco Estado<br />
-                      Tipo de cuenta: Cuenta Corriente<br />
-                      Número: 123456789<br />
-                      RUT: 12.345.678-9<br />
-                      Nombre: Pastelería Mil Sabores<br />
-                      Email: pagos@milsabores.cl<br /><br />
-                      <em>Una vez realizada la transferencia, tu pedido será confirmado por nuestro equipo.</em>
-                    </small>
-                  </div>
+                  <>
+                    <div className="alert alert-info mb-3">
+                      <small>
+                        <strong>Datos para transferencia:</strong><br />
+                        Banco: Banco Estado<br />
+                        Tipo de cuenta: Cuenta Corriente<br />
+                        Número: 123456789<br />
+                        RUT: 12.345.678-9<br />
+                        Nombre: Pastelería Mil Sabores<br />
+                        Email: pagos@milsabores.cl
+                      </small>
+                    </div>
+
+                    <div className="mb-3">
+                      <label className="form-label">
+                        <strong>Comprobante de transferencia</strong>
+                      </label>
+                      <p className="text-muted small mb-2">
+                        Sube una captura de pantalla o foto de tu comprobante de transferencia para agilizar la confirmación de tu pedido.
+                      </p>
+                      <input
+                        type="file"
+                        ref={comprobanteInputRef}
+                        onChange={(e) => {
+                          const file = e.target.files[0]
+                          if (file) {
+                            if (!file.type.startsWith('image/')) {
+                              setErrores({ ...errores, comprobante: 'Solo se permiten imágenes' })
+                              return
+                            }
+                            if (file.size > 5 * 1024 * 1024) {
+                              setErrores({ ...errores, comprobante: 'La imagen no puede superar 5MB' })
+                              return
+                            }
+                            setComprobanteFile(file)
+                            setComprobantePreview(URL.createObjectURL(file))
+                            setErrores({ ...errores, comprobante: '' })
+                          }
+                        }}
+                        accept="image/*"
+                        className={`form-control ${errores.comprobante ? 'is-invalid' : ''}`}
+                        disabled={cargando}
+                      />
+                      {errores.comprobante && <div className="invalid-feedback">{errores.comprobante}</div>}
+                      <small className="text-muted">JPG, PNG. Máximo 5MB. (Opcional pero recomendado)</small>
+
+                      {comprobantePreview && (
+                        <div className="mt-2 position-relative d-inline-block">
+                          <img
+                            src={comprobantePreview}
+                            alt="Preview comprobante"
+                            style={{ maxWidth: '200px', maxHeight: '200px', borderRadius: '8px' }}
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-danger position-absolute top-0 end-0"
+                            style={{ transform: 'translate(50%, -50%)' }}
+                            onClick={() => {
+                              setComprobanteFile(null)
+                              setComprobantePreview(null)
+                              if (comprobanteInputRef.current) {
+                                comprobanteInputRef.current.value = ''
+                              }
+                            }}
+                          >
+                            X
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </>
                 )}
 
                 {metodoPago === 'EFECTIVO' && (

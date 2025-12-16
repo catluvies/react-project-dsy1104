@@ -9,18 +9,17 @@ import { validarNombre, validarEmail, validarTelefono, validarRut } from '../uti
 import { formatearPrecio } from '../utils/formateo'
 
 const AVATARES_DISPONIBLES = [
-  { id: 'cake', emoji: '🎂', nombre: 'Pastel' },
-  { id: 'cupcake', emoji: '🧁', nombre: 'Cupcake' },
-  { id: 'cookie', emoji: '🍪', nombre: 'Galleta' },
-  { id: 'donut', emoji: '🍩', nombre: 'Donut' },
-  { id: 'ice-cream', emoji: '🍦', nombre: 'Helado' },
-  { id: 'candy', emoji: '🍬', nombre: 'Caramelo' },
-  { id: 'chocolate', emoji: '🍫', nombre: 'Chocolate' },
-  { id: 'strawberry', emoji: '🍓', nombre: 'Fresa' },
-  { id: 'cherry', emoji: '🍒', nombre: 'Cereza' },
-  { id: 'heart', emoji: '💖', nombre: 'Corazon' },
-  { id: 'star', emoji: '⭐', nombre: 'Estrella' },
-  { id: 'chef', emoji: '👨‍🍳', nombre: 'Chef' }
+  { id: 'nekoo', imagen: '/images/iconos/nekoo-lol.jpeg', nombre: 'Nekoo' },
+  { id: 'zoe', imagen: '/images/iconos/zoe-lol.jpeg', nombre: 'Zoe' },
+  { id: 'xayah', imagen: '/images/iconos/xayah.jpeg', nombre: 'Xayah' },
+  { id: 'jinx', imagen: '/images/iconos/jinx pixel.jpeg', nombre: 'Jinx' },
+  { id: 'ludo', imagen: '/images/iconos/ludo.jpeg', nombre: 'Ludo' },
+  { id: 'gato-alien', imagen: '/images/iconos/gato-alien.jpeg', nombre: 'Gato Alien' },
+  { id: 'nino-kawai', imagen: '/images/iconos/niño-kawai.jpeg', nombre: 'Kawaii' },
+  { id: 'barbie', imagen: '/images/iconos/barbie.jpeg', nombre: 'Barbie' },
+  { id: 'tocanna', imagen: '/images/iconos/tocanna.jpg', nombre: 'Tocanna' },
+  { id: 'jiafei', imagen: '/images/iconos/jiafei.jpeg', nombre: 'Jiafei' },
+  { id: 'jovani', imagen: '/images/iconos/jovani-vazquez.jpg', nombre: 'Jovani' }
 ]
 
 function PerfilContenido() {
@@ -95,9 +94,9 @@ function PerfilContenido() {
   const obtenerAvatarActual = () => {
     if (avatarSeleccionado) {
       const avatar = AVATARES_DISPONIBLES.find(a => a.id === avatarSeleccionado)
-      if (avatar) return avatar.emoji
+      if (avatar) return avatar
     }
-    return formData.nombre?.charAt(0)?.toUpperCase() || 'U'
+    return null
   }
 
   const cargarPerfil = async () => {
@@ -303,31 +302,68 @@ function PerfilContenido() {
             <div className="card-body text-center">
               <div className="position-relative d-inline-block mb-3">
                 <div
-                  className="rounded-circle bg-primary d-inline-flex align-items-center justify-content-center"
-                  style={{ width: '80px', height: '80px', cursor: 'pointer' }}
+                  className="rounded-circle d-inline-flex align-items-center justify-content-center avatar-perfil-container"
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    cursor: 'pointer',
+                    background: obtenerAvatarActual() ? 'transparent' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 -2px 5px rgba(0,0,0,0.1)',
+                    border: '3px solid #fff',
+                    overflow: 'hidden'
+                  }}
                   onClick={() => setMostrarAvatares(!mostrarAvatares)}
                   title="Cambiar avatar"
                 >
-                  <span className={avatarSeleccionado ? 'fs-2' : 'text-white fs-2'}>
-                    {obtenerAvatarActual()}
-                  </span>
+                  {obtenerAvatarActual() ? (
+                    <img
+                      src={obtenerAvatarActual().imagen}
+                      alt={obtenerAvatarActual().nombre}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  ) : (
+                    <span className="text-white fs-1 fw-bold">
+                      {formData.nombre?.charAt(0)?.toUpperCase() || 'U'}
+                    </span>
+                  )}
                 </div>
+                <small className="d-block text-muted mt-1">Click para cambiar</small>
               </div>
 
               {mostrarAvatares && (
-                <div className="card mb-3">
-                  <div className="card-body p-2">
-                    <p className="small text-muted mb-2">Selecciona tu avatar:</p>
-                    <div className="d-flex flex-wrap justify-content-center gap-1">
+                <div className="card mb-3 shadow">
+                  <div className="card-body p-3">
+                    <p className="small text-muted mb-3">Selecciona tu avatar:</p>
+                    <div className="d-flex flex-wrap justify-content-center gap-2">
                       {AVATARES_DISPONIBLES.map(avatar => (
                         <button
                           key={avatar.id}
                           onClick={() => seleccionarAvatar(avatar.id)}
-                          className={`btn btn-sm ${avatarSeleccionado === avatar.id ? 'btn-primary' : 'btn-outline-secondary'}`}
-                          style={{ fontSize: '1.2rem', padding: '2px 6px' }}
+                          className="btn p-0 position-relative"
+                          style={{
+                            width: '55px',
+                            height: '55px',
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            border: avatarSeleccionado === avatar.id ? '3px solid #0d6efd' : '2px solid #dee2e6',
+                            boxShadow: avatarSeleccionado === avatar.id ? '0 0 10px rgba(13,110,253,0.5)' : 'none',
+                            transition: 'all 0.2s ease'
+                          }}
                           title={avatar.nombre}
                         >
-                          {avatar.emoji}
+                          <img
+                            src={avatar.imagen}
+                            alt={avatar.nombre}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover'
+                            }}
+                          />
                         </button>
                       ))}
                     </div>

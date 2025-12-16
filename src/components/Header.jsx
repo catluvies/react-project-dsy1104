@@ -4,16 +4,24 @@ import { CarritoContext } from '../context/CarritoContext'
 import { AuthContext } from '../context/AuthContext'
 
 const AVATARES_MAP = {
-  'cake': '🎂', 'cupcake': '🧁', 'cookie': '🍪', 'donut': '🍩',
-  'ice-cream': '🍦', 'candy': '🍬', 'chocolate': '🍫', 'strawberry': '🍓',
-  'cherry': '🍒', 'heart': '💖', 'star': '⭐', 'chef': '👨‍🍳'
+  'nekoo': '/images/iconos/nekoo-lol.jpeg',
+  'zoe': '/images/iconos/zoe-lol.jpeg',
+  'xayah': '/images/iconos/xayah.jpeg',
+  'jinx': '/images/iconos/jinx pixel.jpeg',
+  'ludo': '/images/iconos/ludo.jpeg',
+  'gato-alien': '/images/iconos/gato-alien.jpeg',
+  'nino-kawai': '/images/iconos/niño-kawai.jpeg',
+  'barbie': '/images/iconos/barbie.jpeg',
+  'tocanna': '/images/iconos/tocanna.jpg',
+  'jiafei': '/images/iconos/jiafei.jpeg',
+  'jovani': '/images/iconos/jovani-vazquez.jpg'
 }
 
 function Header() {
   const { totalItems } = useContext(CarritoContext)
   const { usuario, logout, isAdmin, isVendedor } = useContext(AuthContext)
   const navigate = useNavigate()
-  const [avatarEmoji, setAvatarEmoji] = useState(null)
+  const [avatarImagen, setAvatarImagen] = useState(null)
   const [dropdownAbierto, setDropdownAbierto] = useState(false)
   const dropdownRef = useRef(null)
 
@@ -21,9 +29,9 @@ function Header() {
     if (usuario?.id) {
       const avatarGuardado = localStorage.getItem(`avatar_${usuario.id}`)
       if (avatarGuardado && AVATARES_MAP[avatarGuardado]) {
-        setAvatarEmoji(AVATARES_MAP[avatarGuardado])
+        setAvatarImagen(AVATARES_MAP[avatarGuardado])
       } else {
-        setAvatarEmoji(null)
+        setAvatarImagen(null)
       }
     }
   }, [usuario])
@@ -44,15 +52,15 @@ function Header() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg bg-pastel-cream border-bottom border-3">
+    <nav className="navbar navbar-expand-lg bg-pastel-cream border-bottom border-3" style={{ minHeight: '80px', padding: '12px 0' }}>
       <div className="container">
         <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
           <img
             src="/logo_sanic.jpg"
             alt="Logo Mil Sabores"
-            style={{width: '50px', height: '50px', borderRadius: '50%'}}
+            style={{width: '60px', height: '60px', borderRadius: '50%'}}
           />
-          <h1 className="h3 mb-0">Mil Sabores</h1>
+          <h1 className="h2 mb-0">Mil Sabores</h1>
         </Link>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -60,19 +68,19 @@ function Header() {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav mx-auto">
-            <li className="nav-item"><Link to="/" className="nav-link">Inicio</Link></li>
-            <li className="nav-item"><Link to="/productos" className="nav-link">Productos</Link></li>
-            <li className="nav-item"><Link to="/categorias" className="nav-link">Categorías</Link></li>
-            <li className="nav-item"><Link to="/ofertas" className="nav-link">Ofertas</Link></li>
-            <li className="nav-item"><Link to="/blog" className="nav-link">Blog</Link></li>
-            <li className="nav-item"><Link to="/nosotros" className="nav-link">Nosotros</Link></li>
-            <li className="nav-item"><Link to="/contacto" className="nav-link">Contacto</Link></li>
+          <ul className="navbar-nav mx-auto" style={{ gap: '8px' }}>
+            <li className="nav-item"><Link to="/" className="nav-link" style={{ fontSize: '1.05rem', padding: '10px 14px' }}>Inicio</Link></li>
+            <li className="nav-item"><Link to="/productos" className="nav-link" style={{ fontSize: '1.05rem', padding: '10px 14px' }}>Productos</Link></li>
+            <li className="nav-item"><Link to="/categorias" className="nav-link" style={{ fontSize: '1.05rem', padding: '10px 14px' }}>Categorías</Link></li>
+            <li className="nav-item"><Link to="/ofertas" className="nav-link" style={{ fontSize: '1.05rem', padding: '10px 14px' }}>Ofertas</Link></li>
+            <li className="nav-item"><Link to="/blog" className="nav-link" style={{ fontSize: '1.05rem', padding: '10px 14px' }}>Blog</Link></li>
+            <li className="nav-item"><Link to="/nosotros" className="nav-link" style={{ fontSize: '1.05rem', padding: '10px 14px' }}>Nosotros</Link></li>
+            <li className="nav-item"><Link to="/contacto" className="nav-link" style={{ fontSize: '1.05rem', padding: '10px 14px' }}>Contacto</Link></li>
           </ul>
 
           <div className="d-flex gap-2 align-items-center">
-            <Link to="/carrito" className="btn btn-outline-primary position-relative">
-              🛒 Carrito
+            <Link to="/carrito" className="btn btn-outline-primary position-relative" style={{ padding: '10px 18px', fontSize: '1rem' }}>
+              Carrito
               {totalItems > 0 && (
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {totalItems}
@@ -87,8 +95,49 @@ function Header() {
                   type="button"
                   onClick={() => setDropdownAbierto(!dropdownAbierto)}
                   aria-expanded={dropdownAbierto}
+                  style={{ padding: '8px 16px', fontSize: '1rem' }}
                 >
-                  {avatarEmoji && <span>{avatarEmoji}</span>}
+                  {avatarImagen ? (
+                    <div
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        border: '2px solid #fff',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                      }}
+                    >
+                      <img
+                        src={avatarImagen}
+                        alt="Avatar"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        border: '2px solid #fff',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        fontSize: '0.85rem'
+                      }}
+                    >
+                      {usuario.nombre?.charAt(0)?.toUpperCase() || 'U'}
+                    </div>
+                  )}
                   {usuario.nombre}
                 </button>
                 <ul className={`dropdown-menu dropdown-menu-end ${dropdownAbierto ? 'show' : ''}`}>

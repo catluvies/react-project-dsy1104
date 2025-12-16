@@ -301,6 +301,32 @@ function AdminOrders() {
                   <p className="mb-0">{boletaSeleccionada.metodoPago}</p>
                 </div>
 
+                {boletaSeleccionada.metodoPago === 'TRANSFERENCIA' && (
+                  <div className="mb-3">
+                    <h6>Comprobante de transferencia</h6>
+                    {boletaSeleccionada.comprobanteUrl ? (
+                      <div>
+                        <img
+                          src={boletasService.obtenerUrlComprobante(boletaSeleccionada.comprobanteUrl)}
+                          alt="Comprobante de transferencia"
+                          className="img-fluid rounded border cursor-pointer"
+                          style={{ maxHeight: '200px', cursor: 'pointer' }}
+                          onClick={() => {
+                            window.open(boletasService.obtenerUrlComprobante(boletaSeleccionada.comprobanteUrl), '_blank')
+                          }}
+                        />
+                        <p className="text-muted small mt-1 mb-0">
+                          Click en la imagen para ver en tamaño completo
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="alert alert-warning py-2 mb-0">
+                        <small>El cliente no adjuntó comprobante</small>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {(isAdmin() || isVendedor()) && (
                   <>
                     <hr />

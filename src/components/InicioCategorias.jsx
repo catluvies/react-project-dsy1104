@@ -69,6 +69,7 @@ function InicioCategorias() {
         <div className="d-flex flex-wrap justify-content-center gap-3 gap-md-4">
           {categorias.map((categoria, index) => {
             const colorClass = obtenerColorClass(index)
+            const imagenUrl = categoriasService.obtenerUrlImagen(categoria.imagenUrl)
 
             return (
               <Link
@@ -85,11 +86,26 @@ function InicioCategorias() {
                 <div
                   className={`card-aero ${colorClass} h-100 text-center`}
                   style={{
-                    padding: '28px 16px',
-                    minHeight: '160px'
+                    padding: '20px 16px',
+                    minHeight: imagenUrl ? '220px' : '160px'
                   }}
                 >
                   <div className="d-flex flex-column align-items-center justify-content-center h-100">
+                    {/* Imagen de la categoría */}
+                    {imagenUrl && (
+                      <img
+                        src={imagenUrl}
+                        alt={categoria.nombre}
+                        style={{
+                          width: '80px',
+                          height: '80px',
+                          objectFit: 'cover',
+                          borderRadius: '12px',
+                          marginBottom: '12px',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                      />
+                    )}
                     <h6
                       className="mb-2"
                       style={{

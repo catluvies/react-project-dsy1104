@@ -75,6 +75,12 @@ function AdminVariantes({ producto, onClose }) {
     })
   }
 
+  // Función para limpiar precio (quitar puntos de miles)
+  const limpiarPrecio = (precio) => {
+    if (!precio) return ''
+    return precio.toString().replace(/\./g, '')
+  }
+
   const validarFormulario = () => {
     const nuevosErrores = {}
 
@@ -86,7 +92,8 @@ function AdminVariantes({ producto, onClose }) {
       nuevosErrores.porciones = 'Las porciones deben ser mayor a 0'
     }
 
-    if (!formData.precio || isNaN(formData.precio) || Number(formData.precio) <= 0) {
+    const precioLimpio = limpiarPrecio(formData.precio)
+    if (!precioLimpio || isNaN(precioLimpio) || Number(precioLimpio) <= 0) {
       nuevosErrores.precio = 'El precio debe ser mayor a 0'
     }
 
@@ -107,7 +114,7 @@ function AdminVariantes({ producto, onClose }) {
       const varianteData = {
         nombre: formData.nombre.trim(),
         porciones: Number(formData.porciones),
-        precio: Number(formData.precio),
+        precio: Number(limpiarPrecio(formData.precio)),
         stock: Number(formData.stock),
         activo: formData.activo
       }
@@ -291,13 +298,13 @@ function AdminVariantes({ producto, onClose }) {
                       <div className="input-group">
                         <span className="input-group-text">$</span>
                         <input
-                          type="number"
+                          type="text"
+                          inputMode="numeric"
                           name="precio"
                           value={formData.precio}
                           onChange={handleFormChange}
                           className={`form-control ${erroresForm.precio ? 'is-invalid' : ''}`}
                           placeholder="15000"
-                          min="0"
                           disabled={guardando}
                         />
                         {erroresForm.precio && <div className="invalid-feedback">{erroresForm.precio}</div>}

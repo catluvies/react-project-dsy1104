@@ -107,7 +107,7 @@ function CategoriasGrid() {
           <p className="lead">Explora nuestras categorías y encuentra el producto perfecto</p>
         </div>
       </section>
-      <section className="py-5">
+      <section className="contacto-bg-decorativo py-5">
         <div className="container">
           <div className="row g-4">
             {categorias.map(categoria => {
@@ -116,45 +116,32 @@ function CategoriasGrid() {
 
               return (
                 <div key={categoria.id} className="col-md-6 col-lg-4">
-                  <div
-                    className="card h-100 border-0 shadow-sm overflow-hidden"
-                    style={{ transition: 'transform 0.3s, box-shadow 0.3s' }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-5px)'
-                      e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.15)'
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)'
-                      e.currentTarget.style.boxShadow = '0 0.125rem 0.25rem rgba(0,0,0,0.075)'
-                    }}
-                  >
-                    <div
-                      style={{
-                        height: '180px',
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url("${imagenUrl}")`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                      }}
-                    />
-                    <div className="card-body d-flex flex-column text-center">
-                      <h5 className="card-title text-cafe mb-2">{categoria.nombre}</h5>
-                      {categoria.descripcion && (
-                        <p className="card-text text-muted small flex-grow-1">
-                          {categoria.descripcion}
-                        </p>
-                      )}
-                      <div className="mt-auto">
-                        <span className="badge mb-3" style={{backgroundColor: '#FFB6C1', color: '#654321'}}>
+                  <div className="glass-card-categoria h-100">
+                    <div className="card-img-container">
+                      <div
+                        style={{
+                          height: '180px',
+                          backgroundImage: `url("${imagenUrl}")`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center'
+                        }}
+                      />
+                    </div>
+                    <div className="p-4 d-flex flex-column text-center" style={{ minHeight: '200px' }}>
+                      <h5 className="mb-2" style={{ color: '#8B4513' }}>{categoria.nombre}</h5>
+                      <p className="text-muted small mb-3" style={{ minHeight: '40px' }}>
+                        {categoria.descripcion || 'Descubre nuestra selección'}
+                      </p>
+                      <div className="mt-auto d-flex flex-column align-items-center gap-2">
+                        <span className="badge-glass-cantidad">
                           {cantidadProductos} {cantidadProductos === 1 ? 'producto' : 'productos'}
                         </span>
-                        <div>
-                          <Link
-                            to={`/productos?categoria=${categoria.id}`}
-                            className="btn btn-primary"
-                          >
-                            Ver Productos
-                          </Link>
-                        </div>
+                        <Link
+                          to={`/productos?categoria=${categoria.id}`}
+                          className="glass-btn-card"
+                        >
+                          Ver Productos
+                        </Link>
                       </div>
                     </div>
                   </div>

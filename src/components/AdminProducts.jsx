@@ -180,6 +180,12 @@ function AdminProducts() {
     }
   }
 
+  // Función para limpiar precio (quitar puntos de miles)
+  const limpiarPrecio = (precio) => {
+    if (!precio) return ''
+    return precio.toString().replace(/\./g, '')
+  }
+
   const validarFormulario = () => {
     const nuevosErrores = {}
 
@@ -187,7 +193,8 @@ function AdminProducts() {
       nuevosErrores.nombre = 'El nombre es requerido (mínimo 2 caracteres)'
     }
 
-    if (!formData.precio || isNaN(formData.precio) || Number(formData.precio) <= 0) {
+    const precioLimpio = limpiarPrecio(formData.precio)
+    if (!precioLimpio || isNaN(precioLimpio) || Number(precioLimpio) <= 0) {
       nuevosErrores.precio = 'El precio debe ser un número mayor a 0'
     }
 
@@ -212,7 +219,7 @@ function AdminProducts() {
       const productoData = {
         nombre: formData.nombre.trim(),
         descripcion: formData.descripcion?.trim() || null,
-        precio: Number(formData.precio),
+        precio: Number(limpiarPrecio(formData.precio)),
         stock: Number(formData.stock),
         categoriaId: Number(formData.categoriaId),
         activo: formData.activo,
@@ -617,12 +624,13 @@ function AdminProducts() {
                       <div className="input-group">
                         <span className="input-group-text">$</span>
                         <input
-                          type="number"
+                          type="text"
+                          inputMode="numeric"
                           name="precio"
                           value={formData.precio}
                           onChange={handleFormChange}
                           className={`form-control ${erroresForm.precio ? 'is-invalid' : ''}`}
-                          min="0"
+                          placeholder="29990"
                           disabled={guardando}
                         />
                         {erroresForm.precio && <div className="invalid-feedback">{erroresForm.precio}</div>}

@@ -19,10 +19,44 @@ function InicioHero() {
           50 años endulzando a Chile con las mejores tortas y postres tradicionales
         </p>
         <div className="d-flex gap-3 justify-content-center flex-wrap">
-          <Link to="/productos" className="btn btn-light btn-lg px-4 py-2">
+          <Link
+            to="/productos"
+            className="btn btn-lg px-4 py-2"
+            style={{
+              backgroundColor: '#8B7355',
+              color: 'white',
+              border: 'none',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#6B5B4F'
+              e.currentTarget.style.transform = 'translateY(-2px)'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#8B7355'
+              e.currentTarget.style.transform = 'translateY(0)'
+            }}
+          >
             Ver Productos
           </Link>
-          <Link to="/categorias" className="btn btn-outline-light btn-lg px-4 py-2">
+          <Link
+            to="/categorias"
+            className="btn btn-lg px-4 py-2"
+            style={{
+              backgroundColor: '#F8BBD9',
+              color: '#6B5B4F',
+              border: 'none',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#F5A3C7'
+              e.currentTarget.style.transform = 'translateY(-2px)'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#F8BBD9'
+              e.currentTarget.style.transform = 'translateY(0)'
+            }}
+          >
             Explorar Categorías
           </Link>
         </div>

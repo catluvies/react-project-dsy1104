@@ -65,6 +65,11 @@ function PerfilContenido() {
   const [errorBoletas, setErrorBoletas] = useState(null)
   const [boletaSeleccionada, setBoletaSeleccionada] = useState(null)
 
+  // Estados para subir comprobante
+  const [archivoComprobante, setArchivoComprobante] = useState(null)
+  const [subiendoComprobante, setSubiendoComprobante] = useState(false)
+  const [errorComprobante, setErrorComprobante] = useState(null)
+
   useEffect(() => {
     if (!isAuthenticated()) {
       navigate('/login')
@@ -264,6 +269,52 @@ function PerfilContenido() {
     setMostrarCambioPassword(false)
     setPasswordData({ passwordActual: '', passwordNueva: '', confirmarPassword: '' })
     setErroresPassword({})
+  }
+
+  // Funciones para subir comprobante
+  const handleArchivoComprobante = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      // Validar tipo de archivo
+      const tiposPermitidos = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
+      if (!tiposPermitidos.includes(file.type)) {
+        setErrorComprobante('Solo se permiten imágenes (JPG, PNG, WEBP) o PDF')
+        return
+      }
+      // Validar tamaño (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setErrorComprobante('El archivo no puede superar los 5MB')
+        return
+      }
+      setArchivoComprobante(file)
+      setErrorComprobante(null)
+    }
+  }
+
+  const handleSubirComprobante = async () => {
+    if (!archivoComprobante || !boletaSeleccionada) return
+
+    setSubiendoComprobante(true)
+    setErrorComprobante(null)
+
+    try {
+      await boletasService.subirComprobante(boletaSeleccionada.id, archivoComprobante)
+      setMensaje({ tipo: 'success', texto: 'Comprobante subido correctamente. Tu pedido será revisado pronto.' })
+      setArchivoComprobante(null)
+      // Recargar boletas para actualizar el estado
+      await cargarBoletas()
+      // Actualizar la boleta seleccionada
+      const boletasActualizadas = await boletasService.obtenerPorUsuario(usuario.id)
+      const boletaActualizada = boletasActualizadas.find(b => b.id === boletaSeleccionada.id)
+      if (boletaActualizada) {
+        setBoletaSeleccionada(boletaActualizada)
+      }
+    } catch (error) {
+      console.error('Error subiendo comprobante:', error)
+      setErrorComprobante(error.response?.data?.mensaje || 'Error al subir el comprobante. Intenta de nuevo.')
+    } finally {
+      setSubiendoComprobante(false)
+    }
   }
 
   const formatearFecha = (fecha) => {
@@ -807,9 +858,79 @@ function PerfilContenido() {
                           )}
 
                           {boletaSeleccionada.estado === 'PENDIENTE' && (
-                            <div className="alert alert-warning mt-3 mb-0 small">
-                              <strong>Pendiente de pago</strong><br />
-                              Realiza la transferencia para confirmar tu pedido.
+                            <div className="mt-3">
+                              <hr />
+                              <h6 className="text-warning">Pendiente de pago</h6>
+
+                              {boletaSeleccionada.comprobanteUrl ? (
+                                <div className="alert alert-info small mb-0">
+                                  <strong>Comprobante enviado</strong><br />
+                                  Tu comprobante está siendo revisado. Te notificaremos cuando sea confirmado.
+                                  <div className="mt-2">
+                                    <a
+                                      href={boletasService.obtenerUrlComprobante(boletaSeleccionada.comprobanteUrl)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="btn btn-outline-primary btn-sm"
+                                    >
+                                      Ver comprobante
+                                    </a>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="card border-warning">
+                                  <div className="card-body p-3">
+                                    <p className="small text-muted mb-2">
+                                      Sube tu comprobante de transferencia para confirmar tu pedido.
+                                    </p>
+
+                                    {errorComprobante && (
+                                      <div className="alert alert-danger small py-2 mb-2">
+                                        {errorComprobante}
+                                      </div>
+                                    )}
+
+                                    <div className="mb-2">
+                                      <input
+                                        type="file"
+                                        accept="image/*,.pdf"
+                                        onChange={handleArchivoComprobante}
+                                        className="form-control form-control-sm"
+                                        disabled={subiendoComprobante}
+                                      />
+                                      <small className="text-muted">JPG, PNG, WEBP o PDF (máx. 5MB)</small>
+                                    </div>
+
+                                    {archivoComprobante && (
+                                      <div className="d-flex align-items-center gap-2 mb-2">
+                                        <span className="badge bg-secondary">{archivoComprobante.name}</span>
+                                        <button
+                                          type="button"
+                                          className="btn btn-link btn-sm text-danger p-0"
+                                          onClick={() => setArchivoComprobante(null)}
+                                        >
+                                          Quitar
+                                        </button>
+                                      </div>
+                                    )}
+
+                                    <button
+                                      onClick={handleSubirComprobante}
+                                      disabled={!archivoComprobante || subiendoComprobante}
+                                      className="btn btn-warning btn-sm w-100"
+                                    >
+                                      {subiendoComprobante ? (
+                                        <>
+                                          <span className="spinner-border spinner-border-sm me-2"></span>
+                                          Subiendo...
+                                        </>
+                                      ) : (
+                                        'Subir Comprobante'
+                                      )}
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>

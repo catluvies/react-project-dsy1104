@@ -1,12 +1,59 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { categoriasService } from '../api/categoriasService'
-import { productosService } from '../api/productosService'
+
+// Colores pastel para las cards (se asignan cíclicamente)
+const COLORES_PASTEL = [
+  { bg: '#E8F4EA', border: '#A8D5BA' },  // Verde menta
+  { bg: '#FFF3CD', border: '#F5D779' },  // Amarillo
+  { bg: '#E8E0F0', border: '#C9B8E0' },  // Lavanda
+  { bg: '#FCE4EC', border: '#F8BBD9' },  // Rosa
+  { bg: '#FFF8E1', border: '#FFE082' },  // Crema
+  { bg: '#E3F2FD', border: '#90CAF9' },  // Azul claro
+  { bg: '#F3E5F5', border: '#CE93D8' },  // Púrpura claro
+  { bg: '#FFEBEE', border: '#FFCDD2' },  // Rojo claro
+]
+
+// Emojis por defecto según nombre de categoría
+const EMOJIS_DEFAULT = {
+  'tortas': '🎂',
+  'torta': '🎂',
+  'kuchen': '🥧',
+  'postres': '🍮',
+  'postre': '🍮',
+  'galletas': '🍪',
+  'galleta': '🍪',
+  'cupcakes': '🧁',
+  'cupcake': '🧁',
+  'alfajores': '🥮',
+  'alfajor': '🥮',
+  'chocolates': '🍫',
+  'chocolate': '🍫',
+  'dulces': '🍬',
+  'dulce': '🍬',
+  'bebidas': '☕',
+  'café': '☕',
+  'cafe': '☕',
+  'panes': '🥐',
+  'pan': '🥐',
+  'helados': '🍦',
+  'helado': '🍦',
+  'frutas': '🍓',
+  'fruta': '🍓',
+  'especiales': '⭐',
+  'especial': '⭐',
+  'vegano': '🌱',
+  'saludable': '🥗',
+  'cumpleaños': '🎉',
+  'bodas': '💒',
+  'eventos': '🎊',
+}
 
 function InicioCategorias() {
   const [categorias, setCategorias] = useState([])
-  const [productos, setProductos] = useState([])
   const [cargando, setCargando] = useState(true)
+  const [indiceActual, setIndiceActual] = useState(0)
+  const carruselRef = useRef(null)
 
   useEffect(() => {
     cargarDatos()
@@ -14,12 +61,8 @@ function InicioCategorias() {
 
   const cargarDatos = async () => {
     try {
-      const [categoriasData, productosData] = await Promise.all([
-        categoriasService.obtenerActivas(),
-        productosService.obtenerActivos()
-      ])
+      const categoriasData = await categoriasService.obtenerActivas()
       setCategorias(categoriasData)
-      setProductos(productosData)
     } catch (error) {
       console.error('Error cargando categorías:', error)
     } finally {
@@ -27,34 +70,40 @@ function InicioCategorias() {
     }
   }
 
-  const contarProductos = (categoriaId) => {
-    return productos.filter(p => p.categoriaId === categoriaId).length
+  // Obtener emoji para la categoría
+  const obtenerEmoji = (categoria) => {
+    // Si imagenUrl empieza con "emoji:", extraer el emoji
+    if (categoria.imagenUrl?.startsWith('emoji:')) {
+      return categoria.imagenUrl.replace('emoji:', '')
+    }
+    // Buscar emoji por nombre
+    const nombreLower = categoria.nombre.toLowerCase()
+    for (const [key, emoji] of Object.entries(EMOJIS_DEFAULT)) {
+      if (nombreLower.includes(key)) return emoji
+    }
+    return '🍰' // Emoji por defecto
   }
 
-  const obtenerImagenCategoria = (categoria) => {
-    if (categoria.imagenUrl) {
-      if (categoria.imagenUrl.startsWith('http')) return categoria.imagenUrl
-      return `https://api.anyararosso.com${categoria.imagenUrl}`
-    }
-    // Imágenes por defecto según nombre de categoría
-    const imagenesDefault = {
-      'tortas': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&q=80',
-      'pasteles': 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400&q=80',
-      'cupcakes': 'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=400&q=80',
-      'galletas': 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&q=80',
-      'postres': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80',
-      'dulces': 'https://images.unsplash.com/photo-1582176604856-e824b4736522?w=400&q=80'
-    }
-    const nombreLower = categoria.nombre.toLowerCase()
-    for (const [key, url] of Object.entries(imagenesDefault)) {
-      if (nombreLower.includes(key)) return url
-    }
-    return 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=400&q=80'
+  // Obtener color para la categoría
+  const obtenerColor = (index) => {
+    return COLORES_PASTEL[index % COLORES_PASTEL.length]
+  }
+
+  // Navegación del carrusel
+  const itemsVisibles = 5
+  const maxIndice = Math.max(0, categorias.length - itemsVisibles)
+
+  const siguiente = () => {
+    setIndiceActual(prev => Math.min(prev + 1, maxIndice))
+  }
+
+  const anterior = () => {
+    setIndiceActual(prev => Math.max(prev - 1, 0))
   }
 
   if (cargando) {
     return (
-      <section className="py-5 bg-light">
+      <section className="py-5" style={{ backgroundColor: '#FFFEF7' }}>
         <div className="container text-center">
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Cargando...</span>
@@ -67,71 +116,172 @@ function InicioCategorias() {
   if (categorias.length === 0) return null
 
   return (
-    <section className="py-5 bg-light">
+    <section className="py-5" style={{ backgroundColor: '#FFFEF7' }}>
       <div className="container">
-        <div className="text-center mb-5">
-          <h2 className="display-5 fw-bold text-cafe">Nuestras Categorías</h2>
-          <p className="lead text-muted">Explora nuestra variedad de productos artesanales</p>
+        {/* Decoración superior */}
+        <div className="text-center mb-2">
+          <span style={{ color: '#F8BBD9', fontSize: '1.5rem' }}>❀</span>
+        </div>
+        <div className="text-center mb-1">
+          <span style={{ fontSize: '2rem' }}>🧁</span>
         </div>
 
-        <div className="row g-4">
-          {categorias.slice(0, 6).map(categoria => {
-            const cantidadProductos = contarProductos(categoria.id)
-            const imagenUrl = obtenerImagenCategoria(categoria)
+        {/* Título */}
+        <div className="text-center mb-4">
+          <h2
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontStyle: 'italic',
+              fontSize: '2.5rem',
+              color: '#8B7355',
+              fontWeight: '400'
+            }}
+          >
+            Nuestras Categorías
+          </h2>
+          <p className="text-muted">Encuentra tu dulce favorito</p>
+        </div>
 
-            return (
-              <div key={categoria.id} className="col-md-6 col-lg-4">
-                <Link
-                  to={`/productos?categoria=${categoria.id}`}
-                  className="text-decoration-none"
-                >
-                  <div
-                    className="card h-100 border-0 shadow-sm overflow-hidden"
-                    style={{ transition: 'transform 0.3s, box-shadow 0.3s' }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-5px)'
-                      e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.15)'
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)'
-                      e.currentTarget.style.boxShadow = '0 0.125rem 0.25rem rgba(0,0,0,0.075)'
-                    }}
+        {/* Carrusel */}
+        <div className="position-relative px-5">
+          {/* Botón anterior */}
+          <button
+            onClick={anterior}
+            disabled={indiceActual === 0}
+            className="btn position-absolute start-0 top-50 translate-middle-y"
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              border: '1px solid #ddd',
+              backgroundColor: '#fff',
+              zIndex: 10,
+              opacity: indiceActual === 0 ? 0.5 : 1,
+              cursor: indiceActual === 0 ? 'default' : 'pointer'
+            }}
+          >
+            ‹
+          </button>
+
+          {/* Cards */}
+          <div className="overflow-hidden" ref={carruselRef}>
+            <div
+              className="d-flex gap-3 transition-transform"
+              style={{
+                transform: `translateX(-${indiceActual * (100 / itemsVisibles)}%)`,
+                transition: 'transform 0.3s ease-in-out'
+              }}
+            >
+              {categorias.map((categoria, index) => {
+                const color = obtenerColor(index)
+                const emoji = obtenerEmoji(categoria)
+
+                return (
+                  <Link
+                    key={categoria.id}
+                    to={`/productos?categoria=${categoria.id}`}
+                    className="text-decoration-none flex-shrink-0"
+                    style={{ width: `calc(${100 / itemsVisibles}% - 12px)` }}
                   >
                     <div
-                      className="card-img-top"
+                      className="card h-100 text-center p-3"
                       style={{
-                        height: '200px',
-                        backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url("${imagenUrl}")`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
+                        backgroundColor: color.bg,
+                        border: `2px dashed ${color.border}`,
+                        borderRadius: '16px',
+                        transition: 'transform 0.2s, box-shadow 0.2s',
+                        cursor: 'pointer',
+                        minHeight: '180px'
                       }}
-                    />
-                    <div className="card-body text-center">
-                      <h5 className="card-title text-cafe mb-2">{categoria.nombre}</h5>
-                      {categoria.descripcion && (
-                        <p className="card-text text-muted small mb-2">
-                          {categoria.descripcion.substring(0, 60)}
-                          {categoria.descripcion.length > 60 ? '...' : ''}
-                        </p>
-                      )}
-                      <span className="badge" style={{ backgroundColor: '#FFB6C1', color: '#654321' }}>
-                        {cantidadProductos} {cantidadProductos === 1 ? 'producto' : 'productos'}
-                      </span>
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-5px)'
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)'
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)'
+                        e.currentTarget.style.boxShadow = 'none'
+                      }}
+                    >
+                      <div className="card-body d-flex flex-column align-items-center justify-content-center">
+                        <span style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>
+                          {emoji}
+                        </span>
+                        <h6
+                          className="mb-1"
+                          style={{
+                            color: '#6B5B4F',
+                            fontWeight: '600',
+                            fontSize: '1rem'
+                          }}
+                        >
+                          {categoria.nombre}
+                        </h6>
+                        {categoria.descripcion && (
+                          <small
+                            style={{
+                              color: '#9E8E7E',
+                              fontSize: '0.8rem'
+                            }}
+                          >
+                            {categoria.descripcion.length > 30
+                              ? categoria.descripcion.substring(0, 30) + '...'
+                              : categoria.descripcion
+                            }
+                          </small>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              </div>
-            )
-          })}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Botón siguiente */}
+          <button
+            onClick={siguiente}
+            disabled={indiceActual >= maxIndice}
+            className="btn position-absolute end-0 top-50 translate-middle-y"
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              border: '1px solid #ddd',
+              backgroundColor: '#fff',
+              zIndex: 10,
+              opacity: indiceActual >= maxIndice ? 0.5 : 1,
+              cursor: indiceActual >= maxIndice ? 'default' : 'pointer'
+            }}
+          >
+            ›
+          </button>
         </div>
 
-        {categorias.length > 6 && (
-          <div className="text-center mt-4">
-            <Link to="/categorias" className="btn btn-outline-primary btn-lg">
-              Ver todas las categorías
-            </Link>
+        {/* Indicadores */}
+        <div className="text-center mt-4">
+          <div className="d-flex justify-content-center gap-2">
+            {Array.from({ length: Math.ceil(categorias.length / itemsVisibles) }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndiceActual(i * itemsVisibles > maxIndice ? maxIndice : i * itemsVisibles)}
+                className="btn p-0"
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: Math.floor(indiceActual / itemsVisibles) === i ? '#8B7355' : '#ddd',
+                  border: 'none',
+                  transition: 'background-color 0.2s'
+                }}
+              />
+            ))}
           </div>
-        )}
+        </div>
+
+        {/* Decoración inferior */}
+        <div className="text-center mt-3">
+          <span style={{ color: '#ddd', fontSize: '1.2rem' }}>❧</span>
+        </div>
       </div>
     </section>
   )

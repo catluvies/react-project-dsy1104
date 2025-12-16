@@ -556,11 +556,13 @@ function AdminProducts() {
                         disabled={guardando}
                       >
                         <option value="">Seleccionar</option>
-                        <option value="gr">Gramos (gr)</option>
-                        <option value="kg">Kilogramos (kg)</option>
-                        <option value="ml">Mililitros (ml)</option>
-                        <option value="lt">Litros (lt)</option>
-                        <option value="unidad">Unidad</option>
+                        <option value="G">Gramos (g)</option>
+                        <option value="KG">Kilogramos (kg)</option>
+                        <option value="ML">Mililitros (ml)</option>
+                        <option value="L">Litros (l)</option>
+                        <option value="UNIDAD">Unidad</option>
+                        <option value="DOCENA">Docena</option>
+                        <option value="PORCION">Porción</option>
                       </select>
                       <small className="text-muted">Ej: 500 gr para un pastel</small>
                     </div>

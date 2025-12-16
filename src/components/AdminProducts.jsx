@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { productosService } from '../api/productosService'
 import { categoriasService } from '../api/categoriasService'
+import { variantesService } from '../api/variantesService'
 import { formatearPrecio } from '../utils/formateo'
 import AdminVariantes from './AdminVariantes'
 
@@ -45,6 +46,7 @@ function AdminProducts() {
   })
 
   const [productoVariantes, setProductoVariantes] = useState(null)
+  const [variantesDelProducto, setVariantesDelProducto] = useState([]) // Variantes del producto que se está editando
 
   useEffect(() => {
     if (!isAuthenticated() || (!isAdmin() && !isVendedor())) {
@@ -118,10 +120,11 @@ function AdminProducts() {
     setImagenSeleccionada(null)
     setPreviewImagen(null)
     setErroresForm({})
+    setVariantesDelProducto([]) // Producto nuevo no tiene variantes
     setModalAbierto(true)
   }
 
-  const abrirModalEditar = (producto) => {
+  const abrirModalEditar = async (producto) => {
     setProductoEditando(producto)
     setFormData({
       nombre: producto.nombre || '',
@@ -142,6 +145,16 @@ function AdminProducts() {
     setImagenSeleccionada(null)
     setPreviewImagen(producto.imagenUrl ? productosService.obtenerUrlImagen(producto.imagenUrl) : null)
     setErroresForm({})
+
+    // Cargar variantes del producto para saber si tiene tamaños
+    try {
+      const variantes = await variantesService.obtenerPorProducto(producto.id)
+      setVariantesDelProducto(variantes || [])
+    } catch (err) {
+      console.error('Error cargando variantes:', err)
+      setVariantesDelProducto([])
+    }
+
     setModalAbierto(true)
   }
 
@@ -150,6 +163,7 @@ function AdminProducts() {
     setProductoEditando(null)
     setImagenSeleccionada(null)
     setPreviewImagen(null)
+    setVariantesDelProducto([])
   }
 
   const handleFormChange = (e) => {
@@ -504,6 +518,29 @@ function AdminProducts() {
                     </div>
                   )}
 
+                  {/* Alerta para productos CON variantes */}
+                  {variantesDelProducto.length > 0 && (
+                    <div className="alert alert-warning py-2 border-warning" style={{ borderWidth: '2px' }}>
+                      <strong>⚠️ Este producto tiene {variantesDelProducto.length} tamaño(s)/variante(s)</strong>
+                      <p className="mb-1 mt-1" style={{ fontSize: '0.9rem' }}>
+                        El precio y stock que se muestran a los clientes provienen de las <strong>variantes</strong>, no de este formulario.
+                      </p>
+                      <small className="text-muted">
+                        Para modificar precios o stock, usa el botón "Tamaños" en la lista de productos.
+                      </small>
+                    </div>
+                  )}
+
+                  {/* Tip solo para productos NUEVOS o SIN variantes */}
+                  {variantesDelProducto.length === 0 && (
+                    <div className="alert alert-info py-2">
+                      <small>
+                        <strong>Tip:</strong> Si este producto tiene varios tamaños (ej: torta para 15 o 30 personas),
+                        primero créalo con un precio/stock base, luego usa el botón "Tamaños" para agregar las variantes.
+                      </small>
+                    </div>
+                  )}
+
                   <div className="row g-3">
                     <div className="col-md-8">
                       <label className="form-label">Nombre *</label>
@@ -579,23 +616,28 @@ function AdminProducts() {
                       />
                     </div>
 
+                    <div className="col-12">
+                      <hr className="my-2" />
+                      <small className="text-muted fw-bold">INFORMACIÓN DEL PRODUCTO (opcional pero recomendado)</small>
+                    </div>
+
                     <div className="col-md-3">
-                      <label className="form-label">Cantidad</label>
+                      <label className="form-label">Contenido</label>
                       <input
                         type="number"
                         name="cantidadMedida"
                         value={formData.cantidadMedida}
                         onChange={handleFormChange}
                         className="form-control"
-                        placeholder="350"
+                        placeholder="500"
                         min="0"
                         disabled={guardando}
                       />
-                      <small className="text-muted">Peso o volumen del producto</small>
+                      <small className="text-muted">Ej: 500 para "500g"</small>
                     </div>
 
                     <div className="col-md-3">
-                      <label className="form-label">Unidad</label>
+                      <label className="form-label">Unidad de medida</label>
                       <select
                         name="unidadMedida"
                         value={formData.unidadMedida}
@@ -612,7 +654,6 @@ function AdminProducts() {
                         <option value="DOCENA">Docena</option>
                         <option value="PORCION">Porción</option>
                       </select>
-                      <small className="text-muted">Ej: 500 gr para un pastel</small>
                     </div>
 
                     <div className="col-md-3">
@@ -627,6 +668,7 @@ function AdminProducts() {
                         min="1"
                         disabled={guardando}
                       />
+                      <small className="text-muted">¿Para cuántas personas?</small>
                     </div>
 
                     <div className="col-md-3">
@@ -641,19 +683,23 @@ function AdminProducts() {
                         min="1"
                         disabled={guardando}
                       />
+                      <small className="text-muted">Vida útil del producto</small>
                     </div>
 
                     <div className="col-md-6">
                       <label className="form-label">Conservación</label>
-                      <input
-                        type="text"
+                      <select
                         name="condicionConservacion"
                         value={formData.condicionConservacion}
                         onChange={handleFormChange}
-                        className="form-control"
-                        placeholder="Mantener refrigerado"
+                        className="form-select"
                         disabled={guardando}
-                      />
+                      >
+                        <option value="">Seleccionar</option>
+                        <option value="REFRIGERADO">Refrigerado</option>
+                        <option value="CONGELADO">Congelado</option>
+                        <option value="AMBIENTE">Temperatura ambiente</option>
+                      </select>
                     </div>
 
                     <div className="col-md-6">
@@ -672,8 +718,53 @@ function AdminProducts() {
                       <small className="text-muted">Por normativa sanitaria, indica los alérgenos presentes</small>
                     </div>
 
+                    <div className="col-12">
+                      <hr className="my-2" />
+                      <small className="text-muted fw-bold">
+                        PRECIO Y DISPONIBILIDAD
+                        {variantesDelProducto.length > 0 && (
+                          <span className="text-warning ms-2">(valores de respaldo - no se muestran al cliente)</span>
+                        )}
+                      </small>
+                    </div>
+
+                    {/* Mostrar tabla de variantes si existen */}
+                    {variantesDelProducto.length > 0 && (
+                      <div className="col-12">
+                        <div className="table-responsive bg-light rounded p-2">
+                          <small className="d-block mb-2 text-success fw-bold">
+                            ✓ Precios y stock REALES (desde variantes):
+                          </small>
+                          <table className="table table-sm table-borderless mb-0" style={{ fontSize: '0.85rem' }}>
+                            <thead>
+                              <tr>
+                                <th>Tamaño</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {variantesDelProducto.map(v => (
+                                <tr key={v.id}>
+                                  <td>{v.nombre}</td>
+                                  <td className="text-success fw-bold">${formatearPrecio(v.precio)}</td>
+                                  <td>
+                                    <span className={`badge ${v.stock === 0 ? 'bg-danger' : v.stock < 5 ? 'bg-warning' : 'bg-success'}`}>
+                                      {v.stock}
+                                    </span>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="col-md-4">
-                      <label className="form-label">Precio *</label>
+                      <label className="form-label text-muted">
+                        {variantesDelProducto.length > 0 ? 'Precio de respaldo' : 'Precio base *'}
+                      </label>
                       <div className="input-group">
                         <span className="input-group-text">$</span>
                         <input
@@ -682,7 +773,7 @@ function AdminProducts() {
                           name="precio"
                           value={formData.precio}
                           onChange={handleFormChange}
-                          className={`form-control ${erroresForm.precio ? 'is-invalid' : ''}`}
+                          className={`form-control ${erroresForm.precio ? 'is-invalid' : ''} ${variantesDelProducto.length > 0 ? 'bg-light text-muted' : ''}`}
                           placeholder="29990"
                           disabled={guardando}
                         />
@@ -691,13 +782,15 @@ function AdminProducts() {
                     </div>
 
                     <div className="col-md-4">
-                      <label className="form-label">Stock *</label>
+                      <label className="form-label text-muted">
+                        {variantesDelProducto.length > 0 ? 'Stock de respaldo' : 'Stock base *'}
+                      </label>
                       <input
                         type="number"
                         name="stock"
                         value={formData.stock}
                         onChange={handleFormChange}
-                        className={`form-control ${erroresForm.stock ? 'is-invalid' : ''}`}
+                        className={`form-control ${erroresForm.stock ? 'is-invalid' : ''} ${variantesDelProducto.length > 0 ? 'bg-light text-muted' : ''}`}
                         min="0"
                         disabled={guardando}
                       />
@@ -721,6 +814,15 @@ function AdminProducts() {
                         </label>
                       </div>
                     </div>
+
+                    {variantesDelProducto.length === 0 && (
+                      <div className="col-12">
+                        <small className="text-muted">
+                          <strong>Nota:</strong> Si agregas tamaños/variantes después, cada variante tendrá su propio precio y stock.
+                          El precio y stock base se usarán solo si no hay variantes.
+                        </small>
+                      </div>
+                    )}
 
                     <div className="col-12">
                       <label className="form-label">

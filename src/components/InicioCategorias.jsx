@@ -10,41 +10,6 @@ const COLORES_AERO = [
   'card-aero-morado',
 ]
 
-// Emojis por defecto según nombre de categoría
-const EMOJIS_DEFAULT = {
-  'tortas': '🎂',
-  'torta': '🎂',
-  'kuchen': '🥧',
-  'postres': '🍮',
-  'postre': '🍮',
-  'galletas': '🍪',
-  'galleta': '🍪',
-  'cupcakes': '🧁',
-  'cupcake': '🧁',
-  'alfajores': '🥮',
-  'alfajor': '🥮',
-  'chocolates': '🍫',
-  'chocolate': '🍫',
-  'dulces': '🍬',
-  'dulce': '🍬',
-  'bebidas': '☕',
-  'café': '☕',
-  'cafe': '☕',
-  'panes': '🥐',
-  'pan': '🥐',
-  'helados': '🍦',
-  'helado': '🍦',
-  'frutas': '🍓',
-  'fruta': '🍓',
-  'especiales': '⭐',
-  'especial': '⭐',
-  'vegano': '🌱',
-  'saludable': '🥗',
-  'cumpleaños': '🎉',
-  'bodas': '💒',
-  'eventos': '🎊',
-}
-
 function InicioCategorias() {
   const [categorias, setCategorias] = useState([])
   const [cargando, setCargando] = useState(true)
@@ -62,17 +27,6 @@ function InicioCategorias() {
     } finally {
       setCargando(false)
     }
-  }
-
-  const obtenerEmoji = (categoria) => {
-    if (categoria.imagenUrl?.startsWith('emoji:')) {
-      return categoria.imagenUrl.replace('emoji:', '')
-    }
-    const nombreLower = categoria.nombre.toLowerCase()
-    for (const [key, emoji] of Object.entries(EMOJIS_DEFAULT)) {
-      if (nombreLower.includes(key)) return emoji
-    }
-    return '🍰'
   }
 
   const obtenerColorClass = (index) => {
@@ -115,7 +69,6 @@ function InicioCategorias() {
         <div className="d-flex flex-wrap justify-content-center gap-3 gap-md-4">
           {categorias.map((categoria, index) => {
             const colorClass = obtenerColorClass(index)
-            const emoji = obtenerEmoji(categoria)
 
             return (
               <Link
@@ -133,20 +86,17 @@ function InicioCategorias() {
                   className={`card-aero ${colorClass} h-100 text-center`}
                   style={{
                     padding: '28px 16px',
-                    minHeight: '200px'
+                    minHeight: '160px'
                   }}
                 >
-                  <div className="d-flex flex-column align-items-center justify-content-center p-0">
-                    <span style={{ fontSize: '3.5rem', marginBottom: '0.75rem' }}>
-                      {emoji}
-                    </span>
+                  <div className="d-flex flex-column align-items-center justify-content-center h-100">
                     <h6
                       className="mb-2"
                       style={{
                         fontFamily: "'Pacifico', cursive",
                         color: '#6B5B4F',
                         fontWeight: '400',
-                        fontSize: '1.1rem'
+                        fontSize: '1.2rem'
                       }}
                     >
                       {categoria.nombre}
@@ -159,8 +109,8 @@ function InicioCategorias() {
                           lineHeight: '1.3'
                         }}
                       >
-                        {categoria.descripcion.length > 35
-                          ? categoria.descripcion.substring(0, 35) + '...'
+                        {categoria.descripcion.length > 50
+                          ? categoria.descripcion.substring(0, 50) + '...'
                           : categoria.descripcion
                         }
                       </small>

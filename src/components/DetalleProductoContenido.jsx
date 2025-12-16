@@ -5,6 +5,23 @@ import { CarritoContext } from '../context/CarritoContext'
 import { productosService } from '../api/productosService'
 import { variantesService } from '../api/variantesService'
 
+// Mapeo de enums a texto legible
+const UNIDAD_MEDIDA_LABELS = {
+  'G': 'g',
+  'KG': 'kg',
+  'ML': 'ml',
+  'L': 'l',
+  'UNIDAD': 'unidad(es)',
+  'DOCENA': 'docena(s)',
+  'PORCION': 'porción(es)'
+}
+
+const CONSERVACION_LABELS = {
+  'REFRIGERADO': 'Mantener refrigerado (0-4°C)',
+  'CONGELADO': 'Mantener congelado (-18°C)',
+  'AMBIENTE': 'Temperatura ambiente'
+}
+
 function DetalleProductoContenido() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -205,7 +222,7 @@ function DetalleProductoContenido() {
                 <p><strong>Duración:</strong> {producto.duracionDias} días</p>
               )}
               {producto.condicionConservacion && (
-                <p><strong>Conservación:</strong> {producto.condicionConservacion}</p>
+                <p><strong>Conservación:</strong> {CONSERVACION_LABELS[producto.condicionConservacion] || producto.condicionConservacion}</p>
               )}
               <p>
                 <strong>Stock disponible:</strong>{' '}
@@ -216,17 +233,13 @@ function DetalleProductoContenido() {
             </div>
 
             {/* Información técnica - peso/medida */}
-            {(producto.cantidadMedida || producto.unidadMedida) && (
-              <details className="mb-4">
-                <summary className="text-muted" style={{ cursor: 'pointer', fontSize: '0.9rem' }}>
-                  <strong>Información técnica</strong>
-                </summary>
-                <div className="mt-2 ps-3">
-                  <p className="mb-0 text-muted">
-                    <strong>Peso:</strong> {producto.cantidadMedida} {producto.unidadMedida}
-                  </p>
-                </div>
-              </details>
+            {(producto.cantidadMedida && producto.unidadMedida) && (
+              <div className="mb-4 p-3 bg-light rounded">
+                <small className="text-muted d-block mb-1">Contenido:</small>
+                <span className="fw-bold">
+                  {producto.cantidadMedida} {UNIDAD_MEDIDA_LABELS[producto.unidadMedida] || producto.unidadMedida}
+                </span>
+              </div>
             )}
 
             {producto.alergenos && (
